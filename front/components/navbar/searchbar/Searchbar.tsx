@@ -1,16 +1,24 @@
 import React from "react";
-import { BsSearch } from "react-icons/bs";
+
+import { FaSearch } from "react-icons/fa";
+
+import useSearchHook from "../../../hooks/useSearchHook";
 
 export const Searchbar = () => {
+  const { handleInput, handleSubmit } = useSearchHook();
+
   return (
-    <form className="relative w-max mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="absolute right-0 top-1 w-auto mx-auto"
+    >
       <input
+        onChange={handleInput}
         name="search"
-        className="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4 ease-linear duration-500"
+        className=" right-0 text-white placeholder:text-white peer cursor-pointer relative z-10 h-12 w-12 rounded-full border border-transparent bg-transparent pl-12 outline-none focus:w-80 focus:cursor-text focus:border-primary focus:pl-16 focus:pr-4 ease-linear duration-500"
+        placeholder="Search..."
       />
-      <div className="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-lime-300 peer-focus:stroke-lime-500">
-        <BsSearch />
-      </div>
+      <FaSearch className=" text-white absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-lime-300 peer-focus:stroke-lime-500" />
     </form>
   );
 };
