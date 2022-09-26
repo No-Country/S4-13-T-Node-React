@@ -1,14 +1,14 @@
-import express from 'express'
+import express from 'express';
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
 
-const PORT = 8080
+const PORT = 8080;
 
 app.get('/', (req, res) => {
-	res.json({ message: 'Running server successfully' })
-})
+  res.json({ message: 'Running server successfully' });
+});
 
 app.listen(PORT, () => {
-	console.log('Server running on ' + PORT)
-})
+  console.log('Server running on ' + PORT);
+});
