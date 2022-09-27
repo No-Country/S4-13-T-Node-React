@@ -1,5 +1,3 @@
-import { DataSource } from 'typeorm';
-
 export abstract class Repository<T> {
   constructor(protected readonly entity: any) {
     this.entity = entity;
@@ -14,5 +12,11 @@ export abstract class Repository<T> {
       console.log(error);
       return error;
     }
+  }
+  async getObjects() {
+    // Este getObjects tiene que retornar los objectos con paginación.
+    try {
+      return await this.entity.find();
+    } catch (error) {}
   }
 }

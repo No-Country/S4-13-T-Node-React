@@ -11,4 +11,12 @@ const createPost = async (post: IPost) => {
   }
 };
 
-export default { createPost };
+const getPosts = async () => {
+  try {
+    return await Post.getObjects();
+  } catch (error) {
+    return error;
+  }
+};
+
+export default { createPost, getPosts };

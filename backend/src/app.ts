@@ -20,6 +20,4 @@ app.get('/', (req, res) => {
   res.json({ message: 'Running server successfully' });
 });
 
-import Repositories from './Repository';
-
 export default app;
