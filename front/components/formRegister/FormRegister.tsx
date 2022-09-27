@@ -1,35 +1,40 @@
-import { Formik, Form, Field } from "formik";
 import React from "react";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 type values = {
   email: string;
+  username: string;
   password: string;
 };
 
-const validateLoginSchema = Yup.object({
+const validateRegisterSchema = Yup.object({
   email: Yup.string()
     .email("Debes ingresar un email válido")
     .required("Email requerido"),
+  username: Yup.string()
+    .min(2, "El nombre de usuario es demasiado corto")
+    .max(15, "El nombre de usuario es demasiado largo")
+    .required("Nombre de usuario requerido"),
   password: Yup.string()
     .min(6, "El password debe tener al menos 6 caracteres")
     .required("Password requerido"),
 });
 
-const FormLogin = () => {
+const FormRegister = () => {
   const handleSubmit = (values: values) => {
-    console.log("Ingresaste a la página");
+    console.log("Registrado exitosamente");
     console.log(values);
   };
 
   return (
     <>
-      <h1>Inicio de sesión</h1>
+      <h1>Registro</h1>
       {
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "", username: "", password: "" }}
           onSubmit={(values) => handleSubmit(values)}
-          validationSchema={validateLoginSchema}
+          validationSchema={validateRegisterSchema}
         >
           {({ errors, touched }) => {
             return (
@@ -42,6 +47,14 @@ const FormLogin = () => {
                 />
                 {errors.email && touched.email ? (
                   <div className="text-xs">{errors.email}</div>
+                ) : null}
+                <Field
+                  name="username"
+                  placeholder="Nombre de usuario"
+                  className="border-2 border-secondary rounded-lg px-2 py-1"
+                />
+                {errors.username && touched.username ? (
+                  <div className="text-xs">{errors.username}</div>
                 ) : null}
                 <Field
                   name="password"
@@ -67,4 +80,4 @@ const FormLogin = () => {
   );
 };
 
-export default FormLogin;
+export default FormRegister;
