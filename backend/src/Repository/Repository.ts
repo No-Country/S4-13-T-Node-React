@@ -1,5 +1,6 @@
 export abstract class Repository<T> {
   constructor(protected readonly entity: any) {
+    // Entity necesita un tipado pero no se cual tiene que ir, hay que buscarlo
     this.entity = entity;
   }
 
@@ -17,6 +18,16 @@ export abstract class Repository<T> {
     // Este getObjects tiene que retornar los objectos con paginación.
     try {
       return await this.entity.find();
-    } catch (error) {}
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getObject(id: number) {
+    try {
+      return await this.entity.findOneById({ id });
+    } catch (error) {
+      return error;
+    }
   }
 }

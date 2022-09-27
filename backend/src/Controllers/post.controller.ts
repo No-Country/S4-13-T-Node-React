@@ -20,4 +20,14 @@ const getPosts = async (req: Request, res: Response) => {
   }
 };
 
-export default { createPost, getPosts };
+const getPostById = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const post = await services.post.getPostById(id);
+    return res.json({ post });
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
+
+export default { createPost, getPosts, getPostById };
