@@ -14,7 +14,17 @@ module.exports = {
       bgCard: "#FDFDFD",
       white: "#fff",
     },
-    extend: {},
+    screens: {
+      xs: '360px',
+      sm: '512px',
+      md: '744px',
+      lg: '1440px',
+    },
+    extend: {
+      height: {
+        '18': '4.5rem',
+      },
+    },
   },
   plugins: [],
 };
