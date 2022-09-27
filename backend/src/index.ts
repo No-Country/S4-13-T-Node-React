@@ -1,14 +1,20 @@
-import express from 'express';
+import 'reflect-metadata';
+import app from './app';
+import { AppDataSource } from './Config/db';
 
-const app = express();
-app.use(express.json());
+// ENV
+import { ENV } from './Config/config';
 
-const PORT = 8080;
+const main = async () => {
+  try {
+    await AppDataSource.initialize();
+    console.log('Database connected');
+    app.listen(ENV.PORT, () => {
+      console.log('Server listening on port ' + ENV.PORT);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Running server successfully' });
-});
-
-app.listen(PORT, () => {
-  console.log('Server running on ' + PORT);
-});
+main();
