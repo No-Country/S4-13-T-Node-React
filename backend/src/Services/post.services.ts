@@ -19,4 +19,12 @@ const getPosts = async () => {
   }
 };
 
-export default { createPost, getPosts };
+const getPostById = async (id: number) => {
+  try {
+    return await Post.getObject(id);
+  } catch (error) {
+    return error;
+  }
+};
+
+export default { createPost, getPosts, getPostById };
