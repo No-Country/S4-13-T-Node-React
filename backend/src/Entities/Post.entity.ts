@@ -1,7 +1,8 @@
+import { IPost } from '@src/interfaces/db.interfaces';
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Post extends BaseEntity {
+export class Post extends BaseEntity implements IPost {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,10 +12,10 @@ export class Post extends BaseEntity {
   @Column()
   mediaURL: string;
 
-  @Column()
+  @Column({ default: 0 })
   likesCount: number;
 
-  @Column()
+  @Column({ default: 0 })
   commentsCount: number;
 
   @Column()

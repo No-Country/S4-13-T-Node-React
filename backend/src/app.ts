@@ -14,10 +14,12 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 // Routes
 import routes from './Routes';
 
-app.use(routes.user, routes.post);
+app.use([routes.user, routes.post]);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Running server successfully' });
 });
+
+import Repositories from './Repository';
 
 export default app;
