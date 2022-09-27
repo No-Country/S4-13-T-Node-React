@@ -5,25 +5,12 @@ module.exports = {
     node: true,
     jest: true,
   },
-  extends: [
-    "plugin:react/recommended",
-    "standard-with-typescript",
-    "plugin:prettier/recommended",
-  ],
+  extends: ['plugin:react/recommended', 'standard-with-typescript', 'plugin:prettier/recommended'],
   overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ["react", "prettier"],
-  rules: {
-    "prettier/prettier": [
-      1,
-      {
-        trailingComma: "es5",
-        singleQuote: true,
-        semi: true,
-      },
-    ],
-  },
+  plugins: ['react', 'prettier'],
+  rules: {},
 };
