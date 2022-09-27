@@ -11,8 +11,10 @@ export const AppDataSource = new DataSource({
   database: ENV.DB_DATABASE,
   entities: Entities,
   synchronize: true,
-  logging: true,
+  // logging: true,
   ssl: {
     rejectUnauthorized: false,
   },
 });
+
+export const connectDB = async () => await AppDataSource.initialize();
