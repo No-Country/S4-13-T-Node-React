@@ -5,7 +5,7 @@ const Post = Repositories.Post;
 
 const createPost = async (post: IPost) => {
   try {
-    return await Post.createObject(post);
+    return await Post.create(post);
   } catch (error) {
     return error;
   }
@@ -13,7 +13,7 @@ const createPost = async (post: IPost) => {
 
 const getPosts = async () => {
   try {
-    return await Post.getObjects();
+    return await Post.list();
   } catch (error) {
     return error;
   }
@@ -21,7 +21,7 @@ const getPosts = async () => {
 
 const getPostById = async (id: number) => {
   try {
-    return await Post.getObject(id);
+    return await Post.get(id);
   } catch (error) {
     return error;
   }
