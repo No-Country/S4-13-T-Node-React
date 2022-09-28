@@ -1,4 +1,4 @@
-import { IPost } from '@src/interfaces/db.interfaces';
+import { IPost } from '@src/interfaces/post.interfaces';
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
