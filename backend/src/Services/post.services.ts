@@ -1,4 +1,4 @@
-import { IPost } from '@src/interfaces/db.interfaces';
+import { IPost,IPostDTO } from '@src/interfaces/post.interfaces';
 import Repositories from '../Repository';
 
 const Post = Repositories.Post;
@@ -27,4 +27,12 @@ const getPostById = async (id: number) => {
   }
 };
 
-export default { createPost, getPosts, getPostById };
+const updatePost = async(id:number,data:IPostDTO)=>{
+  try {
+    return await Post.update(id,data);
+  } catch (error) {
+    return error;
+  }
+}
+
+export default { createPost, getPosts, getPostById,updatePost };

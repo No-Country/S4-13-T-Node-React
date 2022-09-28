@@ -28,9 +28,14 @@ export abstract class Repository<T> implements DatabaseRepository<T> {
       throw new Error(`Error unexpected: ${error}`)
     }
   }
-  update(id: Id, data: Partial<T>, query?: Query | undefined): Promise<T> {
+  async update(id: Id, data: Partial<T>, query?: Query | undefined): Promise<T> {
     try {
-      throw new Error('Nothing implemented')
+      
+      const prueba= await this.entity.update({ id }, data)
+      console.log(prueba)
+      return prueba
+
+   
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }

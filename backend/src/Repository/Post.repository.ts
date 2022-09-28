@@ -1,6 +1,6 @@
 import { Repository } from './Repository';
 import Entities from '../Entities';
-import { IPost } from '@src/interfaces/db.interfaces';
+import { IPost } from '@src/interfaces/post.interfaces';
 import { AppDataSource } from '../Config/db';
 
 const Post = AppDataSource.getRepository(Entities.Post);
