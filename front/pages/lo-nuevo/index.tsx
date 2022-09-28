@@ -20,7 +20,9 @@ const Login: NextPage = () => {
             </button>
           </div>
           <div className="px-2 mx-auto">
-            <CardPost />
+            <CardPost srcImg="/assets/meme-1.png" author="el bromas" score={6.7} />
+            <CardPost srcImg="/assets/meme-2.png" author="capototal" />
+            <CardPost srcImg="/assets/meme-3.png" author="alvalaba" />
           </div>
         </div>
       </Layout>
