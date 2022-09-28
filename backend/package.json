@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn ./src/index.ts",
     "build": "tsc",
-    "start": "node ."
+    "start": "node . test"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,7 @@
     "typeorm": "^0.3.10"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/morgan": "^1.9.3",
