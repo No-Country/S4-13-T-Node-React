@@ -6,7 +6,9 @@ export const ProfileItem = () => {
   return (
     <div>
       <Link href="#">
-        <BiUserCircle className="text-[30px] cursor-pointer text-white" />
+        <a>
+          <BiUserCircle className="text-[30px] cursor-pointer text-white" />
+        </a>
       </Link>
     </div>
   );

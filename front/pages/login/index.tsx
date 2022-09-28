@@ -15,7 +15,9 @@ const Login: NextPage = () => {
       <Layout>
         <div className="flex flex-col justify-center items-center">
           <FormLogin />
-          <Link href="/register">¿Todavía no tienes una cuenta?</Link>
+          <Link href="/register">
+            <a>¿Todavía no tienes una cuenta?</a>
+          </Link>
         </div>
       </Layout>
     </div>
