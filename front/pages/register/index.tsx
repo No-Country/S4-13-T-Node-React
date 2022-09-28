@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import FormRegister from "../../components/formRegister/FormRegister";
-import Layout from "../../components/layout/Layout";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import FormRegister from '../../components/formRegister/FormRegister';
+import Layout from '../../components/layout/Layout';
 const Register: NextPage = () => {
   return (
     <div>

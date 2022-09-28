@@ -13,7 +13,7 @@ module.exports = {
     },
     fontFamily: {
       orelega: 'Orelega One, cursive',
-      roboto: 'Condensed, sans-serif',
+      roboto: 'Roboto Condensed, sans-serif',
     },
     screens: {
       xs: '360px',
@@ -29,7 +29,7 @@ module.exports = {
     },
     extend: {
       height: {
-        '18': '4.5rem',
+        18: '4.5rem',
       },
     },
   },
