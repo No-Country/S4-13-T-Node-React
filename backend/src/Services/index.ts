@@ -1,3 +1,3 @@
-import post from './post.services';
+import Post from './post.services'
 
-export default { post };
+export default { Post }

@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export const ENV = {
   PORT: Number(process.env.PORT),
@@ -8,4 +8,5 @@ export const ENV = {
   DB_HOST: process.env.DB_HOST || 'localhost',
   DB_PORT: Number(process.env.DB_PORT) || 5432,
   DB_DATABASE: process.env.DB_DATABASE,
-};
+  ARG1: process.argv[2],
+}

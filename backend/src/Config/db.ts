@@ -1,6 +1,6 @@
-import { DataSource } from 'typeorm';
-import { ENV } from './config';
-import Entities from '../Entities';
+import { DataSource } from 'typeorm'
+import { ENV } from './config'
+import Entities from '../Entities'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -15,6 +15,6 @@ export const AppDataSource = new DataSource({
   ssl: {
     rejectUnauthorized: false,
   },
-});
+})
 
-export const connectDB = async () => await AppDataSource.initialize();
+export const connectDB = async () => await AppDataSource.initialize()
