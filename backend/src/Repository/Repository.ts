@@ -30,16 +30,14 @@ export abstract class Repository<T> implements DatabaseRepository<T> {
   }
   async update(id: Id, data: Partial<T>, query?: Query | undefined): Promise<T> {
     try {
-      const prueba = await this.entity.update({ id }, data)
-      console.log(prueba)
-      return prueba
+      return await this.entity.update({ id }, data)
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }
   }
-  remove(id: Id, query?: Query | undefined): Promise<T> {
+  async remove(id: Id, query?: Query | undefined): Promise<T> {
     try {
-      throw new Error('Nothing implemented')
+      return await this.entity.softDelete({ id })
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }
