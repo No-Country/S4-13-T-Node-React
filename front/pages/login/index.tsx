@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import FormLogin from "../../components/formLogin/FormLogin";
-import Layout from "../../components/layout/Layout";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import FormLogin from '../../components/formLogin/FormLogin';
+import Layout from '../../components/layout/Layout';
 const Login: NextPage = () => {
   return (
     <div>
