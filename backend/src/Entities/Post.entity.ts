@@ -1,32 +1,32 @@
-import { IPost } from '@src/interfaces/post.interfaces';
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { IPost } from '@src/Interfaces/post.interfaces'
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
 export class Post extends BaseEntity implements IPost {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  title: string;
+  title: string
 
   @Column()
-  mediaURL: string;
+  mediaURL: string
 
   @Column({ default: 0 })
-  likesCount: number;
+  likesCount: number
 
   @Column({ default: 0 })
-  commentsCount: number;
+  commentsCount: number
 
   @Column()
-  tag: string;
+  tag: string
 
   @Column()
-  user_id: number;
+  user_id: number
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at: Date
 }
