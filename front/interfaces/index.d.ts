@@ -12,6 +12,12 @@ export interface MenuItem {
   href?: Url;
 }
 
-export interface PropTag {
+export interface TagProps {
+  href?: Url | String;
   tag: String;
+  other?: Boolean;
+}
+
+export interface OpensProps {
+  open: Boolean;
 }

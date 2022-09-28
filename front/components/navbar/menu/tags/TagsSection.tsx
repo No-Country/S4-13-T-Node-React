@@ -1,12 +1,22 @@
-import Link from 'next/link';
 import React from 'react';
-import { TagsItems } from './TagsItems';
+
+import { TagsItemsCont } from './TagsItemsCont';
+import useOpenTags from '../../../../hooks/useOpenTags';
 
 const TagsSection = () => {
+  const { handleOpen, openTag } = useOpenTags();
+
   return (
-    <div className="absolute hidden lg:block lg:top-16 lg:left-14 lg:w-12 items-center">
-      <p className=" text-primary pb-5 font-bold font-roboto text-[20px] capitalize">tags</p>
-      <TagsItems />
+    <div className=" hidden lg:block lg:w-auto lg:mx-auto lg:items-center lg:h-12">
+      <p
+        onClick={handleOpen}
+        className={`absolute top-[54px] left-14 text-primary border-2 ${
+          openTag ? 'border-transparent' : 'border-primary'
+        } rounded-b-lg p-3.5 font-normal font-roboto text-[20px] z-[1] capitalize cursor-pointer transition-all duration-500 ease-in select-none `}
+      >
+        tags
+      </p>
+      <TagsItemsCont open={openTag} />
     </div>
   );
 };

@@ -11,13 +11,17 @@ const NavContainer = () => {
     <div className="select-none px-5 bg-primary h-14 min-w-screen w-full sm:w-[512px] lg:w-[1024px]  rounded-b-lg flex flex-row relative items-center lg:justify-between z-50">
       <div className=" items-center lg:hidden mt-2">
         <Link href="/" className="curor-pointer ">
-          <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
+          <a>
+            <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
+          </a>
         </Link>
       </div>
 
       <div className=" items-center ml-5 hidden lg:flex">
         <Link href="/" className="curor-pointer ">
-          <Image src="/assets/logo/logoDesktop.png" className="object-contain" width="140px" height="56px" />
+          <a>
+            <Image src="/assets/logo/logoDesktop.png" className="object-contain" width="140px" height="56px" />
+          </a>
         </Link>
       </div>
 
