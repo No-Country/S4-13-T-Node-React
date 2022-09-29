@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import CardPost from '../components/cardPost/CardPost';
 import Layout from '../components/layout/Layout';
+import PostsContainer from '../components/posts/PostsContainer';
 
 const Home: NextPage = () => {
   return (
@@ -21,11 +22,7 @@ const Home: NextPage = () => {
             </button>
           </div>
           <div className="px-2 mx-auto">
-            <CardPost srcImg="/assets/meme-1.png" author="el bromas" score={6.7} />
-            <CardPost srcImg="/assets/meme-2.png" author="capototal" />
-            <CardPost srcImg="/assets/meme-3.png" author="alvalaba" />
-            <CardPost srcImg="/assets/meme-4.png" author="el bromas" score={6.7} />
-            <CardPost srcImg="/assets/meme-6.jpeg" author="el bromas" score={6.7} />
+            <PostsContainer />
           </div>
         </div>
       </Layout>

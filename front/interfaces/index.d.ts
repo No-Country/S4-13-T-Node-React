@@ -29,3 +29,10 @@ export interface PostPropsAxios {
     tag: string;
   };
 }
+
+export interface CardPostProps {
+  srcImg: string;
+  author: string;
+  score?: number;
+  title?: string;
+}
