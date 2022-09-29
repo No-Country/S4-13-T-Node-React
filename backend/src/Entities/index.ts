@@ -1,4 +1,5 @@
-import { User } from './User.entity';
-import { Post } from './Post.entity';
+import { User } from './User.entity'
+import { Post } from './Post.entity'
+import { Comment } from './Comments.entity'
 
-export default { User, Post };
+export default { User, Post, Comment }

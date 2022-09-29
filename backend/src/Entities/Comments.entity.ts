@@ -9,21 +9,18 @@ import {
 } from 'typeorm'
 
 @Entity()
-export class User extends BaseEntity {
+export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
-  username: string
+  comment: string
 
   @Column()
-  password_hash: string
+  user_id: number
 
   @Column()
-  role: string
-
-  @Column()
-  email: string
+  post_id: number
 
   @CreateDateColumn()
   created_at: Date

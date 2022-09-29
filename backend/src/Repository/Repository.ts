@@ -1,4 +1,4 @@
-import { DatabaseRepository, Id, Query } from '@src/interfaces/repository.interface'
+import { DatabaseRepository, Id, Query } from '@src/Interfaces/repository.interface'
 
 export abstract class Repository<T> implements DatabaseRepository<T> {
   constructor(protected readonly entity: any) {
@@ -30,48 +30,16 @@ export abstract class Repository<T> implements DatabaseRepository<T> {
   }
   async update(id: Id, data: Partial<T>, query?: Query | undefined): Promise<T> {
     try {
-      
-      const prueba= await this.entity.update({ id }, data)
-      console.log(prueba)
-      return prueba
-
-   
+      return await this.entity.update({ id }, data)
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }
   }
-  remove(id: Id, query?: Query | undefined): Promise<T> {
+  async remove(id: Id, query?: Query | undefined): Promise<T> {
     try {
-      throw new Error('Nothing implemented')
+      return await this.entity.softDelete({ id })
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }
   }
-
-  // async createObject(object: Partial<T>) {
-  //   try {
-  //     const newObject = await this.entity.create(object);
-  //     await newObject.save();
-  //     return newObject;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return error;
-  //   }
-  // }
-  // async getObjects() {
-  //   // Este getObjects tiene que retornar los objectos con paginación.
-  //   try {
-  //     return await this.entity.find();
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
-
-  // async getObject(id: number) {
-  //   try {
-  //     return await this.entity.findOneById({ id });
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
 }

@@ -1,44 +1,56 @@
-import { Request, Response } from 'express';
-import services from '../Services';
+import { Request, Response } from 'express'
+import Services from '../Services'
 
-const createPost = async (req: Request, res: Response) => {
-  try {
-    const post = req.body;
-    const result = await services.post.createPost(post);
-    res.json({ message: 'Post Created Successfully.', post: result });
-  } catch (error) {
-    return res.status(500).json({ message: error });
+class PostController {
+  async createPost(req: Request, res: Response) {
+    try {
+      const post = req.body
+      const result = await Services.Post.createPost(post)
+      res.json({ message: 'Post Created Successfully.', post: result })
+    } catch (error) {
+      return res.status(500).json({ message: `Error unexpected ${error}` })
+    }
   }
-};
 
-const getPosts = async (req: Request, res: Response) => {
-  try {
-    const posts = await services.post.getPosts();
-    return res.status(200).json({ posts });
-  } catch (error) {
-    return res.status(500).json({ message: error });
+  async getPosts(req: Request, res: Response) {
+    try {
+      const posts = await Services.Post.getPosts()
+      return res.status(200).json({ posts })
+    } catch (error) {
+      return res.status(500).json({ message: `Error unexpected ${error}` })
+    }
   }
-};
 
-const getPostById = async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const post = await services.post.getPostById(id);
-    return res.json({ post });
-  } catch (error) {
-    return res.status(500).json({ message: error });
+  async getPostById(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id)
+      const post = await Services.Post.getPostById(id)
+      return res.json({ post })
+    } catch (error) {
+      return res.status(500).json({ message: `Error unexpected ${error}` })
+    }
   }
-};
 
-const updatePost = async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const data = req.body;
-    const post=await services.post.updatePost(id,data);
-    return res.json({post});
-  } catch (error) {
-    return res.status(500).json({ message: error });
+  async updatePost(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id)
+      const data = req.body
+      const post = await Services.Post.updatePost(id, data)
+      return res.json({ message: 'Post Updated Successfully.', post })
+    } catch (error) {
+      return res.status(500).json({ message: `Error unexpected ${error}` })
+    }
   }
-};
 
-export default { createPost, getPosts, getPostById,updatePost };
+  async removePost(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id)
+      const post = await Services.Post.removePost(id)
+      return res.json({ message: 'Post Deleted Successfully.', post })
+    } catch (error) {
+      return res.status(500).json({ message: `Error unexpected ${error}` })
+    }
+  }
+}
+
+export default new PostController()
