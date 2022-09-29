@@ -21,3 +21,11 @@ export interface TagProps {
 export interface OpensProps {
   open: Boolean;
 }
+
+interface PostPropsAxios {
+  obj?: {
+    username: string;
+    content: String | URL;
+    date: Date;
+  };
+}
