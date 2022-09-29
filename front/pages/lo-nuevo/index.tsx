@@ -23,6 +23,8 @@ const Login: NextPage = () => {
             <CardPost srcImg="/assets/meme-1.png" author="el bromas" score={6.7} />
             <CardPost srcImg="/assets/meme-2.png" author="capototal" />
             <CardPost srcImg="/assets/meme-3.png" author="alvalaba" />
+            <CardPost srcImg="/assets/meme-4.png" author="el bromas" score={6.7} />
+            <CardPost srcImg="/assets/meme-6.jpeg" author="el bromas" score={6.7} />
           </div>
         </div>
       </Layout>
