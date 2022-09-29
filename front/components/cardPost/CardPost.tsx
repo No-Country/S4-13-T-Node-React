@@ -1,20 +1,15 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { BiBookmark, BiMessageRoundedDetail, BiShareAlt, BiHeart } from 'react-icons/bi';
+import { CardPostProps } from '../../interfaces';
 
-type CardPostProps = {
-  srcImg: string;
-  author: string;
-  score?: number;
-};
-
-const CardPost = ({ srcImg, author, score }: CardPostProps) => {
+const CardPost = ({ srcImg, author, score, title }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
 
   return (
     <div className="border-2 border-secondary rounded-3xl my-8 first:mt-4 py-2.5 w-[344px]">
       <div className="flex justify-between items-center font-roboto px-6 mt-1 mb-2">
-        <p>Título del posteo</p>
+        <p>{title}</p>
         <div className="flex flex-col justify-end text-primary font-bold">
           <p className="leading-none">{author}</p>
           <p className="flex justify-end">{score && <span>{score}</span>}</p>

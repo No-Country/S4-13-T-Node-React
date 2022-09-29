@@ -14,10 +14,7 @@ export const getPost = async () => {
 };
 export const getPostById = async (id: number | string) => {
   try {
-    await api.get(`/post/${id}`).then(res => {
-      console.log(res.data);
-      return res;
-    });
+    await api.get(`/post/${id}`);
   } catch (err) {
     console.log(err);
   }
