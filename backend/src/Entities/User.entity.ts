@@ -4,10 +4,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-
+import {Like} from './like.entity';
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -24,6 +25,9 @@ export class User extends BaseEntity {
 
   @Column()
   email: string
+
+  @OneToMany(()=>Like, (like)=>like.user)
+  likes: Like[]
 
   @CreateDateColumn()
   created_at: Date

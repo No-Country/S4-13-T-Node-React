@@ -7,8 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm'
-
+import {Like} from './like.entity';
 @Entity()
 export class Post extends BaseEntity implements IPost {
   @PrimaryGeneratedColumn()
@@ -31,6 +32,9 @@ export class Post extends BaseEntity implements IPost {
 
   @Column({ default: 0 })
   commentsCount: number
+
+  @OneToMany (()=>Like, (like)=>like.post)
+  likes: Like[]
 
   @CreateDateColumn()
   created_at: Date
