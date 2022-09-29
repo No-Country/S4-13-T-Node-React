@@ -21,3 +21,11 @@ export interface TagProps {
 export interface OpensProps {
   open: Boolean;
 }
+
+export interface PostPropsAxios {
+  post?: {
+    title: string | null;
+    mediaUrl: string | URL;
+    tag: string;
+  };
+}
