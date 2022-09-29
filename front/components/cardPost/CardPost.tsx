@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import { useState } from 'react';
 import { BiBookmark, BiMessageRoundedDetail, BiShareAlt, BiHeart } from 'react-icons/bi';
 
 type CardPostProps = {
@@ -9,6 +9,8 @@ type CardPostProps = {
 };
 
 const CardPost = ({ srcImg, author, score }: CardPostProps) => {
+  const [imageHeight, setImageHeight] = useState<number>(0);
+
   return (
     <div className="border-2 border-secondary rounded-3xl my-8 first:mt-4 py-2.5 w-[344px]">
       <div className="flex justify-between items-center font-roboto px-6 mt-1 mb-2">
@@ -18,8 +20,14 @@ const CardPost = ({ srcImg, author, score }: CardPostProps) => {
           <p className="flex justify-end">{score && <span>{score}</span>}</p>
         </div>
       </div>
-      <div className="w-full">
-        <Image src={srcImg} layout="responsive" height={350} width={300} alt="meme" />
+      <div className="relative w-full">
+        <Image
+          src={srcImg}
+          width={340}
+          height={imageHeight}
+          onLoadingComplete={e => setImageHeight(e.naturalHeight)}
+          alt="meme"
+        />
       </div>
       <div className="flex justify-between items-center p-2 mt-1">
         <div className="flex">
