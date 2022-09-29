@@ -38,13 +38,6 @@ export const putPostById = async (title: string, tag: string, id: number | strin
     console.log(err);
   }
 };
-// export const putPostById = async (title: string, tag: string, mediaUrl: String | URL, id: number | string) => {
-//   try {
-//     await api.put(`/post/${id}`, { title, tag, mediaUrl });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 export const deletePost = async (id: number | string) => {
   try {
