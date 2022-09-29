@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getPost } from '../../services/api-calls';
+import { getPost, IPost } from '../../services/api-calls';
 
 const PostsContainer = () => {
+  const [posts, setPosts] = useState<IPost[]>([]);
   useEffect(() => {
-    getPost();
+    getPost().then(posts => (posts ? setPosts(posts) : null));
   }, []);
-
+  console.log(posts);
   return <div>PostsContainer</div>;
 };
 
