@@ -33,7 +33,7 @@ export interface PostPropsAxios {
 }
 
 export interface CardPostProps {
-  srcImg: string;
+  imageUrl: string;
   author: string;
   score?: number;
   title?: string;
