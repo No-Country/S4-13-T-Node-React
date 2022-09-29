@@ -1,26 +1,7 @@
-import { AxiosError, AxiosResponse } from 'axios';
 import useAxios from '../hooks/useAxios';
-import { PostPropsAxios } from '../interfaces';
+import { AxiosGetPost, PostPropsAxios } from '../interfaces';
 
 const api = useAxios();
-
-export interface IPost {
-  id: number;
-  title: string;
-  mediaURL: string;
-  tag: string;
-  likesCount: number;
-  commentsCount: number;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
-}
-
-interface AxiosGetPost extends AxiosResponse {
-  data: {
-    posts: IPost[];
-  };
-}
 
 export const getPost = async () => {
   try {

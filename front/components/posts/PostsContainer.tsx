@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getPost, IPost } from '../../services/api-calls';
+import { IPost } from '../../interfaces';
+import { getPost } from '../../services/api-calls';
 
 const PostsContainer = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
