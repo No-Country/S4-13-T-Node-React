@@ -22,10 +22,10 @@ export interface OpensProps {
   open: Boolean;
 }
 
-interface PostPropsAxios {
-  obj?: {
-    username: string;
-    content: String | URL;
-    date: Date;
+export interface PostPropsAxios {
+  post?: {
+    title: string | null;
+    mediaUrl: string | URL;
+    tag: string;
   };
 }

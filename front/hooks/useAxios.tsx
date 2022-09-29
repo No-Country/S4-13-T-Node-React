@@ -1,24 +1,20 @@
 import axios from 'axios';
-import { PostPropsAxios } from '../interfaces';
 
-const BASE_URL = process.env.API_URL;
+const BASE_URL = process.env.APIURL;
 
-const useAxios = (post?: PostPropsAxios) => {
+const useAxios = () => {
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
+    withCredentials: true,
   });
 
-  axiosInstance.interceptors.request.use(async req => {
-    await axios.post(`${BASE_URL}/post`, { post }).then(res => console.log(res));
+  // axiosInstance.interceptors.request.use(async req => {
+  //   await axios.post(`${BASE_URL}/post`, {}).then(res => console.log(res));
 
-    return req;
-  });
+  //   return req;
+  // });
 
-  axiosInstance.interceptors.response.use(async res => {
-    await axios(`${BASE_URL}/post/:id`);
-
-    return res;
-  });
+  return axiosInstance;
 };
 
 export default useAxios;
