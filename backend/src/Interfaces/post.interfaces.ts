@@ -1,16 +1,13 @@
-import { BaseEntity } from 'typeorm'
+import { BaseEntity } from '../Entities/Base.entity'
+import { IBaseDTO } from './base.interfaces'
 
-export interface IPostDTO extends BaseEntity {
+export interface IPostDTO {
   title: string
   tag: string
   mediaURL: string
+  user_id: number
 }
-export interface IPost extends IPostDTO {
-  id: number
+export interface IPost extends IPostDTO, IBaseDTO, BaseEntity {
   likesCount: number
   commentsCount: number
-  user_id: number
-  created_at: Date
-  updated_at: Date
-  deleted_at: Date
 }
