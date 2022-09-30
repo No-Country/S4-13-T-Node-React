@@ -5,9 +5,6 @@ const api = useAxios();
 
 export const getPost = async () => {
   try {
-    // let response = await api.get('/post').then(res => res);
-    // let data = response.data;
-    // return data
     return await api.get('/post').then(({ data }: AxiosGetPost) => data.posts);
   } catch (error) {
     console.error(error);
