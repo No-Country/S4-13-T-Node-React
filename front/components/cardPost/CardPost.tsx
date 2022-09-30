@@ -25,7 +25,7 @@ const CardPost = ({ imageUrl, author, score, title, hrefPost }: CardPostProps) =
           <p className="flex justify-end">{score && <span>{score}</span>}</p>
         </div>
       </div>
-      <div className=" w-full">
+      <div className="relative w-full">
         <Image
           src={imageUrl}
           width={340}

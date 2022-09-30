@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {},
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+        pathname: 'loremflickr.com/640/480/cats',
+      },
+    ],
+  },
   reactStrictMode: true,
   swcMinify: true,
   env: {

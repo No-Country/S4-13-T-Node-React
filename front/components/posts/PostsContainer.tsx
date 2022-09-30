@@ -8,7 +8,7 @@ const PostsContainer = () => {
   useEffect(() => {
     getPost().then(posts => (posts ? setPosts(posts) : null));
   }, []);
-  console.log(posts);
+  console.log(posts.map(el => el.mediaURL));
   return (
     <div className="px-2 mx-auto">
       {posts
