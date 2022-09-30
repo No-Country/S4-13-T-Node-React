@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn ./src/index.ts",
     "build": "tsc",
-    "start": "node . test"
+    "start": "node . test",
+    "seed": "ts-node ./src/Utils/seeder.ts"
   },
   "keywords": [],
   "author": "",
