@@ -23,13 +23,6 @@ const Home: NextPage = () => {
           </div>
           <div className="px-2 mx-auto">
             <PostsContainer />
-            <CardPost
-              srcImg="/assets/meme-1.png"
-              author="el bromas"
-              score={6.7}
-              title="Videogame"
-              hrefPost={{ pathname: '/post', query: { id: '1' } }}
-            />
           </div>
         </div>
       </Layout>
