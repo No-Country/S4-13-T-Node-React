@@ -13,10 +13,10 @@ const MenuList = ({ open }: OpensProps) => {
       } lg:hidden
       `}
     >
-      <ItemMenu href="/lo-nuevo" text="lo nuevo" />
-      <ItemMenu href="/lo-nuevo" text="mejores memes" />
-      <ItemMenu text="memes random" href="/lo-nuevo" />
-      <ItemMenu text="favoritos" href="/lo-nuevo" />
+      <ItemMenu href="/" text="lo nuevo" />
+      <ItemMenu href="/" text="mejores memes" />
+      <ItemMenu text="memes random" href="/" />
+      <ItemMenu text="favoritos" href="/" />
       <ProfileItem text="mi perfil" icon={<BiUserCircle />} />
     </div>
   );

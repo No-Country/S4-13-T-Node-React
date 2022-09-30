@@ -1,16 +1,26 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { BiBookmark, BiMessageRoundedDetail, BiShareAlt, BiHeart } from 'react-icons/bi';
 import { CardPostProps } from '../../interfaces';
 
-const CardPost = ({ imageUrl, author, score, title }: CardPostProps) => {
+const CardPost = ({ imageUrl, author, score, title, hrefPost }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
 
   return (
-    <div className="border-2 border-secondary rounded-3xl my-8 first:mt-4 py-2.5 w-[344px]">
+    <div className={`border-2 border-secondary rounded-3xl ${hrefPost ? 'mb-8' : ''} first:mt-4 py-2.5 w-[344px]`}>
       <div className="flex justify-between items-center font-roboto px-6 mt-1 mb-2">
-        <p>{title}</p>
-        <div className="flex flex-col justify-end text-primary font-bold">
+        {hrefPost ? (
+          <Link href={hrefPost}>
+            <a>
+              <p className="pointer">{title}</p>
+            </a>
+          </Link>
+        ) : (
+          <p className="pointer">{title}</p>
+        )}
+
+        <div className="flex flex-col justify-end text-primary font-bold cursor-pointer">
           <p className="leading-none">{author}</p>
           <p className="flex justify-end">{score && <span>{score}</span>}</p>
         </div>

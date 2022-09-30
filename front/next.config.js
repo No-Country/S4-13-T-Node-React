@@ -6,6 +6,9 @@ const nextConfig = {
   env: {
     APIURL: 'http://localhost:8080',
   },
+  images: {
+    domains: ['i.pravatar.cc'],
+  },
 };
 
 module.exports = nextConfig;
