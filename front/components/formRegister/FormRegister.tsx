@@ -2,11 +2,9 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-type values = {
-  email: string;
-  username: string;
-  password: string;
-};
+import { useDispatch } from 'react-redux';
+import { signup } from '../../redux/slice/userSignupSlice';
+import { RegisterProps } from '../../interfaces';
 
 const validateRegisterSchema = Yup.object({
   email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
@@ -18,10 +16,7 @@ const validateRegisterSchema = Yup.object({
 });
 
 const FormRegister = () => {
-  const handleSubmit = (values: values) => {
-    console.log('Registrado exitosamente');
-    console.log(values);
-  };
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -31,7 +26,10 @@ const FormRegister = () => {
       {
         <Formik
           initialValues={{ email: '', username: '', password: '' }}
-          onSubmit={values => handleSubmit(values)}
+          onSubmit={(values: RegisterProps, { resetForm }) => {
+            dispatch(signup(values));
+            resetForm();
+          }}
           validationSchema={validateRegisterSchema}
         >
           {({ errors, touched }) => {
@@ -39,7 +37,7 @@ const FormRegister = () => {
               <Form className="flex flex-col justify-center align-center gap-2">
                 <Field
                   name="username"
-                  placeholder="Nombre"
+                  placeholder="username"
                   className="w-[295px] font-roboto border-2 border-accent px-2 py-1"
                 />
                 {errors.username && touched.username ? <div className="text-xs">{errors.username}</div> : null}

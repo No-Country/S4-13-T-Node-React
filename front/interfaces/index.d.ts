@@ -56,3 +56,14 @@ export interface AxiosGetPost extends AxiosResponse {
     posts: IPost[];
   };
 }
+
+export interface RegisterProps {
+  username: string;
+  email: string;
+  password: string;
+}
+export interface LoginProps {
+  username?: string;
+  email: string;
+  password: string;
+}
