@@ -1,21 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'loremflickr.com',
-        pathname: 'loremflickr.com/640/480/cats',
-      },
-    ],
-  },
   reactStrictMode: true,
   swcMinify: true,
   env: {
     APIURL: 'http://localhost:8080',
   },
   images: {
-    domains: ['i.pravatar.cc'],
+    domains: ['i.pravatar.cc', 'loremflickr.com'],
   },
 };
 
