@@ -37,7 +37,7 @@ export interface CardPostProps {
   author: string;
   score?: number;
   title?: string;
-  hrefPost?: {pathname: string, query:{id: string}};
+  hrefPost?: {pathname: string, query:{id: string | number}};
 }
 
 export interface IPost {
@@ -50,12 +50,19 @@ export interface IPost {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+  user_id?: number;
 }
 
 export interface AxiosGetPost extends AxiosResponse {
   data: {
     posts: IPost[];
   };
+}
+
+export interface AxiosGetPostById extends AxiosResponse {
+  data: {
+    post: IPost
+  }
 }
 
 export interface RegisterProps {

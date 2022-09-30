@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import CardPost from '../components/cardPost/CardPost';
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
 
@@ -17,19 +16,12 @@ const Home: NextPage = () => {
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
             <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
-            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4">
+            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
               Subir meme
             </button>
           </div>
           <div className="px-2 mx-auto">
             <PostsContainer />
-            <CardPost
-              srcImg="/assets/meme-1.png"
-              author="el bromas"
-              score={6.7}
-              title="Videogame"
-              hrefPost={{ pathname: '/post', query: { id: '1' } }}
-            />
           </div>
         </div>
       </Layout>
