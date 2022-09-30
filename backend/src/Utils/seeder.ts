@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker'
 import Entities from '../Entities'
 import { AppDataSource } from '../Config/db'
-import { ENV } from '@src/Config/config'
 const Post = AppDataSource.getRepository(Entities.Post)
 
 const createPosts = async () => {
@@ -19,6 +18,11 @@ const createPosts = async () => {
   }
 }
 
-export const initialSetup = () => {
-  createPosts()
+const main = async () => {
+  await AppDataSource.initialize().then(async () => {
+    await createPosts()
+  })
+  process.exit()
 }
+
+main()

@@ -2,10 +2,10 @@ import { Formik, Form, Field } from "formik";
 import React from "react";
 import * as Yup from "yup";
 
-type values = {
-  email: string;
-  password: string;
-};
+import {useDispatch} from 'react-redux'
+import { login } from '../../redux/slice/userLoginSlice';
+import { LoginProps } from '../../interfaces';
+
 
 const validateLoginSchema = Yup.object({
   email: Yup.string()
@@ -17,10 +17,8 @@ const validateLoginSchema = Yup.object({
 });
 
 const FormLogin = () => {
-  const handleSubmit = (values: values) => {
-    console.log("Ingresaste a la página");
-    console.log(values);
-  };
+
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -28,7 +26,10 @@ const FormLogin = () => {
       {
         <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => handleSubmit(values)}
+          onSubmit={(values:LoginProps, {resetForm}) => {
+            dispatch(login(values))
+            resetForm()
+          }}
           validationSchema={validateLoginSchema}
         >
           {({ errors, touched }) => {

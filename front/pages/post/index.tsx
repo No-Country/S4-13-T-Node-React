@@ -33,7 +33,7 @@ const Post: NextPage = () => {
             <p className="font-orelega text-[20px] leading-[26px]">Comentarios</p>
           </div>
           <div className="px-2 mx-auto">
-            <CardPost srcImg="/assets/meme-1.png" author="el bromas" score={6.7} title="Videogame" />
+            <CardPost imageUrl="/assets/meme-1.png" author="el bromas" score={6.7} title="Videogame" />
           </div>
           <div className="flex flex-col w-full justify-around items-center max-w-[344px] mx-auto px-5 mb-4">
             <div className="w-full h-3 flex justify-end font-roboto">

@@ -1,15 +1,13 @@
 import useAxios from '../hooks/useAxios';
-import { PostPropsAxios } from '../interfaces';
+import { AxiosGetPost, PostPropsAxios } from '../interfaces';
 
 const api = useAxios();
 
 export const getPost = async () => {
   try {
-    let response = await api.get('/post');
-    let data = response.data;
-    console.log(data);
-  } catch (err) {
-    console.log(err);
+    return await api.get('/post').then(({ data }: AxiosGetPost) => data.posts);
+  } catch (error) {
+    console.error(error);
   }
 };
 export const getPostById = async (id: number | string) => {

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {},
   reactStrictMode: true,
   swcMinify: true,
   env: {
@@ -11,3 +12,13 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// domains: [
+//   'localhost',
+//   'img.etimg.com',
+//   'loremflickr.com',
+//   'assets.vogue.com',
+//   'm.media-amazon.com',
+//   'upload.wikimedia.org',
+// ],
+// formats: ['image/webp'],

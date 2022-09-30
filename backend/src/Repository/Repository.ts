@@ -1,4 +1,4 @@
-import { DatabaseRepository, Id, Query } from '@src/Interfaces/repository.interface'
+import { DatabaseRepository, Id, Query, QueryList } from '@src/Interfaces/repository.interface'
 import { BaseEntity, FindOptionsWhere, ObjectType, Repository as GenericRepository, UpdateResult } from 'typeorm'
 
 export abstract class Repository<Entity extends BaseEntity> implements DatabaseRepository<Entity> {
@@ -14,9 +14,16 @@ export abstract class Repository<Entity extends BaseEntity> implements DatabaseR
       throw new Error(`Error unexpected: ${error}`)
     }
   }
-  async list(query?: Query | undefined): Promise<Entity[]> {
+  async list(query: QueryList): Promise<Entity[]> {
     try {
-      return await this.repository.find()
+      const { size, page, sort } = query
+
+      const builder = this.repository.createQueryBuilder()
+
+      builder.offset((page - 1) * size).limit(size)
+      builder.orderBy('created_at', sort.toUpperCase())
+
+      return await builder.getMany()
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }

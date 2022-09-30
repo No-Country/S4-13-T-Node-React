@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export interface ChildrenProp {
   children: React.ReactNode;
 }
@@ -31,9 +33,38 @@ export interface PostPropsAxios {
 }
 
 export interface CardPostProps {
-  srcImg: string;
+  imageUrl: string;
   author: string;
   score?: number;
   title?: string;
   hrefPost?: {pathname: string, query:{id: string}};
+}
+
+export interface IPost {
+  id: number;
+  title: string;
+  mediaURL: string;
+  tag: string;
+  likesCount: number;
+  commentsCount: number;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+}
+
+export interface AxiosGetPost extends AxiosResponse {
+  data: {
+    posts: IPost[];
+  };
+}
+
+export interface RegisterProps {
+  username: string;
+  email: string;
+  password: string;
+}
+export interface LoginProps {
+  username?: string;
+  email: string;
+  password: string;
 }

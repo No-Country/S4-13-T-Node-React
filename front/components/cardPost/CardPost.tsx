@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BiBookmark, BiMessageRoundedDetail, BiShareAlt, BiHeart } from 'react-icons/bi';
 import { CardPostProps } from '../../interfaces';
 
-const CardPost = ({ srcImg, author, score, title, hrefPost }: CardPostProps) => {
+const CardPost = ({ imageUrl, author, score, title, hrefPost }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
 
   return (
@@ -27,7 +27,7 @@ const CardPost = ({ srcImg, author, score, title, hrefPost }: CardPostProps) => 
       </div>
       <div className="relative w-full">
         <Image
-          src={srcImg}
+          src={imageUrl}
           width={340}
           height={imageHeight}
           onLoadingComplete={e => setImageHeight(e.naturalHeight)}

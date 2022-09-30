@@ -1,4 +1,5 @@
 import { IPost, IPostDTO } from '@src/Interfaces/post.interfaces'
+import { Query } from '@src/Interfaces/repository.interface'
 import Repositories from '../Repository'
 
 const Post = Repositories.Post
@@ -12,21 +13,25 @@ class PostService {
     try {
       return await this.repository.create(post)
     } catch (error) {
-      return error
+      throw new Error(`Unexpected server Error ${error}`)
     }
   }
-  async getPosts() {
+  async getPosts(page: number = 1, size: number = 20, sort: string) {
     try {
-      return await this.repository.list()
+      return await this.repository.list({
+        size,
+        page,
+        sort,
+      })
     } catch (error) {
-      return error
+      throw new Error(`Unexpected server Error ${error}`)
     }
   }
   async getPostById(id: number) {
     try {
       return await this.repository.get(id)
     } catch (error) {
-      return error
+      throw new Error(`Unexpected server Error ${error}`)
     }
   }
 
@@ -34,7 +39,7 @@ class PostService {
     try {
       return await this.repository.update(id, data)
     } catch (error) {
-      return error
+      throw new Error(`Unexpected server Error ${error}`)
     }
   }
 
@@ -42,7 +47,7 @@ class PostService {
     try {
       return await this.repository.remove(id)
     } catch (error) {
-      return error
+      throw new Error(`Unexpected server Error ${error}`)
     }
   }
 }
