@@ -12,7 +12,9 @@ const PostsContainer = () => {
   return (
     <div className="px-2 mx-auto">
       {posts
-        ? posts.map(post => <CardPost imageUrl={post.mediaURL} author="anonimous" title={post.title} />)
+        ? posts.map(post => (
+            <CardPost key={Math.random() * 999} imageUrl={post.mediaURL} author="anonimous" title={post.title} />
+          ))
         : 'loading...'}
     </div>
   );
