@@ -35,4 +35,5 @@ export interface CardPostProps {
   author: string;
   score?: number;
   title?: string;
+  hrefPost?: {pathname: string, query:{id: string}};
 }
