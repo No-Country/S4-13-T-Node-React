@@ -1,19 +1,9 @@
-import { IPost } from '@src/Interfaces/post.interfaces'
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm'
+import { IPost } from '../Interfaces/post.interfaces'
+import { Column, Entity } from 'typeorm'
+import { BaseEntity } from './Base.entity'
 
 @Entity()
 export class Post extends BaseEntity implements IPost {
-  @PrimaryGeneratedColumn()
-  id: number
-
   @Column()
   title: string
 
@@ -31,13 +21,4 @@ export class Post extends BaseEntity implements IPost {
 
   @Column({ default: 0 })
   commentsCount: number
-
-  @CreateDateColumn()
-  created_at: Date
-
-  @UpdateDateColumn()
-  updated_at: Date
-
-  @DeleteDateColumn()
-  deleted_at: Date
 }

@@ -15,9 +15,8 @@ class PostController {
   async getPosts(req: Request, res: Response) {
     try {
       const { page = 1, size = 20, sort = 'desc' } = req.query
-
       const posts = await Services.Post.getPosts(Number(page), Number(size), String(sort))
-      return res.status(200).json({ posts })
+      return [res.status(200).json({ posts })]
     } catch (error) {
       return res.status(500).json({ message: `Error unexpected ${error}` })
     }

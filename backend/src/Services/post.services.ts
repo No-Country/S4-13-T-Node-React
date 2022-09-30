@@ -1,5 +1,5 @@
-import { IPost, IPostDTO } from '@src/Interfaces/post.interfaces'
-import { Query } from '@src/Interfaces/repository.interface'
+import { IPost, IPostDTO } from '../Interfaces/post.interfaces'
+import { Query } from '../Interfaces/repository.interface'
 import Repositories from '../Repository'
 
 const Post = Repositories.Post
