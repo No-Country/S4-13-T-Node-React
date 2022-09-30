@@ -14,7 +14,7 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 // Routes
 import routes from './Routes'
 
-app.use([routes.post])
+app.use(routes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'Running server successfully' })
