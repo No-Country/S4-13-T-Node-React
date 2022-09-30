@@ -7,7 +7,7 @@ const nextConfig = {
     APIURL: 'http://localhost:8080',
   },
   images: {
-    domains: ['i.pravatar.cc'],
+    domains: ['i.pravatar.cc', 'loremflickr.com'],
   },
 };
 

@@ -8,12 +8,17 @@ const PostsContainer = () => {
   useEffect(() => {
     getPost().then(posts => (posts ? setPosts(posts) : null));
   }, []);
-  console.log(posts);
   return (
     <div className="px-2 mx-auto">
       {posts
         ? posts.map(post => (
-            <CardPost key={Math.random() * 999} imageUrl={post.mediaURL} author="anonimous" title={post.title} />
+            <CardPost
+              key={Math.random() * 999}
+              imageUrl={post.mediaURL}
+              author="anonimous"
+              title={post.title}
+              hrefPost={{ pathname: '/post', query: { id: post.id } }}
+            />
           ))
         : 'loading...'}
     </div>

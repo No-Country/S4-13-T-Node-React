@@ -1,22 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+
+import { IPost } from '../../interfaces';
+
 import CardPost from '../../components/cardPost/CardPost';
 import Comments from '../../components/comments/Comments';
 import Layout from '../../components/layout/Layout';
 
+import { getPostById } from '../../services/api-calls';
+
 const Post: NextPage = () => {
   const router = useRouter();
 
-  // TODO: traer el posteo con una peticion postById
-  const { id } = router.query;
-
   const [showTags, setShowTags] = useState<boolean>(false);
+  const [postVisited, setPostVisited] = useState<Partial<IPost>>({});
+
+  const id = parseInt(router.query.id as string);
+
+  useEffect(() => {
+    getPostById(id).then(post => (post ? setPostVisited(post) : null));
+  }, []);
 
   const handleShowTags = () => {
     setShowTags(prev => !prev);
   };
+
+  const { mediaURL, title, likesCount } = postVisited;
 
   return (
     <div>
@@ -33,11 +44,17 @@ const Post: NextPage = () => {
             <p className="font-orelega text-[20px] leading-[26px]">Comentarios</p>
           </div>
           <div className="px-2 mx-auto">
-            <CardPost imageUrl="/assets/meme-1.png" author="el bromas" score={6.7} title="Videogame" />
+            <CardPost
+              // La propiedad imageUrl tira un error: Image is missing required "src" property. Al cargar la página
+              imageUrl={mediaURL || ''}
+              author="el bromas"
+              score={6.7}
+              title={title}
+            />
           </div>
           <div className="flex flex-col w-full justify-around items-center max-w-[344px] mx-auto px-5 mb-4">
             <div className="w-full h-3 flex justify-end font-roboto">
-              <p className="text-sm">5 me gusta</p>
+              <p className="text-sm">{likesCount} me gusta</p>
             </div>
             <div className="flex w-full font-roboto text-primary font-bold mb-2">
               <div className="overflow-hidden">
@@ -45,7 +62,7 @@ const Post: NextPage = () => {
                   {showTags ? 'Ocultar Tags' : 'Ver Tags'}
                 </p>
                 <div
-                  className={`flex flex-wrap font-normal gap-2 my-2 transition-all duration-500 linear select-none ${
+                  className={`flex flex-wrap font-normal gap-2 my-2 transition-all duration-500 ease-in-out select-none ${
                     showTags ? 'translate-y-0 h-auto' : 'translate-y-[-300px] h-0'
                   }`}
                 >
@@ -63,7 +80,7 @@ const Post: NextPage = () => {
                 placeholder="Escribí aquí tu comentario"
               />
               <div className="flex justify-end my-2">
-                <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4">
+                <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
                   Comentar
                 </button>
               </div>
