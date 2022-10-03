@@ -1,20 +1,22 @@
 import { MiddlewareValidator } from '../Middleware/validate.middleware'
-import { Router } from 'express'
-import controllers from '../Controllers'
+import { BaseRouter } from './base.router'
+import { PostController } from '../Controllers/post.controller'
 
-const postRoute = Router()
+export class PostRouter extends BaseRouter<PostController, MiddlewareValidator> {
+  constructor() {
+    super(PostController, MiddlewareValidator)
+  }
 
-const middleware = new MiddlewareValidator()
+  routes(): void {
+    this.router
+      .route('/post')
+      .post(this.middleware.createPost, this.controller.createPost)
+      .get(this.middleware.getRequestPost, this.controller.getPosts)
 
-postRoute
-  .route('/post')
-  .post(middleware.createPost, controllers.post.createPost)
-  .get(middleware.getRequestPost, controllers.post.getPosts)
-
-postRoute
-  .route('/post/:id')
-  .get(controllers.post.getPostById)
-  .put(middleware.getUpdatePost, controllers.post.updatePost)
-  .delete(controllers.post.removePost)
-
-export default postRoute
+    this.router
+      .route('/post/:id')
+      .get(this.controller.getPostById)
+      .put(this.middleware.getUpdatePost, this.controller.updatePost)
+      .delete(this.controller.removePost)
+  }
+}

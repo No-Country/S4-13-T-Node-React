@@ -1,3 +1,3 @@
-import Post from './Post.repository';
+import Post from './post.repository'
 
-export default { Post };
+export default { Post }

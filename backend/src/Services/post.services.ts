@@ -1,24 +1,20 @@
-import { UpdateResult } from 'typeorm'
 import { IPost, IPostDTO } from '../Interfaces/post.interfaces'
-import Repositories from '../Repository'
+import { PostRepository } from '../Repository/post.repository'
 
-const Post = Repositories.Post
-
-class PostService {
-  private repository
+class PostService extends PostRepository {
   constructor() {
-    this.repository = Post
+    super()
   }
   async createPost(post: IPost) {
     try {
-      return await this.repository.create(post)
+      return await this.create(post)
     } catch (error) {
       throw new Error(`Unexpected server Error ${error}`)
     }
   }
   async getPosts(page: number = 1, size: number = 20, sort: string) {
     try {
-      const [posts, total] = await this.repository.list({
+      const [posts, total] = await this.list({
         size,
         page,
         sort,
@@ -31,7 +27,7 @@ class PostService {
   }
   async getPostById(id: number) {
     try {
-      return await this.repository.get(id)
+      return await this.get(id)
     } catch (error) {
       throw new Error(`Unexpected server Error ${error}`)
     }
@@ -39,7 +35,7 @@ class PostService {
 
   async updatePost(id: number, data: IPostDTO) {
     try {
-      const updated = await this.repository.update(id, data)
+      const updated = await this.update(id, data)
       if (updated.affected === 0) {
         return { error: 'Post not found or is deleted.' }
       }
@@ -51,7 +47,7 @@ class PostService {
 
   async removePost(id: number) {
     try {
-      const deleted = await this.repository.remove(id)
+      const deleted = await this.remove(id)
       if (deleted.affected === 0) {
         return { error: 'Post not found or already deleted.' }
       }

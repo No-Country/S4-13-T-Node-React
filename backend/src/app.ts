@@ -1,23 +1,36 @@
 import express from 'express'
 import morgan from 'morgan'
-
-// cors
 import cors from 'cors'
+import { ConfigServer } from './Config/config'
+import { PostRouter } from './Routes/post.route'
 
-const app = express()
+export class Server extends ConfigServer {
+  public app: express.Application = express()
+  private port: number = this.getNumberEnv('PORT')
 
-// Middlewares
-app.use(morgan('dev'))
-app.use(express.json())
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+  constructor() {
+    super()
+    this.app.use(express.json())
+    this.app.use(express.urlencoded({ extended: true }))
 
-// Routes
-import routes from './Routes'
+    this.dbConnect().then(() => {
+      console.log('Database connected.')
+    })
 
-app.use(routes)
+    this.app.use(morgan('dev'))
+    this.app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Running server successfully' })
-})
+    this.app.use(this.routers())
+    this.listen()
+  }
 
-export default app
+  routers(): express.Router[] {
+    return [new PostRouter().router]
+  }
+
+  public listen() {
+    this.app.listen(this.port, () => {
+      console.log('Server listening on port', this.port)
+    })
+  }
+}

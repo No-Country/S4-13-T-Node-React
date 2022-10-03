@@ -1,28 +1,35 @@
 import { faker } from '@faker-js/faker'
-import Entities from '../Entities'
-import { AppDataSource } from '../Config/db'
-const Post = AppDataSource.getRepository(Entities.Post)
+import { DataSource } from 'typeorm'
+import { ConfigServer } from '../Config/config'
+import { Post } from '../Entities/post.entity'
+class Seeder extends ConfigServer {
+  constructor() {
+    super()
+    this.main()
+  }
 
-const createPosts = async () => {
-  const count = await Post.count()
-  if (count > 0) return
+  async createPosts(dataSource: DataSource) {
+    const post = dataSource.getRepository(Post)
+    const count = await post.count()
+    if (count > 0) return
 
-  for (let i = 0; i < 50; i++) {
-    await Post.create({
-      title: faker.commerce.productName(),
-      mediaURL: faker.image.cats(),
-      tag: faker.commerce.department(),
-      user_id: 1,
-    }).save()
-    console.log(`Post ${i} created`)
+    for (let i = 0; i < 50; i++) {
+      const posts = post.create({
+        title: faker.commerce.productName(),
+        mediaURL: faker.image.cats(),
+        tag: faker.commerce.department(),
+        user_id: 1,
+      })
+      await post.save(posts)
+      console.log(`Post ${i} created`)
+    }
+  }
+
+  async main() {
+    const dataSource = await this.dbConnect()
+    await this.createPosts(dataSource)
+    process.exit()
   }
 }
 
-const main = async () => {
-  await AppDataSource.initialize().then(async () => {
-    await createPosts()
-  })
-  process.exit()
-}
-
-main()
+new Seeder()

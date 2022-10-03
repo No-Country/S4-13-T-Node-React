@@ -1,4 +1,4 @@
-import { BaseEntity } from '../Entities/Base.entity'
+import { BaseEntity } from '../Entities/base.entity'
 import { UpdateResult } from 'typeorm'
 
 export type Query = Record<string, any>

@@ -4,10 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn ./src/index.ts",
     "build": "tsc",
-    "start": "node . test",
-    "seed": "ts-node ./src/Utils/seeder.ts"
+    "seed": "ts-node ./src/Utils/seeder.ts",
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "start": "tsc && node ."
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.10"
