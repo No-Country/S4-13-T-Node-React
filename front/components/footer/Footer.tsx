@@ -20,10 +20,14 @@ function Footer() {
         <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
         <ul>
           <li>
-            <Link href="#">Contacto</Link>
+            <Link href="#">
+              <a>Contacto</a>
+            </Link>
           </li>
           <li>
-            <Link href="#">Términos de servicio</Link>
+            <Link href="#">
+              <a>Términos de servicio</a>
+            </Link>
           </li>
         </ul>
       </div>

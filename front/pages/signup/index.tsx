@@ -1,8 +1,11 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
+import FormLinks from '../../components/formRegister/FormLinks';
 import FormRegister from '../../components/formRegister/FormRegister';
-import Layout from '../../components/layout/Layout';
+import { HrComponent } from '../../components/formRegister/HrComponent';
+import { MediaContainer } from '../../components/formRegister/MediaContainer';
+import LayoutFormPages from '../../components/layout/LayoutFormPages';
+
 const Register: NextPage = () => {
   return (
     <div>
@@ -12,14 +15,14 @@ const Register: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
+      <LayoutFormPages heading="registro">
         <div className="flex flex-col justify-center items-center">
           <FormRegister />
-          <Link href="/login">
-            <a>¿Ya tienes una cuenta?</a>
-          </Link>
+          <FormLinks question="¿ya tenés cuenta?" anchor="Ingresá" />
+          <HrComponent />
+          <MediaContainer />
         </div>
-      </Layout>
+      </LayoutFormPages>
     </div>
   );
 };
