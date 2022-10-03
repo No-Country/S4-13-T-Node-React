@@ -21,7 +21,7 @@ export const userSignUpSlice = createSlice({
         let newUser = { username, email, password };
         state = newUser;
       }
-      console.log(state);
+      console.log('cuenta creada!', state);
     },
   },
 });

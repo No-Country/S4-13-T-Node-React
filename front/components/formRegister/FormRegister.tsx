@@ -20,7 +20,7 @@ const FormRegister = () => {
 
   return (
     <>
-      <h4 className="text-sm max-w-[250px] py-6 text-center">
+      <h4 className="text-sm max-w-[250px] py-6 text-center font-semibold text-black">
         Vas a poder hacer comentarios, agregar a favoritos y subir memes!
       </h4>
       {
@@ -38,14 +38,14 @@ const FormRegister = () => {
                 <Field
                   name="username"
                   placeholder="Nombre"
-                  autocomplete="off"
+                  autoComplete="off"
                   className="w-[295px] placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent px-2 py-1"
                 />
                 {errors.username && touched.username ? <div className="text-xs">{errors.username}</div> : null}
                 <Field
                   name="email"
                   type="email"
-                  autocomplete="off"
+                  autoComplete="off"
                   placeholder="Email"
                   className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
                 />
@@ -53,7 +53,7 @@ const FormRegister = () => {
                 <Field
                   name="password"
                   type="password"
-                  autocomplete="off"
+                  autoComplete="off"
                   placeholder="Contraseña"
                   className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
                 />
