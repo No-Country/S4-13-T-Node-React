@@ -20,7 +20,7 @@ const FormRegister = () => {
 
   return (
     <>
-      <h4 className="text-sm max-w-[250px] py-6 text-center">
+      <h4 className="text-sm max-w-[250px] py-6 text-center font-semibold text-black">
         Vas a poder hacer comentarios, agregar a favoritos y subir memes!
       </h4>
       {
@@ -34,25 +34,28 @@ const FormRegister = () => {
         >
           {({ errors, touched }) => {
             return (
-              <Form className="flex flex-col justify-center align-center gap-2">
+              <Form className="flex flex-col justify-center align-center gap-4">
                 <Field
                   name="username"
-                  placeholder="username"
-                  className="w-[295px] font-roboto border-2 border-accent px-2 py-1"
+                  placeholder="Nombre"
+                  autoComplete="off"
+                  className="w-[295px] placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent px-2 py-1"
                 />
                 {errors.username && touched.username ? <div className="text-xs">{errors.username}</div> : null}
                 <Field
                   name="email"
                   type="email"
+                  autoComplete="off"
                   placeholder="Email"
-                  className=" font-roboto border-2 border-accent w-[295px] px-2 py-1"
+                  className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
                 />
                 {errors.email && touched.email ? <div className="text-xs">{errors.email}</div> : null}
                 <Field
                   name="password"
                   type="password"
+                  autoComplete="off"
                   placeholder="Contraseña"
-                  className=" font-roboto border-2 border-accent w-[295px] px-2 py-1"
+                  className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
                 />
                 {errors.password && touched.password ? <div className="text-xs">{errors.password}</div> : null}
                 <button

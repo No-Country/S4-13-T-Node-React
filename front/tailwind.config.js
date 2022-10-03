@@ -10,6 +10,7 @@ module.exports = {
       accent: '#74726F',
       bgCard: '#FDFDFD',
       white: '#fff',
+      black: '#000',
     },
     fontFamily: {
       orelega: 'Orelega One, cursive',

@@ -21,6 +21,8 @@ export const userLoginSlice = createSlice({
         console.log('sesion iniciada!');
         return credentials;
       }
+      console.warn('credenciales incorrectas');
+
       return;
     },
   },

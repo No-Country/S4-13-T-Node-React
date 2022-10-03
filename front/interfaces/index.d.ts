@@ -1,7 +1,12 @@
+import { ChildrenProp } from './index.d';
 import { AxiosResponse } from 'axios';
 
 export interface ChildrenProp {
   children: React.ReactNode;
+}
+
+export interface HCProps extends ChildrenProp {
+  heading: string;
 }
 
 export interface SearchProp {
@@ -24,6 +29,10 @@ export interface OpensProps {
   open: Boolean;
 }
 
+export interface test {
+  title: string;
+}
+
 export interface PostPropsAxios {
   post?: {
     title: string | null;
@@ -37,7 +46,7 @@ export interface CardPostProps {
   author: string;
   score?: number;
   title?: string;
-  hrefPost?: {pathname: string, query:{id: string | number}};
+  hrefPost?: { pathname: string; query: { id: string | number } };
 }
 
 export interface IPost {
@@ -61,8 +70,8 @@ export interface AxiosGetPost extends AxiosResponse {
 
 export interface AxiosGetPostById extends AxiosResponse {
   data: {
-    post: IPost
-  }
+    post: IPost;
+  };
 }
 
 export interface RegisterProps {
@@ -74,4 +83,13 @@ export interface LoginProps {
   username?: string;
   email: string;
   password: string;
+}
+
+export interface FormLinksProps {
+  question: string;
+  anchor: string;
+}
+
+export interface MDProps {
+  social: string;
 }
