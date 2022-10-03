@@ -5,7 +5,7 @@ import { BiUserCircle } from 'react-icons/bi';
 export const ProfileItem = () => {
   return (
     <div>
-      <Link href="#">
+      <Link href="/profile">
         <a>
           <BiUserCircle className="text-[30px] cursor-pointer text-white" />
         </a>
