@@ -4,6 +4,7 @@ import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
 // import { BaseMiddleware } from './base.middleware'
 import HttpResponse from '../Utils/http.response'
+import { BaseMiddleware } from './base.middleware'
 
 // Lo ideal es que MiddlewareValidator expanda de BaseMiddleware pero me tira error cuando uso this.httpResponse
 // export class MiddlewareValidator extends BaseMiddleware {

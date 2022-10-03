@@ -1,6 +1,6 @@
 import { IPost } from '../Interfaces/post.interfaces'
 import { Column, Entity } from 'typeorm'
-import { BaseEntity } from './Base.entity'
+import { BaseEntity } from './base.entity'
 
 @Entity()
 export class Post extends BaseEntity implements IPost {
