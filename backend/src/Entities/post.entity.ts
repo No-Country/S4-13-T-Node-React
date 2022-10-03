@@ -1,6 +1,7 @@
 import { IPost } from '../Interfaces/post.interfaces'
-import { Column, Entity } from 'typeorm'
+import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from './base.entity'
+import { Like } from './like.entity'
 
 @Entity()
 export class Post extends BaseEntity implements IPost {
@@ -21,4 +22,7 @@ export class Post extends BaseEntity implements IPost {
 
   @Column({ default: 0 })
   commentsCount: number
+
+  @OneToMany(() => Like, like => like.post)
+  likes: Like[]
 }
