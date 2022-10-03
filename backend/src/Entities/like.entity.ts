@@ -1,33 +1,14 @@
-import {
-    BaseEntity,
-    Column,
-    CreateDateColumn,
-    DeleteDateColumn,
-    Entity,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-  } from 'typeorm'
-  import {User} from './User.entity'
-  import {Post} from './Post.entity'
-  @Entity()
-  export class Like extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number
-  
-    @ManyToOne(() => User, (user) => user.likes)
-    user: User
+import { BaseEntity, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { User } from './user.entity'
+import { Post } from './post.entity'
+@Entity()
+export class Like extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @ManyToOne(() => Post, (post) => post.likes)
-    post: Post
+  @ManyToOne(() => User, user => user.likes)
+  user: User
 
-    @CreateDateColumn()
-    created_at: Date
-  
-    @UpdateDateColumn()
-    updated_at: Date
-  
-    @DeleteDateColumn()
-    deleted_at: Date
-  }
-  
+  @ManyToOne(() => Post, post => post.likes)
+  post: Post
+}

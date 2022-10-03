@@ -1,12 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -17,17 +9,8 @@ export class Comment extends BaseEntity {
   comment: string
 
   @Column()
-  user_id: number
+  user: number
 
   @Column()
-  post_id: number
-
-  @CreateDateColumn()
-  created_at: Date
-
-  @UpdateDateColumn()
-  updated_at: Date
-
-  @DeleteDateColumn()
-  deleted_at: Date
+  post: number
 }
