@@ -17,7 +17,7 @@ export abstract class Repository<Entity extends BaseEntity> implements DatabaseR
     }
   }
 
-  async list(query: QueryList): Promise<Entity[]> {
+  async list(query: QueryList): Promise<[Entity[], number]> {
     try {
       const { size, page, sort } = query
 
@@ -26,7 +26,8 @@ export abstract class Repository<Entity extends BaseEntity> implements DatabaseR
       builder.offset((page - 1) * size).limit(size)
       builder.orderBy('created_at', sort.toUpperCase())
 
-      return await builder.getMany()
+      const [list, total] = await builder.getManyAndCount()
+      return [list, total]
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }
@@ -43,7 +44,14 @@ export abstract class Repository<Entity extends BaseEntity> implements DatabaseR
 
   async update(id: any, data: any, query?: Query | undefined): Promise<UpdateResult> {
     try {
-      return await this.repository.update(id, data)
+      const builder = await this.repository
+        .createQueryBuilder()
+        .update(data)
+        .where({ id, deleted_at: null })
+        .returning('*')
+        .execute()
+
+      return builder
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }
@@ -51,7 +59,13 @@ export abstract class Repository<Entity extends BaseEntity> implements DatabaseR
 
   async remove(id: Id, query?: Query | undefined): Promise<UpdateResult> {
     try {
-      return await this.repository.softDelete(id)
+      const builder = await this.repository
+        .createQueryBuilder()
+        .softDelete()
+        .where({ id, deleted_at: null })
+        .returning('*')
+        .execute()
+      return builder
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }

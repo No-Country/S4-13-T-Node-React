@@ -1,5 +1,16 @@
 import { IPostDTO } from '../Interfaces/post.interfaces'
-import { IsNotEmpty, IsNumber, IsString, IsUrl, MinLength } from 'class-validator'
+import {
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsNumberString,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator'
 
 export class PostDTO implements IPostDTO {
   @IsString()
@@ -19,4 +30,36 @@ export class PostDTO implements IPostDTO {
   @IsNumber()
   @IsNotEmpty()
   user_id: number
+}
+
+const sort = ['asc', 'ASC', 'desc', 'DESC']
+
+export class getPostRequest {
+  @IsOptional()
+  // @IsNumberString()
+  @Min(1)
+  page: any
+
+  @IsOptional()
+  // @IsNumberString()
+  @Min(1)
+  size: any
+
+  @IsOptional()
+  @MinLength(3)
+  @MaxLength(4)
+  @IsIn(sort)
+  sort: any
+}
+
+export class updatePostRequest {
+  @IsOptional()
+  @IsNotEmpty()
+  @MinLength(3)
+  title: any
+
+  @IsOptional()
+  @IsNotEmpty()
+  @MinLength(3)
+  tag: any
 }

@@ -2,9 +2,10 @@ import { Response } from 'express'
 
 export enum HttpStatus {
   OK = 200,
-  NOT_FOUND = 404,
+  BAD_REQUEST = 400,
   UNAUTHROIZED = 401,
   FORBIDDEN = 403,
+  NOT_FOUND = 404,
   INTERNAL_SERVER_ERROR = 500,
 }
 
@@ -37,6 +38,14 @@ class HttpResponse {
     return res.status(HttpStatus.FORBIDDEN).json({
       status: HttpStatus.FORBIDDEN,
       statusMsg: 'Forbidden resource.',
+      error: data,
+    })
+  }
+
+  BadRequest(res: Response, data?: any): Response {
+    return res.status(HttpStatus.BAD_REQUEST).json({
+      status: HttpStatus.BAD_REQUEST,
+      statusMsg: 'Bad request.',
       error: data,
     })
   }
