@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { BiArrowBack } from 'react-icons/bi';
 
 import { IPost } from '../../interfaces';
 
@@ -41,14 +42,17 @@ const Post: NextPage = () => {
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
             <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
-            <p className="font-orelega text-[20px] leading-[26px]">Comentarios</p>
+            <div className="flex items-center gap-x-0.5">
+              {/* TODO: Volver a la página anterior sin recargar la página */}
+              <BiArrowBack className="text-[24px] cursor-pointer text-primary mx-2" onClick={() => router.back()} />
+              <p className="font-orelega text-[20px] leading-[26px]">Comentarios</p>
+            </div>
           </div>
           <div className="px-2 mx-auto">
             <CardPost
               // La propiedad imageUrl tira un error: Image is missing required "src" property. Al cargar la página
               imageUrl={mediaURL || ''}
               author="el bromas"
-              score={6.7}
               title={title}
             />
           </div>
@@ -62,8 +66,8 @@ const Post: NextPage = () => {
                   {showTags ? 'Ocultar Tags' : 'Ver Tags'}
                 </p>
                 <div
-                  className={`flex flex-wrap font-normal gap-2 my-2 transition-all duration-500 ease-in-out select-none ${
-                    showTags ? 'translate-y-0 h-auto' : 'translate-y-[-300px] h-0'
+                  className={`flex flex-wrap font-normal gap-2 my-2 transition-all duration-100 ease-out select-none ${
+                    showTags ? 'opacity-100 h-auto' : 'opacity-0 h-0'
                   }`}
                 >
                   <p className="border-2 border-secondary rounded-3xl text-center py-1 px-4">Madre</p>
@@ -74,7 +78,7 @@ const Post: NextPage = () => {
               </div>
             </div>
             <div className="w-full border-t-[1px] mb-2"></div>
-            <div className="w-full mt-2">
+            <div className="w-full mt-2" id="comments">
               <textarea
                 className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none"
                 placeholder="Escribí aquí tu comentario"

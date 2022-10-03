@@ -44,7 +44,6 @@ export interface PostPropsAxios {
 export interface CardPostProps {
   imageUrl: string;
   author: string;
-  score?: number;
   title?: string;
   hrefPost?: { pathname: string; query: { id: string | number } };
 }
