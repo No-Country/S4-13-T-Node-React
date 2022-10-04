@@ -1,9 +1,12 @@
 import { Request, Response } from 'express'
 import { PostService } from '../Services/post.services'
-import httpResponse from '../Utils/http.response'
+import { HttpResponse } from '../Utils/http.response'
 
 export class PostController {
-  constructor(private readonly postService: PostService = new PostService()) {}
+  constructor(
+    private readonly postService: PostService = new PostService(),
+    private readonly httpResponse: HttpResponse = new HttpResponse()
+  ) {}
   async createPost(req: Request, res: Response) {
     try {
       const post = req.body
@@ -20,6 +23,7 @@ export class PostController {
       const [posts, total, last_page] = await this.postService.getPosts(Number(page), Number(size), String(sort))
       return [res.status(200).json({ posts, actual_page: Number(page), size: Number(size), total, last_page })]
     } catch (error) {
+      console.log(this.postService)
       return res.status(500).json({ message: `Error unexpected ${error}` })
     }
   }
@@ -29,7 +33,7 @@ export class PostController {
       const id = Number(req.params.id)
       const post = await this.postService.getPostById(id)
       if (post) return res.json({ post })
-      return httpResponse.NotFound(res, 'Post not found.')
+      return this.httpResponse.NotFound(res, 'Post not found.')
     } catch (error) {
       return res.status(500).json({ message: `Error unexpected ${error}` })
     }
@@ -41,7 +45,7 @@ export class PostController {
       const data = req.body
       const post = await this.postService.updatePost(id, data)
       if (post.error) {
-        return httpResponse.NotFound(res, post.error)
+        return this.httpResponse.NotFound(res, post.error)
       }
       return res.json({ message: 'Post Updated Successfully.', post })
     } catch (error) {
@@ -54,7 +58,7 @@ export class PostController {
       const id = Number(req.params.id)
       const post = await this.postService.removePost(id)
       if (post.error) {
-        return httpResponse.NotFound(res, post.error)
+        return this.httpResponse.NotFound(res, post.error)
       }
       return res.json({ message: 'Post Deleted Successfully.', post })
     } catch (error) {
@@ -62,5 +66,3 @@ export class PostController {
     }
   }
 }
-
-export default new PostController()

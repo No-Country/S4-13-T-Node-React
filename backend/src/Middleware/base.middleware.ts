@@ -1,5 +1,5 @@
-import HttpResponse from '../Utils/http.response'
+import { HttpResponse } from '../Utils/http.response'
 
 export class BaseMiddleware {
-  constructor(public httpResponse: typeof HttpResponse = HttpResponse) {}
+  constructor(public httpResponse: HttpResponse = new HttpResponse()) {}
 }

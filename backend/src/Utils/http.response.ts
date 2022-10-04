@@ -9,7 +9,7 @@ export enum HttpStatus {
   INTERNAL_SERVER_ERROR = 500,
 }
 
-class HttpResponse {
+export class HttpResponse {
   Ok(res: Response, data?: any): Response {
     return res.status(HttpStatus.OK).json({
       status: HttpStatus.OK,
@@ -59,4 +59,4 @@ class HttpResponse {
   }
 }
 
-export default new HttpResponse()
+// export default new HttpResponse()

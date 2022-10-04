@@ -10,13 +10,38 @@ export class PostRouter extends BaseRouter<PostController, MiddlewareValidator> 
   routes(): void {
     this.router
       .route('/post')
-      .post(this.middleware.createPost, this.controller.createPost)
-      .get(this.middleware.getRequestPost, this.controller.getPosts)
+      .post(
+        (req, res, next) => {
+          this.middleware.createPost(req, res, next)
+        },
+        (req, res) => {
+          this.controller.createPost(req, res)
+        }
+      )
+      .get(
+        (req, res, next) => {
+          this.middleware.getRequestPost(req, res, next)
+        },
+        (req, res) => {
+          this.controller.getPosts(req, res)
+        }
+      )
 
     this.router
       .route('/post/:id')
-      .get(this.controller.getPostById)
-      .put(this.middleware.getUpdatePost, this.controller.updatePost)
-      .delete(this.controller.removePost)
+      .get((req, res) => {
+        this.controller.getPostById(req, res)
+      })
+      .put(
+        (req, res, next) => {
+          this.middleware.getUpdatePost(req, res, next)
+        },
+        (req, res) => {
+          this.controller.updatePost(req, res)
+        }
+      )
+      .delete((req, res) => {
+        this.controller.removePost(req, res)
+      })
   }
 }

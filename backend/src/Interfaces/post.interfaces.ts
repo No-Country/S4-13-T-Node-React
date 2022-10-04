@@ -1,4 +1,5 @@
 import { BaseEntity } from '../Entities/base.entity'
+import { User } from '../Entities/user.entity'
 import { IBaseDTO } from './base.interfaces'
 
 export interface IPostDTO {

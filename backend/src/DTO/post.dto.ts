@@ -1,16 +1,5 @@
 import { IPostDTO } from '../Interfaces/post.interfaces'
-import {
-  IsIn,
-  IsNotEmpty,
-  IsNumber,
-  IsNumberString,
-  IsOptional,
-  IsString,
-  IsUrl,
-  MaxLength,
-  Min,
-  MinLength,
-} from 'class-validator'
+import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength, Min, MinLength } from 'class-validator'
 
 export class PostDTO implements IPostDTO {
   @IsString()

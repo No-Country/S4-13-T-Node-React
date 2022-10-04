@@ -3,6 +3,7 @@ import { IUser } from '../Interfaces/user.interfaces'
 import { BaseEntity } from './base.entity'
 import { Comment } from './comment.entity'
 import { Like } from './like.entity'
+import { Post } from './post.entity'
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -17,6 +18,9 @@ export class User extends BaseEntity implements IUser {
 
   @Column()
   email: string
+
+  @OneToMany(() => Post, post => post.user_id)
+  post: Post[]
 
   @OneToMany(() => Like, like => like.user)
   likes: Like[]

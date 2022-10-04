@@ -1,8 +1,9 @@
 import { IPost } from '../Interfaces/post.interfaces'
-import { Column, Entity, OneToMany } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { BaseEntity } from './base.entity'
 import { Like } from './like.entity'
 import { Comment } from './comment.entity'
+import { User } from './user.entity'
 
 @Entity()
 export class Post extends BaseEntity implements IPost {
@@ -15,7 +16,8 @@ export class Post extends BaseEntity implements IPost {
   @Column()
   tag: string
 
-  @Column()
+  @ManyToOne(() => User, user => user.post)
+  @JoinColumn({ name: 'user_id' })
   user_id: number
 
   @Column({ default: 0 })

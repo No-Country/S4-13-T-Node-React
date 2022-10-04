@@ -2,13 +2,11 @@ import { getPostRequest, PostDTO, updatePostRequest } from '../DTO/post.dto'
 import { IPostDTO } from '../Interfaces/post.interfaces'
 import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
-// import { BaseMiddleware } from './base.middleware'
-import HttpResponse from '../Utils/http.response'
 import { BaseMiddleware } from './base.middleware'
 
 // Lo ideal es que MiddlewareValidator expanda de BaseMiddleware pero me tira error cuando uso this.httpResponse
 // export class MiddlewareValidator extends BaseMiddleware {
-export class MiddlewareValidator {
+export class MiddlewareValidator extends BaseMiddleware {
   createPost(req: Request, res: Response, next: NextFunction) {
     const { title, tag, media_url, user_id }: IPostDTO = req.body
 
@@ -22,7 +20,7 @@ export class MiddlewareValidator {
     validate(valid, { validationError: { target: false } }).then(err => {
       if (err.length > 0) {
         // return this.httpResponse.Error(res,err)
-        return HttpResponse.BadRequest(res, err)
+        return this.httpResponse.BadRequest(res, err)
       } else {
         next()
       }
@@ -40,7 +38,7 @@ export class MiddlewareValidator {
 
     validate(valid, { validationError: { target: false } }).then(err => {
       if (err.length > 0) {
-        return HttpResponse.BadRequest(res, err)
+        return this.httpResponse.BadRequest(res, err)
       } else {
         next()
       }
@@ -58,13 +56,13 @@ export class MiddlewareValidator {
     if (title || tag) {
       validate(valid, { validationError: { target: false } }).then(err => {
         if (err.length > 0) {
-          return HttpResponse.BadRequest(res, err)
+          return this.httpResponse.BadRequest(res, err)
         } else {
           next()
         }
       })
     } else {
-      return HttpResponse.BadRequest(res, 'Need at least one value.')
+      return this.httpResponse.BadRequest(res, 'Need at least one value.')
     }
   }
 }

@@ -16,7 +16,7 @@ class Seeder extends ConfigServer {
     for (let i = 0; i < 50; i++) {
       const posts = post.create({
         title: faker.commerce.productName(),
-        mediaURL: faker.image.cats(),
+        media_url: faker.image.cats(),
         tag: faker.commerce.department(),
         user_id: 1,
       })
