@@ -13,9 +13,9 @@ const PostsContainer = () => {
       {posts
         ? posts.map(post => (
             <CardPost
-              key={Math.random() * 999}
-              imageUrl={post.mediaURL}
-              author="anonimous"
+              key={post.id}
+              imageUrl={post.media_url}
+              author={post.user.username}
               title={post.title}
               hrefPost={{ pathname: '/post', query: { id: post.id } }}
             />

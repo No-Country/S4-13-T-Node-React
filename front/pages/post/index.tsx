@@ -28,7 +28,7 @@ const Post: NextPage = () => {
     setShowTags(prev => !prev);
   };
 
-  const { mediaURL, title, likesCount } = postVisited;
+  const { media_url, title, likesCount } = postVisited;
 
   return (
     <div>
@@ -51,7 +51,7 @@ const Post: NextPage = () => {
           <div className="px-2 mx-auto">
             <CardPost
               // La propiedad imageUrl tira un error: Image is missing required "src" property. Al cargar la página
-              imageUrl={mediaURL || ''}
+              imageUrl={media_url || ''}
               author="el bromas"
               title={title}
             />
