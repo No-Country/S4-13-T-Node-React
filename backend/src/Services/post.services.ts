@@ -1,20 +1,18 @@
 import { IPost, IPostDTO } from '../Interfaces/post.interfaces'
 import { PostRepository } from '../Repository/post.repository'
 
-class PostService extends PostRepository {
-  constructor() {
-    super()
-  }
+export class PostService {
+  constructor(private readonly postRepository: PostRepository = new PostRepository()) {}
   async createPost(post: IPost) {
     try {
-      return await this.create(post)
+      return await this.postRepository.create(post)
     } catch (error) {
       throw new Error(`Unexpected server Error ${error}`)
     }
   }
   async getPosts(page: number = 1, size: number = 20, sort: string) {
     try {
-      const [posts, total] = await this.list({
+      const [posts, total] = await this.postRepository.list({
         size,
         page,
         sort,
@@ -27,7 +25,7 @@ class PostService extends PostRepository {
   }
   async getPostById(id: number) {
     try {
-      return await this.get(id)
+      return await this.postRepository.get(id)
     } catch (error) {
       throw new Error(`Unexpected server Error ${error}`)
     }
@@ -35,7 +33,7 @@ class PostService extends PostRepository {
 
   async updatePost(id: number, data: IPostDTO) {
     try {
-      const updated = await this.update(id, data)
+      const updated = await this.postRepository.update(id, data)
       if (updated.affected === 0) {
         return { error: 'Post not found or is deleted.' }
       }
@@ -47,7 +45,7 @@ class PostService extends PostRepository {
 
   async removePost(id: number) {
     try {
-      const deleted = await this.remove(id)
+      const deleted = await this.postRepository.remove(id)
       if (deleted.affected === 0) {
         return { error: 'Post not found or already deleted.' }
       }
@@ -57,5 +55,3 @@ class PostService extends PostRepository {
     }
   }
 }
-
-export default new PostService()
