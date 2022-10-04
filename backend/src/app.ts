@@ -2,7 +2,8 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import { ConfigServer } from './Config/config'
-import { PostRouter } from './Routes/post.route'
+import { PostRouter } from './Routes/post.routes'
+import { UserRouter } from './Routes/user.routes'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -25,7 +26,7 @@ export class Server extends ConfigServer {
   }
 
   routers(): express.Router[] {
-    return [new PostRouter().router]
+    return [new PostRouter().router, new UserRouter().router]
   }
 
   public listen() {
