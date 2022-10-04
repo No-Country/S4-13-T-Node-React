@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany } from 'typeorm'
 import { IUser } from '../Interfaces/user.interfaces'
 import { BaseEntity } from './base.entity'
 import { Comment } from './comment.entity'
+import { Favorite } from './favorite.entity'
 import { Like } from './like.entity'
 import { Post } from './post.entity'
 
@@ -19,7 +20,7 @@ export class User extends BaseEntity implements IUser {
   @Column()
   email: string
 
-  @OneToMany(() => Post, post => post.user_id)
+  @OneToMany(() => Post, post => post.user)
   post: Post[]
 
   @OneToMany(() => Like, like => like.user)
@@ -27,4 +28,7 @@ export class User extends BaseEntity implements IUser {
 
   @OneToMany(() => Comment, comment => comment.user)
   comments: Comment[]
+
+  @OneToMany(() => Favorite, favorite => favorite.user)
+  favorites: Favorite[]
 }

@@ -24,14 +24,21 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
     }
   }
 
-  async list(query: QueryList): Promise<[T[], number]> {
+  async list(alias: string, relation?: string, query?: QueryList): Promise<[T[], number]> {
     try {
-      const { size, page, sort } = query
+      const { size, page, sort } = query!
+      console.log(relation, alias)
 
-      const builder = (await this.repository).createQueryBuilder()
+      const builder = (await this.repository).createQueryBuilder(alias)
 
-      builder.offset((page - 1) * size).limit(size)
-      builder.orderBy('created_at', sort.toUpperCase())
+      if (relation) {
+        builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
+      }
+
+      builder
+        .offset((page - 1) * size)
+        .limit(size)
+        .orderBy(`${alias}.created_at`, sort.toUpperCase())
 
       const [list, total] = await builder.getManyAndCount()
       return [list, total]
@@ -40,10 +47,17 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
     }
   }
 
-  async get(id: number, query?: Query | undefined): Promise<T | null> {
+  async get(id: number, alias: string, relation?: string, query?: Query | undefined): Promise<T | null> {
     try {
-      const options: FindOptionsWhere<ObjectType<T>> = { id }
-      return await (await this.repository).findOneBy(options)
+      const builder = (await this.repository).createQueryBuilder(alias)
+
+      if (relation) {
+        builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
+      }
+
+      builder.where({ id })
+
+      return await builder.getOne()
     } catch (error) {
       throw new Error(`Error unexpected: ${error}`)
     }

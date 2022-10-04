@@ -8,14 +8,14 @@ import { BaseMiddleware } from './base.middleware'
 // export class MiddlewareValidator extends BaseMiddleware {
 export class MiddlewareValidator extends BaseMiddleware {
   createPost(req: Request, res: Response, next: NextFunction) {
-    const { title, tag, media_url, user_id }: IPostDTO = req.body
+    const { title, tag, media_url, user }: IPostDTO = req.body
 
     const valid = new PostDTO()
 
     valid.title = title
     valid.media_url = media_url
     valid.tag = tag
-    valid.user_id = user_id
+    valid.user = user
 
     validate(valid, { validationError: { target: false } }).then(err => {
       if (err.length > 0) {

@@ -1,6 +1,7 @@
 import { IPostDTO } from '../Interfaces/post.interfaces'
 import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength, Min, MinLength } from 'class-validator'
 import { BaseDTO } from './base.dto'
+import { User } from '../Entities/user.entity'
 
 export class PostDTO extends BaseDTO implements IPostDTO {
   @IsString()
@@ -19,7 +20,7 @@ export class PostDTO extends BaseDTO implements IPostDTO {
 
   @IsNumber()
   @IsNotEmpty()
-  user_id: number
+  user: User
 }
 
 const sort = ['asc', 'ASC', 'desc', 'DESC']

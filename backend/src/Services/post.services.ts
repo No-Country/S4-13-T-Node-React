@@ -2,7 +2,12 @@ import { IPost, IPostDTO } from '../Interfaces/post.interfaces'
 import { PostRepository } from '../Repository/post.repository'
 
 export class PostService {
-  constructor(private readonly postRepository: PostRepository = new PostRepository()) {}
+  private readonly alias: string
+  private readonly relation: string
+  constructor(private readonly postRepository: PostRepository = new PostRepository()) {
+    this.alias = 'post'
+    this.relation = 'user'
+  }
   async createPost(post: IPost) {
     try {
       return await this.postRepository.create(post)
@@ -12,7 +17,7 @@ export class PostService {
   }
   async getPosts(page: number = 1, size: number = 20, sort: string) {
     try {
-      const [posts, total] = await this.postRepository.list({
+      const [posts, total] = await this.postRepository.list(this.alias, this.relation, {
         size,
         page,
         sort,
@@ -25,7 +30,7 @@ export class PostService {
   }
   async getPostById(id: number) {
     try {
-      return await this.postRepository.get(id)
+      return await this.postRepository.get(id, this.alias, this.relation)
     } catch (error) {
       throw new Error(`Unexpected server Error ${error}`)
     }
