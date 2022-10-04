@@ -5,7 +5,7 @@ const api = useAxios();
 
 export const getPost = async () => {
   try {
-    return await api.get('/post').then(({ data }: AxiosGetPost) => data.posts);
+    return await api.get('/post').then(({ data }: AxiosGetPost) => data.data.posts);
   } catch (error) {
     console.error(error);
   }
@@ -13,7 +13,7 @@ export const getPost = async () => {
 
 export const getPostById = async (id: number | string) => {
   try {
-    return await api.get(`/post/${id}`).then(({data}: AxiosGetPostById) => data.post);
+    return await api.get(`/post/${id}`).then(({ data }: AxiosGetPostById) => data.data.post);
   } catch (err) {
     console.log(err);
   }

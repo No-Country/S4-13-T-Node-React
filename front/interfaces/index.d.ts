@@ -51,7 +51,7 @@ export interface CardPostProps {
 export interface IPost {
   id: number;
   title: string;
-  mediaURL: string;
+  media_url: string;
   tag: string;
   likesCount: number;
   commentsCount: number;
@@ -63,13 +63,17 @@ export interface IPost {
 
 export interface AxiosGetPost extends AxiosResponse {
   data: {
-    posts: IPost[];
+    data: {
+      posts: IPost[];
+    };
   };
 }
 
 export interface AxiosGetPostById extends AxiosResponse {
   data: {
-    post: IPost;
+    data: {
+      post: IPost;
+    };
   };
 }
 
