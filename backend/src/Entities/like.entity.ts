@@ -1,7 +1,8 @@
-import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { User } from './user.entity'
 import { Post } from './post.entity'
 import { ILikeDTO } from '../Interfaces/like.interface'
+import { BaseEntity } from './base.entity'
 @Entity()
 export class Like extends BaseEntity implements ILikeDTO {
   @PrimaryGeneratedColumn()

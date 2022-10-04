@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { ICommentDTO } from '../Interfaces/comment.interface'
+import { BaseEntity } from './base.entity'
 import { Post } from './post.entity'
 import { User } from './user.entity'
 

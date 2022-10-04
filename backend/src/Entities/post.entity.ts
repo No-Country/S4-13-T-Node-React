@@ -1,4 +1,4 @@
-import { IPost } from '../Interfaces/post.interfaces'
+import { IPostDTO } from '../Interfaces/post.interfaces'
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { BaseEntity } from './base.entity'
 import { Like } from './like.entity'
@@ -6,7 +6,7 @@ import { Comment } from './comment.entity'
 import { User } from './user.entity'
 
 @Entity()
-export class Post extends BaseEntity implements IPost {
+export class Post extends BaseEntity implements IPostDTO {
   @Column()
   title: string
 

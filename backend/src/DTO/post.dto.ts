@@ -1,7 +1,8 @@
 import { IPostDTO } from '../Interfaces/post.interfaces'
 import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength, Min, MinLength } from 'class-validator'
+import { BaseDTO } from './base.dto'
 
-export class PostDTO implements IPostDTO {
+export class PostDTO extends BaseDTO implements IPostDTO {
   @IsString()
   @IsNotEmpty()
   @MinLength(6)

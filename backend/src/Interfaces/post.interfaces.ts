@@ -1,14 +1,13 @@
-import { BaseEntity } from '../Entities/base.entity'
-import { User } from '../Entities/user.entity'
 import { IBaseDTO } from './base.interfaces'
 
-export interface IPostDTO {
+export interface IPostDTO extends IBaseDTO {
   title: string
   tag: string
   media_url: string
   user_id: number
 }
-export interface IPost extends IPostDTO, IBaseDTO, BaseEntity {
+
+export interface IPost extends IPostDTO {
   likesCount: number
   commentsCount: number
 }

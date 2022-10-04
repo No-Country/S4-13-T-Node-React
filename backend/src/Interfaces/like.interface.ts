@@ -1,12 +1,8 @@
-import { BaseEntity } from '../Entities/base.entity'
+import { BaseDTO } from '../DTO/base.dto'
 import { Post } from '../Entities/post.entity'
 import { User } from '../Entities/user.entity'
-import { IBaseDTO } from './base.interfaces'
 
-export interface ILikeDTO {
+export interface ILikeDTO extends BaseDTO {
   user: User
-
   post: Post
 }
-
-export interface ILike extends ILikeDTO, IBaseDTO, BaseEntity {}
