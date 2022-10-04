@@ -23,7 +23,6 @@ export class PostController {
       const [posts, total, last_page] = await this.postService.getPosts(Number(page), Number(size), String(sort))
       return [res.status(200).json({ posts, actual_page: Number(page), size: Number(size), total, last_page })]
     } catch (error) {
-      console.log(this.postService)
       return res.status(500).json({ message: `Error unexpected ${error}` })
     }
   }

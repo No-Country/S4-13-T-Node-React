@@ -5,9 +5,6 @@ import { ILikeDTO } from '../Interfaces/like.interface'
 import { BaseEntity } from './base.entity'
 @Entity()
 export class Like extends BaseEntity implements ILikeDTO {
-  @PrimaryGeneratedColumn()
-  id: number
-
   @ManyToOne(() => User, user => user.likes)
   @JoinColumn({ name: 'user_id' })
   user: User

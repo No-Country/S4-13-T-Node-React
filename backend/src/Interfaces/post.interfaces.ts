@@ -1,10 +1,11 @@
+import { User } from '../Entities/user.entity'
 import { IBaseDTO } from './base.interfaces'
 
 export interface IPostDTO extends IBaseDTO {
   title: string
   tag: string
   media_url: string
-  user_id: number
+  user: User
 }
 
 export interface IPost extends IPostDTO {

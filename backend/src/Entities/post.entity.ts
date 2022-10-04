@@ -4,6 +4,7 @@ import { BaseEntity } from './base.entity'
 import { Like } from './like.entity'
 import { Comment } from './comment.entity'
 import { User } from './user.entity'
+import { Favorite } from './favorite.entity'
 
 @Entity()
 export class Post extends BaseEntity implements IPostDTO {
@@ -18,7 +19,7 @@ export class Post extends BaseEntity implements IPostDTO {
 
   @ManyToOne(() => User, user => user.post)
   @JoinColumn({ name: 'user_id' })
-  user_id: number
+  user: User
 
   @Column({ default: 0 })
   likesCount: number
@@ -31,4 +32,7 @@ export class Post extends BaseEntity implements IPostDTO {
 
   @OneToMany(() => Comment, comment => comment.post)
   comments: Comment[]
+
+  @OneToMany(() => Favorite, favorite => favorite.post)
+  favorites: Favorite[]
 }
