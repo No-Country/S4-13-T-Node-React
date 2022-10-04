@@ -1,10 +1,10 @@
-import { MiddlewareValidator } from '../Middleware/validate.middleware'
-import { BaseRouter } from './base.router'
+import { PostMiddleware } from '../Middleware/post.middleware'
+import { BaseRouter } from './base.routes'
 import { PostController } from '../Controllers/post.controller'
 
-export class PostRouter extends BaseRouter<PostController, MiddlewareValidator> {
+export class PostRouter extends BaseRouter<PostController, PostMiddleware> {
   constructor() {
-    super(PostController, MiddlewareValidator)
+    super(PostController, PostMiddleware)
   }
 
   routes(): void {
@@ -30,7 +30,7 @@ export class PostRouter extends BaseRouter<PostController, MiddlewareValidator> 
     this.router
       .route('/post/:id')
       .get((req, res) => {
-        this.controller.getPostById(req, res)
+        this.controller.getPost(req, res)
       })
       .put(
         (req, res, next) => {

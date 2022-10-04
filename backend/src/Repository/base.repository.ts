@@ -17,78 +17,57 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
   }
 
   async create(data: T, query?: Query | undefined): Promise<T> {
-    try {
-      return (await this.repository).save(data)
-    } catch (error) {
-      throw new Error(`Error unexpected: ${error}`)
-    }
+    return (await this.repository).save(data)
   }
 
   async list(alias: string, relation?: string, query?: QueryList): Promise<[T[], number]> {
-    try {
-      const { size, page, sort } = query!
-      console.log(relation, alias)
+    const { size, page, sort } = query!
 
-      const builder = (await this.repository).createQueryBuilder(alias)
+    const builder = (await this.repository).createQueryBuilder(alias)
 
-      if (relation) {
-        builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
-      }
-
-      builder
-        .offset((page - 1) * size)
-        .limit(size)
-        .orderBy(`${alias}.created_at`, sort.toUpperCase())
-
-      const [list, total] = await builder.getManyAndCount()
-      return [list, total]
-    } catch (error) {
-      throw new Error(`Error unexpected: ${error}`)
+    if (relation) {
+      builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
     }
+
+    builder
+      .offset((page - 1) * size)
+      .limit(size)
+      .orderBy(`${alias}.created_at`, sort.toUpperCase())
+
+    const [list, total] = await builder.getManyAndCount()
+    return [list, total]
   }
 
   async get(id: number, alias: string, relation?: string, query?: Query | undefined): Promise<T | null> {
-    try {
-      const builder = (await this.repository).createQueryBuilder(alias)
+    const builder = (await this.repository).createQueryBuilder(alias)
 
-      if (relation) {
-        builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
-      }
-
-      builder.where({ id })
-
-      return await builder.getOne()
-    } catch (error) {
-      throw new Error(`Error unexpected: ${error}`)
+    if (relation) {
+      builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
     }
+
+    builder.where({ id })
+
+    return await builder.getOne()
   }
 
   async update(id: any, data: any, query?: Query | undefined): Promise<UpdateResult> {
-    try {
-      const builder = await (await this.repository)
-        .createQueryBuilder()
-        .update(data)
-        .where({ id, deleted_at: IsNull() })
-        .returning('*')
-        .execute()
+    const builder = await (await this.repository)
+      .createQueryBuilder()
+      .update(data)
+      .where({ id, deleted_at: IsNull() })
+      .returning('*')
+      .execute()
 
-      return builder
-    } catch (error) {
-      throw new Error(`Error unexpected: ${error}`)
-    }
+    return builder
   }
 
   async remove(id: Id, query?: Query | undefined): Promise<UpdateResult> {
-    try {
-      const builder = await (await this.repository)
-        .createQueryBuilder()
-        .softDelete()
-        .where({ id, deleted_at: IsNull() })
-        .returning('*')
-        .execute()
-      return builder
-    } catch (error) {
-      throw new Error(`Error unexpected: ${error}`)
-    }
+    const builder = await (await this.repository)
+      .createQueryBuilder()
+      .softDelete()
+      .where({ id, deleted_at: IsNull() })
+      .returning('*')
+      .execute()
+    return builder
   }
 }

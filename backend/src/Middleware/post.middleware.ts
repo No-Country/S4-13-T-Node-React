@@ -4,9 +4,11 @@ import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
 import { BaseMiddleware } from './base.middleware'
 
-// Lo ideal es que MiddlewareValidator expanda de BaseMiddleware pero me tira error cuando uso this.httpResponse
-// export class MiddlewareValidator extends BaseMiddleware {
-export class MiddlewareValidator extends BaseMiddleware {
+export class PostMiddleware extends BaseMiddleware {
+  constructor() {
+    super()
+  }
+
   createPost(req: Request, res: Response, next: NextFunction) {
     const { title, tag, media_url, user }: IPostDTO = req.body
 
