@@ -10,12 +10,12 @@ import { BaseMiddleware } from './base.middleware'
 // export class MiddlewareValidator extends BaseMiddleware {
 export class MiddlewareValidator {
   createPost(req: Request, res: Response, next: NextFunction) {
-    const { title, tag, mediaURL, user_id }: IPostDTO = req.body
+    const { title, tag, media_url, user_id }: IPostDTO = req.body
 
     const valid = new PostDTO()
 
     valid.title = title
-    valid.mediaURL = mediaURL
+    valid.media_url = media_url
     valid.tag = tag
     valid.user_id = user_id
 

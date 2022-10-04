@@ -25,7 +25,7 @@ export class PostDTO implements IPostDTO {
 
   @IsUrl()
   @IsNotEmpty()
-  mediaURL: string
+  media_url: string
 
   @IsNumber()
   @IsNotEmpty()

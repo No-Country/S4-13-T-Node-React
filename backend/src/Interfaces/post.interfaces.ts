@@ -4,7 +4,7 @@ import { IBaseDTO } from './base.interfaces'
 export interface IPostDTO {
   title: string
   tag: string
-  mediaURL: string
+  media_url: string
   user_id: number
 }
 export interface IPost extends IPostDTO, IBaseDTO, BaseEntity {

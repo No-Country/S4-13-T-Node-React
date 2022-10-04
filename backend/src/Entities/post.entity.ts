@@ -2,6 +2,7 @@ import { IPost } from '../Interfaces/post.interfaces'
 import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from './base.entity'
 import { Like } from './like.entity'
+import { Comment } from './comment.entity'
 
 @Entity()
 export class Post extends BaseEntity implements IPost {
@@ -9,7 +10,7 @@ export class Post extends BaseEntity implements IPost {
   title: string
 
   @Column()
-  mediaURL: string
+  media_url: string
 
   @Column()
   tag: string
@@ -25,4 +26,7 @@ export class Post extends BaseEntity implements IPost {
 
   @OneToMany(() => Like, like => like.post)
   likes: Like[]
+
+  @OneToMany(() => Comment, comment => comment.post)
+  comments: Comment[]
 }
