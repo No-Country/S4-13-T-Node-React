@@ -6,6 +6,7 @@ import { IPost } from '../../interfaces';
 import CardPost from './cardPost/CardPost';
 import Comments from './comments/Comments';
 import Loading from '../../components/loading/Loading';
+import InputComment from './comments/InputComment';
 
 import { getPostById } from '../../services/api-calls';
 
@@ -44,7 +45,7 @@ const PostContainer = () => {
         <div className="flex items-center gap-x-2">
           {/* TODO: Volver a la página anterior sin recargar la página */}
           <svg
-            className="cursor-pointer"
+            className="cursor-pointer active:text-secondary"
             width="16"
             height="15"
             viewBox="0 0 16 15"
@@ -71,7 +72,7 @@ const PostContainer = () => {
       </div>
       <div className="flex flex-col w-full justify-around items-center max-w-[344px] mx-auto px-5 mb-4">
         <div className="w-full h-3 flex justify-end font-roboto">
-          <p className="text-sm">{likesCount} me gusta</p>
+          <p className="text-sm mt-1">{likesCount} me gusta</p>
         </div>
         <div className="flex w-full font-roboto text-primary font-bold mb-2">
           <div className="overflow-hidden">
@@ -79,8 +80,8 @@ const PostContainer = () => {
               {showTags ? 'Ocultar Tags' : 'Ver Tags'}
             </span>
             <div
-              className={`flex flex-wrap font-normal gap-2 my-2 transition-all duration-100 ease-out select-none ${
-                showTags ? 'opacity-100 h-auto' : 'opacity-0 h-0'
+              className={`flex flex-wrap font-normal gap-2 mb-2 transition-all duration-100 ease-out select-none ${
+                showTags ? 'opacity-100 h-auto my-2' : 'opacity-0 h-0'
               }`}
             >
               <p className="border-2 border-secondary rounded-3xl text-center py-1 px-4">Madre</p>
@@ -92,17 +93,9 @@ const PostContainer = () => {
         </div>
         <div className="w-full border-t-[1px] mb-2"></div>
         <div className="w-full mt-2" id="comments">
-          <textarea
-            className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none"
-            placeholder="Escribí aquí tu comentario"
-          />
-          <div className="flex justify-end my-2">
-            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
-              Comentar
-            </button>
-          </div>
+          <InputComment />
         </div>
-        <div className="flex flex-col gap-y-5 mt-6 mb-4">
+        <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px]">
           <Comments />
           <Comments />
           <Comments response={response} />
