@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { CardPostProps } from '../../interfaces';
+import { CardPostProps } from '../../../interfaces';
 
 const CardPost = ({ imageUrl, author, title, hrefPost }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
