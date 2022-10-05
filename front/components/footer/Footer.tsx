@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 function Footer() {
   return (
-    <div className="inset-x-0 w-full mx-auto sm:w-[512px] lg:w-[1024px]">
+    <div className="inset-x-0 w-full mx-auto sm:w-[512px] lg:w-[1024px] font-roboto">
       <div className="bg-accent h-18 min-screen mx-2 rounded-t-lg flex justify-around items-center text-white text-center">
         <ul>
           <li>
