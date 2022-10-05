@@ -13,7 +13,11 @@ export const getPost = async () => {
 
 export const getPostById = async (id: number | string) => {
   try {
+<<<<<<< HEAD
+    return await api.get(`/post/${id}`).then(({ data }: AxiosGetPostById) => data.data.post);
+=======
     return await api.get(`/post/${id}`).then(({data}: AxiosGetPostById) => data.data.post);
+>>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   } catch (err) {
     console.log(err);
   }

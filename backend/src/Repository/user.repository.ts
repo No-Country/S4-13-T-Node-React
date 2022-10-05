@@ -1,6 +1,5 @@
-import { Query } from 'typeorm/driver/Query'
 import { User } from '../Entities/user.entity'
-import { IUser } from '../Interfaces/user.interfaces'
+import { IUser, RoleTypes } from '../Interfaces/user.interfaces'
 import { BaseRepository } from './base.repository'
 
 export class UserRepository extends BaseRepository<IUser> {
@@ -8,25 +7,39 @@ export class UserRepository extends BaseRepository<IUser> {
     super(User)
   }
 
-  async getUserWithLikes(id: number, query?: Query | undefined): Promise<IUser | null> {
-    const builder = (await this.repository).createQueryBuilder('user')
-
-    builder.leftJoinAndSelect('user.likes', 'likes')
-    builder.leftJoinAndSelect('likes.post', 'post')
-
-    builder.where({ id })
-
-    return await builder.getOne()
+  async getUserWithLikes(id: number): Promise<IUser | null> {
+    return (await this.repository)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.likes', 'likes')
+      .leftJoinAndSelect('likes.post', 'post')
+      .where({ id })
+      .getOne()
   }
 
-  async getUserWithFavorites(id: number, query?: Query | undefined): Promise<IUser | null> {
-    const builder = (await this.repository).createQueryBuilder('user')
+  async getUserWithFavorites(id: number): Promise<IUser | null> {
+    return await (await this.repository)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.favorites', 'favorites')
+      .leftJoinAndSelect('favorites.post', 'post')
+      .where({ id })
+      .getOne()
+  }
 
-    builder.leftJoinAndSelect('user.favorites', 'favorites')
-    builder.leftJoinAndSelect('favorites.post', 'post')
+  async getUserWithRole(id: number, role: RoleTypes[]): Promise<IUser | null> {
+    const user = (await this.repository).createQueryBuilder('user').where({ id }).andWhere({ role }).getOne()
 
-    builder.where({ id })
+    return user
+  }
 
-    return await builder.getOne()
+  async findUserByUsername(username: string): Promise<IUser | null> {
+    return (await this.repository)
+      .createQueryBuilder('user')
+      .addSelect('user.password_hash')
+      .where({ username })
+      .getOne()
+  }
+
+  async findUserByEmail(email: string): Promise<IUser | null> {
+    return (await this.repository).createQueryBuilder('user').addSelect('user.password_hash').where({ email }).getOne()
   }
 }
