@@ -1,3 +1,5 @@
+const { transform } = require('typescript');
+
 module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -31,6 +33,15 @@ module.exports = {
     extend: {
       height: {
         18: '4.5rem',
+      },
+      animation: {
+        'spin-load': 'spinFast 2s cubic-bezier(0,.99,.27,.87) infinite',
+      },
+      keyframes: {
+        spinFast: {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(180deg)' },
+        },
       },
     },
   },
