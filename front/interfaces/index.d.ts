@@ -68,7 +68,11 @@ export interface AxiosGetPost extends AxiosResponse {
   data: {
     data: {
       posts: IPost[];
+<<<<<<< HEAD
+    };
+=======
     }
+>>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   };
 }
 
@@ -76,7 +80,11 @@ export interface AxiosGetPostById extends AxiosResponse {
   data: {
     data: {
       post: IPost;
+<<<<<<< HEAD
+    };
+=======
     }
+>>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   };
 }
 
