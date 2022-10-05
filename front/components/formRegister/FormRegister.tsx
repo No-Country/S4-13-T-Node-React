@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { signup } from '../../redux/slice/userSignupSlice';
 import { RegisterProps } from '../../interfaces';
+import useToggleView from '../../hooks/useToggleView';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const validateRegisterSchema = Yup.object({
   email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
@@ -17,6 +19,8 @@ const validateRegisterSchema = Yup.object({
 
 const FormRegister = () => {
   const dispatch = useDispatch();
+
+  const { handleToggle, toggleView } = useToggleView();
 
   return (
     <>
@@ -34,7 +38,7 @@ const FormRegister = () => {
         >
           {({ errors, touched }) => {
             return (
-              <Form className="flex flex-col justify-center align-center gap-4">
+              <Form className="flex flex-col justify-center align-center gap-4 select-none">
                 <Field
                   name="username"
                   placeholder="Nombre"
@@ -50,13 +54,25 @@ const FormRegister = () => {
                   className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
                 />
                 {errors.email && touched.email ? <div className="text-xs">{errors.email}</div> : null}
-                <Field
-                  name="password"
-                  type="password"
-                  autoComplete="off"
-                  placeholder="Contraseña"
-                  className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
-                />
+                <div className="relative">
+                  <Field
+                    name="password"
+                    type={`${toggleView ? 'text' : 'password'}`}
+                    autoComplete="off"
+                    placeholder="Contraseña"
+                    className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
+                  />
+                  <div className="absolute top-2 right-5 text-xl">
+                    <AiFillEye
+                      className={`cursor-pointer ${toggleView ? 'hidden' : 'block'} `}
+                      onClick={handleToggle}
+                    />
+                    <AiFillEyeInvisible
+                      className={`cursor-pointer ${toggleView ? 'block' : 'hidden'} `}
+                      onClick={handleToggle}
+                    />
+                  </div>
+                </div>
                 {errors.password && touched.password ? <div className="text-xs">{errors.password}</div> : null}
                 <button
                   type="submit"

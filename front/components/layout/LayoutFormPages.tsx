@@ -4,7 +4,7 @@ import NavForms from '../navbar/navForms/NavForms';
 
 const LayoutFormPages = ({ children, heading }: HCProps) => {
   return (
-    <div className="min-h-full min-w-[100vw] flex flex-col items-center">
+    <div className="min-h-full min-w-[100vw] flex flex-col items-center select-none">
       <NavForms title={heading} />
       {children}
     </div>
