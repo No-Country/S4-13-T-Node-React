@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IPost } from '../../interfaces';
 import { getPost } from '../../services/api-calls';
-import CardPost from '../cardPost/CardPost';
+import CardPost from './cardPost/CardPost';
+import Loading from '../loading/Loading';
 
 const PostsContainer = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getPost().then(posts => (posts ? setPosts(posts) : null));
+    getPost().then(posts => {
+      posts ? setPosts(posts) : null;
+      setLoading(false);
+    });
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="px-2 mx-auto">
       {posts

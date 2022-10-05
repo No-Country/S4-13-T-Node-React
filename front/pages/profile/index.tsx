@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import CardPost from '../../components/cardPost/CardPost';
 import Layout from '../../components/layout/Layout';
 import UpdatedMemesContainer from '../../components/uploadedMemes/UpdatedMemesContainer';
 import UserContainer from '../../components/user/UserContainer';
@@ -14,14 +13,14 @@ const Register: NextPage = () => {
       </Head>
 
       <Layout>
-        <>  
-          <UserContainer/>
-          <div className='px-2 mt-8 sm:mx-auto'>
-            <h2 className='pl-6 font-orelega text-xl mb-4'>Mis memes subidos</h2>
-          <UpdatedMemesContainer/>         
-          <UpdatedMemesContainer/> 
-          </div>        
-        </>       
+        <>
+          <UserContainer />
+          <div className="px-2 mt-8 sm:mx-auto">
+            <h2 className="pl-6 font-orelega text-xl mb-4">Mis memes subidos</h2>
+            <UpdatedMemesContainer />
+            <UpdatedMemesContainer />
+          </div>
+        </>
       </Layout>
     </div>
   );
