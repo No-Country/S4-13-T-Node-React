@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm'
-import { IUser } from '../Interfaces/user.interfaces'
+import { IUser, RoleTypes } from '../Interfaces/user.interfaces'
 import { BaseEntity } from './base.entity'
 import { Comment } from './comment.entity'
 import { Favorite } from './favorite.entity'
@@ -11,11 +11,11 @@ export class User extends BaseEntity implements IUser {
   @Column({ unique: true })
   username: string
 
-  @Column()
-  password_hash: string
+  @Column({ select: false })
+  password: string
 
   @Column({ type: 'text', array: true, default: ['User'], enum: ['Admin', 'User'] })
-  role: string[]
+  role: RoleTypes[]
 
   @Column()
   email: string

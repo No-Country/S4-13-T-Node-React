@@ -3,7 +3,7 @@ import { IBaseDTO } from './base.interfaces'
 
 export interface IPostDTO extends IBaseDTO {
   title: string
-  tag: string
+  tags: string[]
   media_url: string
   user: User
 }

@@ -4,6 +4,8 @@ import cors from 'cors'
 import { ConfigServer } from './Config/config'
 import { PostRouter } from './Routes/post.routes'
 import { UserRouter } from './Routes/user.routes'
+import { LoginStrategy } from './Strategies/login.strategy'
+import { JwtStrategy } from './Strategies/jwt.strategy'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -13,6 +15,7 @@ export class Server extends ConfigServer {
     super()
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
+    this.passportUse()
 
     this.dbConnect().then(() => {
       console.log('Database connected.')
@@ -23,6 +26,10 @@ export class Server extends ConfigServer {
 
     this.app.use(this.routers())
     this.listen()
+  }
+
+  passportUse() {
+    return [new LoginStrategy().use, new JwtStrategy().use]
   }
 
   routers(): express.Router[] {

@@ -1,5 +1,16 @@
 import { IPostDTO } from '../Interfaces/post.interfaces'
-import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength, Min, MinLength } from 'class-validator'
+import {
+  IsArray,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator'
 import { BaseDTO } from './base.dto'
 import { User } from '../Entities/user.entity'
 
@@ -9,10 +20,9 @@ export class PostDTO extends BaseDTO implements IPostDTO {
   @MinLength(6)
   title: string
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
-  @MinLength(3)
-  tag: string
+  tags: string[]
 
   @IsUrl()
   @IsNotEmpty()
