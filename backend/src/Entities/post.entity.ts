@@ -14,8 +14,8 @@ export class Post extends BaseEntity implements IPostDTO {
   @Column()
   media_url: string
 
-  @Column()
-  tag: string
+  @Column({ type: 'text', array: true })
+  tags: string[]
 
   @ManyToOne(() => User, user => user.post)
   @JoinColumn({ name: 'user_id' })

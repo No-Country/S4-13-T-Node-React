@@ -10,13 +10,13 @@ export class PostMiddleware extends BaseMiddleware {
   }
 
   createPost(req: Request, res: Response, next: NextFunction) {
-    const { title, tag, media_url, user }: IPostDTO = req.body
+    const { title, tags, media_url, user }: IPostDTO = req.body
 
     const valid = new PostDTO()
 
     valid.title = title
     valid.media_url = media_url
-    valid.tag = tag
+    valid.tags = tags
     valid.user = user
 
     validate(valid, { validationError: { target: false } }).then(err => {
