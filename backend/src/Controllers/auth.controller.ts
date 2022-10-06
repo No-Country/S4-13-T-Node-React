@@ -28,4 +28,24 @@ export class AuthController extends AuthService {
       return this.httpResponse.Error(res, error)
     }
   }
+
+  async google_login(req: Request, res: Response) {
+    try {
+      const userEncode = req.user as IUser
+
+      const encode = await this.generateJWT(userEncode)
+
+      if (!encode) {
+        return this.httpResponse.Unauthorized(res, 'No permissions.')
+      }
+
+      res.header('Content-Type', 'application/json')
+      res.cookie('access_token', encode.access_token, { maxAge: 60000 * 15 })
+      res.write(JSON.stringify(encode))
+
+      res.end()
+    } catch (error) {
+      return this.httpResponse.Error(res, error)
+    }
+  }
 }

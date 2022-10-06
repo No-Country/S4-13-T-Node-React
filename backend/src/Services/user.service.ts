@@ -1,4 +1,4 @@
-import { IUser, RoleTypes, UpdateUser } from '../Interfaces/user.interfaces'
+import { CreateUserDTO, RoleTypes, UpdateUser } from '../Interfaces/user.interfaces'
 import { UserRepository } from '../Repository/user.repository'
 import * as bcrypt from 'bcryptjs'
 
@@ -8,10 +8,12 @@ export class UserService {
     this.alias = 'user'
   }
 
-  async createUser(user: IUser) {
+  async createUser(user: CreateUserDTO) {
     const newUser = (await this.userRepository.repository).create(user)
-    const hash = await bcrypt.hash(newUser.password, 10)
-    newUser.password = hash
+    if (user.password) {
+      const hash = await bcrypt.hash(newUser.password!, 10)
+      newUser.password = hash
+    }
     return await this.userRepository.create(newUser)
   }
 

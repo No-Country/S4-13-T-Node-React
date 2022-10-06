@@ -7,6 +7,13 @@ export enum RoleTypes {
   ADMIN = 'Admin',
 }
 
+export interface CreateUserDTO {
+  username: string
+  email: string
+  password?: string
+  google_id?: string
+}
+
 export interface IUserDTO extends IBaseDTO {
   username: string
   role?: RoleTypes[]
@@ -16,7 +23,7 @@ export interface IUserDTO extends IBaseDTO {
 }
 
 export interface IUser extends IUserDTO {
-  password: string
+  password: string | null
 }
 
 export interface RequestUser extends Express.User {

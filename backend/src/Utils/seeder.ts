@@ -25,7 +25,23 @@ class Seeder extends ConfigServer {
       email: 'juliyache@test.com',
       role: [RoleTypes.ADMIN, RoleTypes.USER],
     })
-    console.log(`User created`)
+    console.log(`User yache created`)
+
+    await user.save({
+      username: 'admin',
+      password: password_hash,
+      email: 'admin@test.com',
+      role: [RoleTypes.ADMIN, RoleTypes.USER],
+    })
+    console.log(`User admin created`)
+
+    await user.save({
+      username: 'user',
+      password: password_hash,
+      email: 'user@test.com',
+      role: [RoleTypes.USER],
+    })
+    console.log(`User common created`)
   }
 
   async createPosts(dataSource: DataSource) {

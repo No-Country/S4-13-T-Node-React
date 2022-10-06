@@ -8,10 +8,13 @@ import { Post } from './post.entity'
 
 @Entity()
 export class User extends BaseEntity implements IUser {
+  @Column({ unique: true, nullable: true, default: null })
+  google_id: string
+
   @Column({ unique: true })
   username: string
 
-  @Column({ select: false })
+  @Column({ select: false, nullable: true, default: null })
   password: string
 
   @Column({ type: 'text', array: true, default: ['User'], enum: ['Admin', 'User'] })

@@ -16,7 +16,7 @@ export class UserMiddleware extends BaseMiddleware {
 
     valid.username = username
     valid.email = email
-    valid.password = password
+    valid.password = password!
 
     validate(valid, { validationError: { target: false } }).then(err => {
       if (err.length > 0) {
