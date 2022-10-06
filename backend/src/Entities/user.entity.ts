@@ -17,7 +17,7 @@ export class User extends BaseEntity implements IUser {
   @Column({ type: 'text', array: true, default: ['User'], enum: ['Admin', 'User'] })
   role: RoleTypes[]
 
-  @Column()
+  @Column({ unique: true })
   email: string
 
   @OneToMany(() => Post, post => post.user)

@@ -21,6 +21,13 @@ export class PostService {
     return [posts, total, last_page]
   }
 
+  async getPostsByUser(page: number = 1, size: number = 20, sort: string, id: number) {
+    const [posts, total] = await this.postRepository.getPostsByUser(id, { page, size, sort })
+
+    const last_page = Math.ceil(total / size)
+    return [posts, total, last_page]
+  }
+
   async getPost(id: number) {
     return await this.postRepository.getPostWithComments(id)
   }

@@ -12,35 +12,39 @@ export class AuthService extends ConfigServer {
 
   public async validateUser(username: string, password: string): Promise<IUser | null> {
     const userByUsername = await this.userService.findByUsername(username)
-    const userByEmail = await this.userService.findByUsername(username)
+    const userByEmail = await this.userService.findByEmail(username)
 
     if (userByUsername) {
       const isMatch = await bcrypt.compare(password, userByUsername.password)
-      isMatch && userByUsername
+      if (isMatch) {
+        return userByUsername
+      }
     }
 
     if (userByEmail) {
       const isMatch = await bcrypt.compare(password, userByEmail.password)
-      isMatch && userByEmail
+      if (isMatch) {
+        return userByEmail
+      }
     }
 
     return null
   }
 
   sing(payload: jwt.JwtPayload, jwt_secret: any) {
-    return this.jwtInstance.sign(payload, jwt_secret)
+    return this.jwtInstance.sign(payload, jwt_secret, { expiresIn: '15m' })
   }
 
   public async generateJWT(user: IUser): Promise<{ access_token: string; user: IUser }> {
-    const userConsult = await this.userService.getUserWithRole(user.id, user.role)
+    const userConsult = await this.userService.getUserWithRole(user.id, user.role!)
 
     const payload: PayloadToken = {
-      role: userConsult!.role,
+      role: userConsult!.role!,
       sub: userConsult!.id,
     }
 
     if (userConsult) {
-      user.password = 'Not permission'
+      user.password = 'No permission.'
     }
 
     return {

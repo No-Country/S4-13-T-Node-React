@@ -1,15 +1,20 @@
 import { Request, Response } from 'express'
 import { PostService } from '../Services/post.service'
 import { HttpResponse } from '../Utils/http.response'
-
-export class PostController {
+import { ConfigServer } from '../Config/config'
+import { RequestUser } from '../Interfaces/user.interfaces'
+export class PostController extends ConfigServer {
   constructor(
     private readonly postService: PostService = new PostService(),
     private readonly httpResponse: HttpResponse = new HttpResponse()
-  ) {}
+  ) {
+    super()
+  }
   async createPost(req: Request, res: Response) {
     try {
+      const user = req.user as RequestUser
       const post = req.body
+      post.user = user.sub
       const result = await this.postService.createPost(post)
       this.httpResponse.Ok(res, { message: 'Post Created Successfully.', post: result })
     } catch (error) {

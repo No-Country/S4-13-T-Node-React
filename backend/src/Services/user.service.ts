@@ -1,4 +1,4 @@
-import { IUser, IUserDTO, RoleTypes } from '../Interfaces/user.interfaces'
+import { IUser, RoleTypes, UpdateUser } from '../Interfaces/user.interfaces'
 import { UserRepository } from '../Repository/user.repository'
 import * as bcrypt from 'bcryptjs'
 
@@ -25,20 +25,28 @@ export class UserService {
     return await this.userRepository.get(id, this.alias)
   }
 
-  async getUserWithFavorites(id: number) {
-    return await this.userRepository.getUserWithFavorites(id)
+  async getUserWithPosts(id: number, page: number, size: number, sort: string) {
+    return await this.userRepository.getUserWithPosts(id, { page, size, sort })
   }
 
-  async getUserWithLikes(id: number) {
-    return await this.userRepository.getUserWithLikes(id)
+  async getUserWithFavorites(id: number, page: number, size: number, sort: string) {
+    return await this.userRepository.getUserWithFavorites(id, { page, size, sort })
+  }
+
+  async getUserWithLikes(id: number, page: number, size: number, sort: string) {
+    return await this.userRepository.getUserWithLikes(id, { page, size, sort })
   }
 
   async getUserWithRole(id: number, role: RoleTypes[]) {
     return await this.userRepository.getUserWithRole(id, role)
   }
 
-  async updateUser(id: number, data: IUserDTO) {
-    const updated = await this.userRepository.update(id, data)
+  async updateUser(id: number, user: UpdateUser) {
+    if (user.password) {
+      const hash = await bcrypt.hash(user.password, 10)
+      user.password = hash
+    }
+    const updated = await this.userRepository.update(id, user)
     if (updated.affected === 0) {
       return { error: 'User not found or is deleted.' }
     }
@@ -58,6 +66,6 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return await this.userRepository.findUserByUsername(email)
+    return await this.userRepository.findUserByEmail(email)
   }
 }

@@ -5,7 +5,7 @@ export interface IPostDTO extends IBaseDTO {
   title: string
   tags: string[]
   media_url: string
-  user: User
+  user?: User
 }
 
 export interface IPost extends IPostDTO {

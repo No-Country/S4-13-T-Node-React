@@ -9,19 +9,17 @@ export class PostMiddleware extends BaseMiddleware {
     super()
   }
 
-  createPost(req: Request, res: Response, next: NextFunction) {
-    const { title, tags, media_url, user }: IPostDTO = req.body
+  createPostValidator(req: Request, res: Response, next: NextFunction) {
+    const { title, tags, media_url }: IPostDTO = req.body
 
     const valid = new PostDTO()
 
     valid.title = title
     valid.media_url = media_url
     valid.tags = tags
-    valid.user = user
 
     validate(valid, { validationError: { target: false } }).then(err => {
       if (err.length > 0) {
-        // return this.httpResponse.Error(res,err)
         return this.httpResponse.BadRequest(res, err)
       } else {
         next()
@@ -29,8 +27,8 @@ export class PostMiddleware extends BaseMiddleware {
     })
   }
 
-  getRequestPost(req: Request, res: Response, next: NextFunction) {
-    const { page = 1, size = 20, sort = 'desc' } = req.query
+  getPostsValidator(req: Request, res: Response, next: NextFunction) {
+    const { page = '1', size = '20', sort = 'desc' } = req.query
 
     const valid = new getPostRequest()
 
@@ -47,15 +45,15 @@ export class PostMiddleware extends BaseMiddleware {
     })
   }
 
-  getUpdatePost(req: Request, res: Response, next: NextFunction) {
-    const { title, tag } = req.body
+  updatePostValidator(req: Request, res: Response, next: NextFunction) {
+    const { title, tags }: updatePostRequest = req.body
 
     const valid = new updatePostRequest()
 
-    valid.tag = tag
+    valid.tags = tags
     valid.title = title
 
-    if (title || tag) {
+    if (title || tags) {
       validate(valid, { validationError: { target: false } }).then(err => {
         if (err.length > 0) {
           return this.httpResponse.BadRequest(res, err)

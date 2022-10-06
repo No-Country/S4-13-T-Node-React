@@ -6,6 +6,7 @@ import { PostRouter } from './Routes/post.routes'
 import { UserRouter } from './Routes/user.routes'
 import { LoginStrategy } from './Strategies/login.strategy'
 import { JwtStrategy } from './Strategies/jwt.strategy'
+import { AuthRouter } from './Routes/auth.routes'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -15,6 +16,7 @@ export class Server extends ConfigServer {
     super()
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
+
     this.passportUse()
 
     this.dbConnect().then(() => {
@@ -33,7 +35,7 @@ export class Server extends ConfigServer {
   }
 
   routers(): express.Router[] {
-    return [new PostRouter().router, new UserRouter().router]
+    return [new PostRouter().router, new UserRouter().router, new AuthRouter().router]
   }
 
   public listen() {
