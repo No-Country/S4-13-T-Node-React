@@ -11,6 +11,9 @@ export class User extends BaseEntity implements IUser {
   @Column({ unique: true, nullable: true, default: null })
   google_id: string
 
+  @Column({ unique: true, nullable: true, default: null })
+  facebook_id: string
+
   @Column({ unique: true })
   username: string
 
@@ -23,7 +26,7 @@ export class User extends BaseEntity implements IUser {
   @Column({ type: 'text', array: true, default: ['User'], enum: ['Admin', 'User'] })
   role: RoleTypes[]
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true, default: null })
   email: string
 
   @OneToMany(() => Post, post => post.user)

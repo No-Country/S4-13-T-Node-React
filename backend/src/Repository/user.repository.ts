@@ -69,4 +69,8 @@ export class UserRepository extends BaseRepository<IUser> {
   async findUserByEmail(email: string): Promise<IUser | null> {
     return (await this.repository).createQueryBuilder('user').addSelect('user.password').where({ email }).getOne()
   }
+
+  async findUserByFacebookID(id: string): Promise<IUser | null> {
+    return (await this.repository).createQueryBuilder('user').where({ facebook_id: id }).getOne()
+  }
 }
