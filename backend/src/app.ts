@@ -8,6 +8,7 @@ import { LoginStrategy } from './Strategies/login.strategy'
 import { JwtStrategy } from './Strategies/jwt.strategy'
 import { AuthRouter } from './Routes/auth.routes'
 import { GoogleStrategy } from './Strategies/google.strategy'
+import { FacebookStrategy } from './Strategies/facebook.strategy'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -25,7 +26,7 @@ export class Server extends ConfigServer {
     })
 
     this.app.get('/', (req, res) => {
-      res.send('<a href="/login/google">Google</a>')
+      res.send('<a href="/login/google">Google</a><a href="/login/facebook">Facebook</a>') // Para probar el login de google
     })
 
     this.app.use(morgan('dev'))
@@ -36,7 +37,7 @@ export class Server extends ConfigServer {
   }
 
   passportUse() {
-    return [new LoginStrategy().use, new JwtStrategy().use, new GoogleStrategy().use]
+    return [new LoginStrategy().use, new JwtStrategy().use, new GoogleStrategy().use, new FacebookStrategy().use]
   }
 
   routers(): express.Router[] {

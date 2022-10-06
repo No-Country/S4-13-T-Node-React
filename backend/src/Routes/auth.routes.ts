@@ -19,14 +19,25 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
         '/login/google/callback',
         this.middleware.passAuth('google', {
           session: false,
-          // successRedirect: '/auth/google/success',
-          failureRedirect: '/auth/google/failure',
+          // successRedirect: '/login/google/success',
+          failureRedirect: '/login/failure',
         }),
         (req, res) => {
-          this.controller.google_login(req, res)
+          this.controller.login(req, res)
         }
       )
-      .get('/auth/google/failure', (req, res) => {
+      .get(
+        '/login/facebook',
+        this.middleware.passAuth('facebook', { session: false, scope: ['email', 'user_location'] })
+      )
+      .get(
+        '/login/facebook/callback',
+        this.middleware.passAuth('facebook', { session: false, failureRedirect: '/login/failure' }),
+        (req, res) => {
+          this.controller.login(req, res)
+        }
+      )
+      .get('/login/failure', (req, res) => {
         this.httpResponse.BadRequest(res, 'Something went wrong.')
       })
   }

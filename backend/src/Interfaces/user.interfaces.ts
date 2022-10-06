@@ -9,9 +9,10 @@ export enum RoleTypes {
 
 export interface CreateUserDTO {
   username: string
-  email: string
+  email?: string
   password?: string
   google_id?: string
+  facebook_id?: string
   avatar_url?: string
 }
 

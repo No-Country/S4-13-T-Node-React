@@ -70,4 +70,8 @@ export class UserService {
   async findByEmail(email: string) {
     return await this.userRepository.findUserByEmail(email)
   }
+
+  async findByFacebookID(id: string) {
+    return await this.userRepository.findUserByFacebookID(id)
+  }
 }
