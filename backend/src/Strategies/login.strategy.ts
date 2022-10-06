@@ -1,6 +1,6 @@
 import { IUser } from '../Interfaces/user.interfaces'
 import { AuthService } from '../Services/auth.service'
-import { PassportUse } from '../Utils/passport.user'
+import { PassportUse } from '../Utils/passport.use'
 import { Strategy as LocalStrategy, VerifyFunction } from 'passport-local'
 
 const authService: AuthService = new AuthService()

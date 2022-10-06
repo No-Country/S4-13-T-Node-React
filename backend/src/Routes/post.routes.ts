@@ -11,7 +11,7 @@ export class PostRouter extends BaseRouter<PostController, PostMiddleware> {
     this.router
       .route('/post')
       .post(
-        this.middleware.passAuth('jwt'),
+        this.middleware.passAuth('jwt', { session: false }),
         (req, res, next) => {
           this.middleware.createPostValidator(req, res, next)
         },
@@ -34,7 +34,7 @@ export class PostRouter extends BaseRouter<PostController, PostMiddleware> {
         this.controller.getPost(req, res)
       })
       .put(
-        this.middleware.passAuth('jwt'),
+        this.middleware.passAuth('jwt', { session: false }),
         (req, res, next) => this.middleware.checkUserIsPostOwner(req, res, next),
         (req, res, next) => {
           this.middleware.updatePostValidator(req, res, next)
@@ -44,7 +44,7 @@ export class PostRouter extends BaseRouter<PostController, PostMiddleware> {
         }
       )
       .delete(
-        this.middleware.passAuth('jwt'),
+        this.middleware.passAuth('jwt', { session: false }),
         (req, res, next) => this.middleware.checkUserIsPostOwner(req, res, next),
         (req, res) => {
           this.controller.removePost(req, res)

@@ -7,6 +7,7 @@ import { UserRouter } from './Routes/user.routes'
 import { LoginStrategy } from './Strategies/login.strategy'
 import { JwtStrategy } from './Strategies/jwt.strategy'
 import { AuthRouter } from './Routes/auth.routes'
+import { GoogleStrategy } from './Strategies/google.strategy'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -23,6 +24,10 @@ export class Server extends ConfigServer {
       console.log('Database connected.')
     })
 
+    this.app.get('/', (req, res) => {
+      res.send('<a href="/login/google">Google</a>')
+    })
+
     this.app.use(morgan('dev'))
     this.app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 
@@ -31,7 +36,7 @@ export class Server extends ConfigServer {
   }
 
   passportUse() {
-    return [new LoginStrategy().use, new JwtStrategy().use]
+    return [new LoginStrategy().use, new JwtStrategy().use, new GoogleStrategy().use]
   }
 
   routers(): express.Router[] {

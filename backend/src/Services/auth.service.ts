@@ -15,14 +15,14 @@ export class AuthService extends ConfigServer {
     const userByEmail = await this.userService.findByEmail(username)
 
     if (userByUsername) {
-      const isMatch = await bcrypt.compare(password, userByUsername.password)
+      const isMatch = await bcrypt.compare(password, userByUsername.password!)
       if (isMatch) {
         return userByUsername
       }
     }
 
     if (userByEmail) {
-      const isMatch = await bcrypt.compare(password, userByEmail.password)
+      const isMatch = await bcrypt.compare(password, userByEmail.password!)
       if (isMatch) {
         return userByEmail
       }

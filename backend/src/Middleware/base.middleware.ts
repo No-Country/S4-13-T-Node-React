@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
-import passport from 'passport'
+import passport, { AuthenticateOptions } from 'passport'
 import { RequestUser, RoleTypes } from '../Interfaces/user.interfaces'
 import { HttpResponse } from '../Utils/http.response'
 import { PostService } from '../Services/post.service'
 import { UserService } from '../Services/user.service'
+import { VerifyCallback } from 'passport-jwt'
 
 export class BaseMiddleware {
   constructor(
@@ -12,8 +13,8 @@ export class BaseMiddleware {
     private readonly userService: UserService = new UserService()
   ) {}
 
-  passAuth(type: string) {
-    return passport.authenticate(type, { session: false })
+  passAuth(type: string, callback: AuthenticateOptions) {
+    return passport.authenticate(type, callback)
   }
 
   checkAdminRole(req: Request, res: Response, next: NextFunction) {

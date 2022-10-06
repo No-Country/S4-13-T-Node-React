@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { AuthController } from '../Controllers/auth.controller'
 import { BaseMiddleware } from '../Middleware/base.middleware'
 import { HttpResponse } from '../Utils/http.response'
@@ -10,8 +10,24 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
   }
 
   routes(): void {
-    this.router.post('/login', this.middleware.passAuth('login'), (req: Request, res: Response) =>
-      this.controller.login(req, res)
-    )
+    this.router
+      .post('/login', this.middleware.passAuth('login', { session: false }), (req: Request, res: Response) =>
+        this.controller.login(req, res)
+      )
+      .get('/login/google', this.middleware.passAuth('google', { session: false, scope: ['email', 'profile'] }))
+      .get(
+        '/login/google/callback',
+        this.middleware.passAuth('google', {
+          session: false,
+          // successRedirect: '/auth/google/success',
+          failureRedirect: '/auth/google/failure',
+        }),
+        (req, res) => {
+          this.controller.google_login(req, res)
+        }
+      )
+      .get('/auth/google/failure', (req, res) => {
+        this.httpResponse.BadRequest(res, 'Something went wrong.')
+      })
   }
 }
