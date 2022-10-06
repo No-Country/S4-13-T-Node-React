@@ -6,6 +6,9 @@ const useAxios = () => {
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
+    headers: {
+      // "access_token": //lo agarra de redux
+    },
   });
 
   // axiosInstance.interceptors.request.use(async req => {

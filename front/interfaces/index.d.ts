@@ -61,18 +61,14 @@ export interface IPost {
   user_id?: number;
   user: {
     username: string;
-  }
+  };
 }
 
 export interface AxiosGetPost extends AxiosResponse {
   data: {
     data: {
       posts: IPost[];
-<<<<<<< HEAD
     };
-=======
-    }
->>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   };
 }
 
@@ -80,11 +76,7 @@ export interface AxiosGetPostById extends AxiosResponse {
   data: {
     data: {
       post: IPost;
-<<<<<<< HEAD
     };
-=======
-    }
->>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   };
 }
 
@@ -95,7 +87,7 @@ export interface RegisterProps {
 }
 export interface LoginProps {
   username?: string;
-  email: string;
+  email?: string;
   password: string;
 }
 
@@ -106,4 +98,13 @@ export interface FormLinksProps {
 
 export interface MDProps {
   social: string;
+}
+
+export interface GetUserData {
+  access_token: string;
+  user: {
+    username: string;
+    email: string;
+    role: string[];
+  };
 }

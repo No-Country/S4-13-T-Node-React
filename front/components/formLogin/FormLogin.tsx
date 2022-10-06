@@ -2,17 +2,20 @@ import { Formik, Form, Field } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/slice/userLoginSlice';
-import { LoginProps } from '../../interfaces';
+import { getData } from '../../redux/slice/userDataSlice';
+import { GetUserData, LoginProps } from '../../interfaces';
 import Link from 'next/link';
+
+import { postLogin } from '../../services/auth-calls';
 
 import { AiFillEye } from 'react-icons/ai';
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import useToggleView from '../../hooks/useToggleView';
 
 const validateLoginSchema = Yup.object({
-  email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
+  username: Yup.string().min(5, 'muy corto!').required('Campo requerido'),
   password: Yup.string().min(6, 'El password debe tener al menos 6 caracteres').required('Password requerido'),
 });
 
@@ -25,9 +28,10 @@ const FormLogin = () => {
     <>
       {
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ username: '', password: '' }}
           onSubmit={(values: LoginProps, { resetForm }) => {
             dispatch(login(values));
+
             resetForm();
           }}
           validationSchema={validateLoginSchema}
@@ -36,12 +40,12 @@ const FormLogin = () => {
             return (
               <Form className="flex flex-col justify-center align-center mt-16 gap-2 select-none">
                 <Field
-                  name="email"
-                  type="email"
-                  placeholder="Email"
+                  name="username"
+                  type="text"
+                  placeholder="Email o Username"
                   className=" font-roboto border-[1px] border-accent rounded-[4px] w-[295px] px-4 py-1"
                 />
-                {errors.email && touched.email ? <div className="text-xs">{errors.email}</div> : null}
+                {errors.username && touched.username ? <div className="text-xs">{errors.username}</div> : null}
 
                 <div className="relative">
                   <Field
