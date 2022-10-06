@@ -14,6 +14,9 @@ export class User extends BaseEntity implements IUser {
   @Column({ unique: true })
   username: string
 
+  @Column({ default: 'https://loremflickr.com/640/480/cats' })
+  avatar_url: string
+
   @Column({ select: false, nullable: true, default: null })
   password: string
 

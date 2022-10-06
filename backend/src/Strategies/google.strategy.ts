@@ -9,7 +9,7 @@ const userService: UserService = new UserService()
 
 export class GoogleStrategy extends AuthService {
   async validate(req: Request, accessToken: string, refreshToken: string, profile: any, done: VerifyCallback) {
-    const { email, given_name, family_name, id } = profile
+    const { email, given_name, family_name, id, picture } = profile
     const user_found = await userService.findByEmail(email)
 
     if (user_found) {
@@ -20,6 +20,7 @@ export class GoogleStrategy extends AuthService {
         google_id: id,
         email,
         username: `${given_name}.${family_name}.${id}`,
+        avatar_url: picture,
       })
       req.user = user
       return done(null, user)

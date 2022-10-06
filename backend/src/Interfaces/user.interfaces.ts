@@ -12,10 +12,12 @@ export interface CreateUserDTO {
   email: string
   password?: string
   google_id?: string
+  avatar_url?: string
 }
 
 export interface IUserDTO extends IBaseDTO {
   username: string
+  avatar_url?: string
   role?: RoleTypes[]
   email: string
   likes?: Like[]
