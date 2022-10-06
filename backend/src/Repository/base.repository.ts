@@ -45,9 +45,7 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
       builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
     }
 
-    builder.where({ id })
-
-    return await builder.getOne()
+    return await builder.where({ id }).getOne()
   }
 
   async update(id: any, data: any, query?: Query | undefined): Promise<UpdateResult> {

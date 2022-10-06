@@ -9,12 +9,25 @@ export enum RoleTypes {
 
 export interface IUserDTO extends IBaseDTO {
   username: string
-  role: RoleTypes[]
+  role?: RoleTypes[]
   email: string
-  likes: Like[]
-  comments: Comment[]
+  likes?: Like[]
+  comments?: Comment[]
 }
 
 export interface IUser extends IUserDTO {
+  password: string
+}
+
+export interface RequestUser extends Express.User {
+  sub: number
+  role: RoleTypes[]
+  iat: number
+  exp: number
+}
+
+export interface UpdateUser {
+  username: string
+  email: string
   password: string
 }

@@ -16,7 +16,7 @@ export class JwtStrategy extends AuthService {
     return PassportUse<JwtStr, StrategyOptions, (payload: PayloadToken, done: any) => Promise<PayloadToken>>(
       'jwt',
       JwtStr,
-      { jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), secretOrKey: this.getEnvironment('JWT_SECRET') },
+      { jwtFromRequest: ExtractJwt.fromHeader('access_token'), secretOrKey: this.getEnvironment('JWT_SECRET') },
       this.validate
     )
   }

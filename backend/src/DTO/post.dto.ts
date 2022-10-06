@@ -12,7 +12,6 @@ import {
   MinLength,
 } from 'class-validator'
 import { BaseDTO } from './base.dto'
-import { User } from '../Entities/user.entity'
 
 export class PostDTO extends BaseDTO implements IPostDTO {
   @IsString()
@@ -28,21 +27,21 @@ export class PostDTO extends BaseDTO implements IPostDTO {
   @IsNotEmpty()
   media_url: string
 
-  @IsNumber()
-  @IsNotEmpty()
-  user: User
+  // @IsNumber()
+  // @IsNotEmpty()
+  // user: User
 }
 
 const sort = ['asc', 'ASC', 'desc', 'DESC']
 
 export class getPostRequest {
-  @IsOptional()
   // @IsNumberString()
+  @IsOptional()
   @Min(1)
   page: any
 
-  @IsOptional()
   // @IsNumberString()
+  @IsOptional()
   @Min(1)
   size: any
 
@@ -57,10 +56,10 @@ export class updatePostRequest {
   @IsOptional()
   @IsNotEmpty()
   @MinLength(3)
-  title: any
+  title: string
 
   @IsOptional()
+  @IsArray()
   @IsNotEmpty()
-  @MinLength(3)
-  tag: any
+  tags: string[]
 }

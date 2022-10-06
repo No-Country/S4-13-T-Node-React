@@ -8,7 +8,7 @@ const authService: AuthService = new AuthService()
 export class LoginStrategy {
   async validate(username: string, password: string, done: any): Promise<IUser> {
     const user = await authService.validateUser(username, password)
-    if (user) {
+    if (!user) {
       return done(null, false, { message: 'Invalid username or password' })
     }
 

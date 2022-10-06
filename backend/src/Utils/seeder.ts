@@ -4,6 +4,7 @@ import { ConfigServer } from '../Config/config'
 import { Post } from '../Entities/post.entity'
 import { User } from '../Entities/user.entity'
 import * as bcrypt from 'bcryptjs'
+import { RoleTypes } from '../Interfaces/user.interfaces'
 class Seeder extends ConfigServer {
   constructor() {
     super()
@@ -22,6 +23,7 @@ class Seeder extends ConfigServer {
       username: 'yache',
       password: password_hash,
       email: 'juliyache@test.com',
+      role: [RoleTypes.ADMIN, RoleTypes.USER],
     })
     console.log(`User created`)
   }
