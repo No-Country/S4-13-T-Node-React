@@ -19,7 +19,7 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
         '/login/google/callback',
         this.middleware.passAuth('google', {
           session: false,
-          // successRedirect: '/login/google/success',
+          // successRedirect: 'http://localhost:3000/login',
           failureRedirect: '/login/failure',
         }),
         (req, res) => {

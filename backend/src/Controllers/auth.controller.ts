@@ -20,9 +20,12 @@ export class AuthController extends AuthService {
 
       res.header('Content-Type', 'application/json')
       res.cookie('access_token', encode.access_token, { maxAge: 60000 * 15 })
-      res.write(JSON.stringify(encode))
+      // res.write(JSON.stringify(encode))
 
-      res.end()
+      // TODO, SEND TO COOKIE REFRESH_TOKEN AND USER INFO
+
+      res.redirect('http://localhost:3000/')
+      // res.end()
     } catch (error) {
       console.error(error)
       return this.httpResponse.Error(res, error)

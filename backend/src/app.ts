@@ -30,7 +30,7 @@ export class Server extends ConfigServer {
     })
 
     this.app.use(morgan('dev'))
-    this.app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+    this.app.use(cors({ credentials: true, origin: true }))
 
     this.app.use(this.routers())
     this.listen()
