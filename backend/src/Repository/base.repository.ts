@@ -21,7 +21,7 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
   }
 
   async list(alias: string, relation?: string, query?: QueryList): Promise<[T[], number]> {
-    const { size, page, sort } = query!
+    const { size, page, sort, word, property } = query!
 
     const builder = (await this.repository).createQueryBuilder(alias)
 
@@ -33,6 +33,11 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
       .offset((page - 1) * size)
       .limit(size)
       .orderBy(`${alias}.created_at`, sort.toUpperCase())
+
+    console.log(word && property)
+    if (word && property) {
+      builder.where(`${alias}.${property} like :word`, { word: `%${word}%` })
+    }
 
     const [list, total] = await builder.getManyAndCount()
     return [list, total]

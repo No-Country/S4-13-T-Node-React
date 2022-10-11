@@ -24,8 +24,8 @@ export class PostController extends ConfigServer {
 
   async getPosts(req: Request, res: Response) {
     try {
-      const { page = '1', size = '20', sort = 'desc' } = req.query
-      const [posts, total, last_page] = await this.postService.getPosts(Number(page), Number(size), String(sort))
+      const { page = '1', size = '20', sort = 'desc', word } = req.query
+      const [posts, total, last_page] = await this.postService.getPosts(Number(page), Number(size), sort, word)
       return this.httpResponse.Ok(res, { posts, actual_page: Number(page), size: Number(size), total, last_page })
     } catch (error) {
       return this.httpResponse.Error(res, error)

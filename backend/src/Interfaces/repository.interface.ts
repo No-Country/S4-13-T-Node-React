@@ -7,6 +7,8 @@ export interface QueryList {
   size: number
   page: number
   sort: any
+  word?: string
+  property?: string
 }
 
 export type Id = number
