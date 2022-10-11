@@ -220,6 +220,12 @@
             "description": "change between return older posts or newer",
             "enum": ["desc", "asc"],
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "word",
+            "description": "Search a post by the word given",
+            "type": "string"
           }
         ],
         "responses": {
