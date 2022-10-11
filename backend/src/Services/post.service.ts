@@ -11,11 +11,13 @@ export class PostService {
   async createPost(post: IPost) {
     return await this.postRepository.create(post)
   }
-  async getPosts(page: number = 1, size: number = 20, sort: string) {
+  async getPosts(page: any = 1, size: any = 20, sort: any, word?: any) {
     const [posts, total] = await this.postRepository.list(this.alias, this.relation, {
       size,
       page,
       sort,
+      word,
+      property: 'title',
     })
     const last_page = Math.ceil(total / size)
     return [posts, total, last_page]
