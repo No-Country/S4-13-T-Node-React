@@ -7,7 +7,7 @@ import { PayloadToken } from '../Interfaces/auth.interface'
 
 export class AuthService extends ConfigServer {
   constructor(
-    private readonly userService: UserService = new UserService(),
+    protected readonly userService: UserService = new UserService(),
     private readonly jwtInstance = jwt,
     private readonly baseService: BaseService = new BaseService()
   ) {

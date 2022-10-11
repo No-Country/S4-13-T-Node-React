@@ -14,6 +14,16 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
       .post('/login', this.middleware.passAuth('login', { session: false }), (req: Request, res: Response) =>
         this.controller.login(req, res)
       )
+      .post(
+        '/refresh',
+        (req, res, next) => this.middleware.getRefreshToken(req, res, next),
+        (req, res) => this.controller.refresh(req, res)
+      )
+      .post(
+        '/logout',
+        (req, res, next) => this.middleware.getAccessToken(req, res, next),
+        (req, res) => this.controller.logout(req, res)
+      )
       .get('/login/google', this.middleware.passAuth('google', { session: false, scope: ['email', 'profile'] }))
       .get(
         '/login/google/callback',
@@ -40,10 +50,5 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
       .get('/login/failure', (req, res) => {
         this.httpResponse.BadRequest(res, 'Something went wrong.')
       })
-      .post(
-        '/refresh',
-        (req, res, next) => this.middleware.getRefreshToken(req, res, next),
-        (req, res) => this.controller.refresh(req, res)
-      )
   }
 }
