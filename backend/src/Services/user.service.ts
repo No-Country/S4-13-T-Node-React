@@ -1,18 +1,18 @@
 import { CreateUserDTO, RoleTypes, UpdateUser } from '../Interfaces/user.interfaces'
 import { UserRepository } from '../Repository/user.repository'
-import * as bcrypt from 'bcryptjs'
+import { BaseService } from './base.service'
 
-export class UserService {
+export class UserService extends BaseService {
   private readonly alias: string
   constructor(private readonly userRepository: UserRepository = new UserRepository()) {
+    super()
     this.alias = 'user'
   }
 
   async createUser(user: CreateUserDTO) {
     const newUser = (await this.userRepository.repository).create(user)
     if (user.password) {
-      const hash = await bcrypt.hash(newUser.password!, 10)
-      newUser.password = hash
+      newUser.password = await this.encrypt(user.password)
     }
     return await this.userRepository.create(newUser)
   }
@@ -45,7 +45,7 @@ export class UserService {
 
   async updateUser(id: number, user: UpdateUser) {
     if (user.password) {
-      const hash = await bcrypt.hash(user.password, 10)
+      const hash = await this.encrypt(user.password)
       user.password = hash
     }
     const updated = await this.userRepository.update(id, user)
