@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "API S4-13-T",
-    "description": "API Doc of team S4-13-T of NoCountry.",
+    "description": "API Doc of team S4-13-T of NoCountry. **IMPORTANTE** Todas las respuestas retornan un objecto con 'statusCode', 'statusMsg' y 'data'. Todo lo que se mande a las respuestas van a estar en 'data'",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
