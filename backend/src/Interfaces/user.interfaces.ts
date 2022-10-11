@@ -27,6 +27,7 @@ export interface IUserDTO extends IBaseDTO {
 
 export interface IUser extends IUserDTO {
   password: string | null
+  refresh_token?: string
 }
 
 export interface RequestUser extends Express.User {
@@ -37,7 +38,8 @@ export interface RequestUser extends Express.User {
 }
 
 export interface UpdateUser {
-  username: string
-  email: string
-  password: string
+  username?: string
+  email?: string
+  password?: string
+  refresh_token?: string
 }

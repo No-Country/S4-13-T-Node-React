@@ -17,33 +17,33 @@ export class UserService extends BaseService {
     return await this.userRepository.create(newUser)
   }
 
-  async getUsers(page: number = 1, size: number = 100, sort: string) {
+  async findAll(page: number = 1, size: number = 100, sort: string) {
     const [users, total] = await this.userRepository.list(this.alias, undefined, { size, page, sort })
     const last_page = Math.ceil(total / size)
     return [users, total, last_page]
   }
 
-  async getUser(id: number) {
+  async findById(id: number) {
     return await this.userRepository.get(id, this.alias)
   }
 
-  async getUserWithPosts(id: number, page: number, size: number, sort: string) {
+  async findByIdWithPosts(id: number, page: number, size: number, sort: string) {
     return await this.userRepository.getUserWithPosts(id, { page, size, sort })
   }
 
-  async getUserWithFavorites(id: number, page: number, size: number, sort: string) {
+  async findByIdWithFavorites(id: number, page: number, size: number, sort: string) {
     return await this.userRepository.getUserWithFavorites(id, { page, size, sort })
   }
 
-  async getUserWithLikes(id: number, page: number, size: number, sort: string) {
+  async findByIdWithLikes(id: number, page: number, size: number, sort: string) {
     return await this.userRepository.getUserWithLikes(id, { page, size, sort })
   }
 
-  async getUserWithRole(id: number, role: RoleTypes[]) {
+  async findByIdWithRole(id: number, role: RoleTypes[]) {
     return await this.userRepository.getUserWithRole(id, role)
   }
 
-  async updateUser(id: number, user: UpdateUser) {
+  async update(id: number, user: UpdateUser) {
     if (user.password) {
       const hash = await this.encrypt(user.password)
       user.password = hash
@@ -55,7 +55,7 @@ export class UserService extends BaseService {
     return updated.raw
   }
 
-  async removeUser(id: number) {
+  async remove(id: number) {
     const deleted = await this.userRepository.remove(id)
     if (deleted.affected === 0) {
       return { error: 'User not found or already deleted.' }

@@ -40,5 +40,10 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
       .get('/login/failure', (req, res) => {
         this.httpResponse.BadRequest(res, 'Something went wrong.')
       })
+      .post(
+        '/refresh',
+        (req, res, next) => this.middleware.getRefreshToken(req, res, next),
+        (req, res) => this.controller.refresh(req, res)
+      )
   }
 }

@@ -8,4 +8,8 @@ export class BaseService {
   async encrypt(toEncrypt: string, salt: number = 10) {
     return await bcrypt.hash(toEncrypt, await this.salt(salt))
   }
+
+  async compare(toCompare: string, encrypt: string) {
+    return await bcrypt.compare(toCompare, encrypt)
+  }
 }

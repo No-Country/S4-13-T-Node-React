@@ -1,12 +1,16 @@
+import * as jwt from 'jsonwebtoken'
 import { ConfigServer } from '../Config/config'
 import { UserService } from './user.service'
-import * as jwt from 'jsonwebtoken'
-import * as bcrypt from 'bcryptjs'
+import { BaseService } from './base.service'
 import { IUser } from '../Interfaces/user.interfaces'
 import { PayloadToken } from '../Interfaces/auth.interface'
 
 export class AuthService extends ConfigServer {
-  constructor(private readonly userService: UserService = new UserService(), private readonly jwtInstance = jwt) {
+  constructor(
+    private readonly userService: UserService = new UserService(),
+    private readonly jwtInstance = jwt,
+    private readonly baseService: BaseService = new BaseService()
+  ) {
     super()
   }
 
@@ -15,14 +19,14 @@ export class AuthService extends ConfigServer {
     const userByEmail = await this.userService.findByEmail(username)
 
     if (userByUsername) {
-      const isMatch = await bcrypt.compare(password, userByUsername.password!)
+      const isMatch = await this.baseService.compare(password, userByUsername.password!)
       if (isMatch) {
         return userByUsername
       }
     }
 
     if (userByEmail) {
-      const isMatch = await bcrypt.compare(password, userByEmail.password!)
+      const isMatch = await this.baseService.compare(password, userByEmail.password!)
       if (isMatch) {
         return userByEmail
       }
@@ -31,12 +35,12 @@ export class AuthService extends ConfigServer {
     return null
   }
 
-  sing(payload: jwt.JwtPayload, jwt_secret: any) {
-    return this.jwtInstance.sign(payload, jwt_secret, { expiresIn: '15m' })
+  private sing(payload: jwt.JwtPayload, jwt_secret: any, expiresIn: string) {
+    return this.jwtInstance.sign(payload, jwt_secret, { expiresIn })
   }
 
-  public async generateJWT(user: IUser): Promise<{ access_token: string; user: IUser }> {
-    const userConsult = await this.userService.getUserWithRole(user.id, user.role!)
+  protected async generateJWT(user: IUser): Promise<{ access_token: string; refresh_token: string; user: IUser }> {
+    const userConsult = await this.userService.findByIdWithRole(user.id, user.role!)
 
     const payload: PayloadToken = {
       role: userConsult!.role!,
@@ -47,9 +51,38 @@ export class AuthService extends ConfigServer {
       user.password = 'No permission.'
     }
 
+    const access_token = this.sing(payload, this.getEnvironment('JWT_SECRET'), '15m')
+    const refresh_token = this.sing(payload, this.getEnvironment('JWT_REFRESH_SECRET'), '60d')
+
+    await this.updateRefreshTokenUser(refresh_token, userConsult!.id)
+
     return {
-      access_token: this.sing(payload, this.getEnvironment('JWT_SECRET')),
+      access_token,
+      refresh_token,
       user,
     }
+  }
+
+  private async updateRefreshTokenUser(refresh_token: string, id: number) {
+    const hash = await this.baseService.encrypt(refresh_token)
+    await this.userService.update(id, { refresh_token: hash })
+  }
+
+  protected async compareRefreshToken(
+    refresh_token: string,
+    id: number
+  ): Promise<{ access_token: string; refresh_token: string; user: IUser } | false> {
+    const user = await this.userService.findById(id)
+    if (!user || !user.refresh_token) return false
+
+    const isMatch = await this.baseService.compare(refresh_token, user?.refresh_token!)
+
+    if (!isMatch) return false
+
+    const encode = await this.generateJWT(user)
+
+    await this.userService.update(user.id, { refresh_token: encode.refresh_token })
+
+    return encode
   }
 }
