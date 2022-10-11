@@ -50,7 +50,7 @@ export abstract class ConfigServer {
       port: this.getNumberEnv('DB_PORT'),
       database: this.getEnvironment('DB_DATABASE'),
       entities: [pathEntities],
-      synchronize: true,
+      // synchronize: true,
       // logging:true,
       ssl: {
         rejectUnauthorized: false,
