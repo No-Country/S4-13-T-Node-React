@@ -22,7 +22,7 @@ export class AuthController extends AuthService {
       res.cookie('access_token', encode.access_token, { maxAge: 60000 * 15 })
       res.cookie('user', encode.user, { maxAge: 60000 * 15 })
       res.cookie('refresh_token', encode.refresh_token, { maxAge: 60000 * 86400 })
-      if (this.NODE_ENV == 'prod') {
+      if (this.NODE_ENV == 'dev') {
         res.write(JSON.stringify(encode))
         res.end()
       } else {
