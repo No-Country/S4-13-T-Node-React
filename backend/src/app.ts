@@ -1,6 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+import swaggerUI from 'swagger-ui-express'
+import * as swaggerDocument from './swagger.json'
 import { ConfigServer } from './Config/config'
 import { PostRouter } from './Routes/post.routes'
 import { UserRouter } from './Routes/user.routes'
@@ -28,6 +30,7 @@ export class Server extends ConfigServer {
     this.app.get('/', (req, res) => {
       res.send('<a href="/login/google">Google</a><a href="/login/facebook">Facebook</a>') // Para probar el login de google
     })
+    this.app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
     this.app.use(morgan('dev'))
     this.app.use(cors({ credentials: true, origin: true }))

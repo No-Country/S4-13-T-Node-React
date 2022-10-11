@@ -72,7 +72,7 @@ export class AuthService extends ConfigServer {
     refresh_token: string,
     id: number
   ): Promise<{ access_token: string; refresh_token: string; user: IUser } | false> {
-    const user = await this.userService.findById(id)
+    const user = await this.userService.findByIdWithRefreshToken(id)
     if (!user || !user.refresh_token) return false
 
     const isMatch = await this.baseService.compare(refresh_token, user?.refresh_token!)

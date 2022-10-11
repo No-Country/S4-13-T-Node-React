@@ -74,4 +74,8 @@ export class UserService extends BaseService {
   async findByFacebookID(id: string) {
     return await this.userRepository.findUserByFacebookID(id)
   }
+
+  async findByIdWithRefreshToken(id: number) {
+    return await this.userRepository.findByIdWithRefreshToken(id)
+  }
 }

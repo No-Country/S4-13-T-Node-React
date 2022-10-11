@@ -56,6 +56,13 @@ export class UserRepository extends BaseRepository<IUser> {
       .getOne()
   }
 
+  async findByIdWithRefreshToken(id: number): Promise<IUser | null> {
+    return await (await this.repository)
+      .createQueryBuilder('user')
+      .addSelect('user.refresh_token')
+      .where({ id })
+      .getOne()
+  }
   async getUserWithRole(id: number, role: RoleTypes[]): Promise<IUser | null> {
     const user = (await this.repository).createQueryBuilder('user').where({ id }).andWhere({ role }).getOne()
 
@@ -68,6 +75,10 @@ export class UserRepository extends BaseRepository<IUser> {
 
   async findUserByEmail(email: string): Promise<IUser | null> {
     return (await this.repository).createQueryBuilder('user').addSelect('user.password').where({ email }).getOne()
+  }
+
+  async findUserByGoogleID(id: string): Promise<IUser | null> {
+    return await (await this.repository).createQueryBuilder('user').where({ google_id: id }).getOne()
   }
 
   async findUserByFacebookID(id: string): Promise<IUser | null> {

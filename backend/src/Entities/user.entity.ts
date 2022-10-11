@@ -29,7 +29,7 @@ export class User extends BaseEntity implements IUser {
   @Column({ unique: true, nullable: true, default: null })
   email: string
 
-  @Column({ nullable: true, default: null })
+  @Column({ nullable: true, default: null, select: false })
   refresh_token: string
 
   @OneToMany(() => Post, post => post.user)

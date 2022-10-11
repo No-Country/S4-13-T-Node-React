@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 import { ICommentDTO } from '../Interfaces/comment.interface'
 import { BaseEntity } from './base.entity'
 import { Post } from './post.entity'
@@ -6,9 +6,6 @@ import { User } from './user.entity'
 
 @Entity()
 export class Comment extends BaseEntity implements ICommentDTO {
-  @PrimaryGeneratedColumn()
-  id: number
-
   @Column()
   comment: string
 

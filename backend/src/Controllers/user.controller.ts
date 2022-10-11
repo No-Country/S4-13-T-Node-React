@@ -1,13 +1,11 @@
 import { Request, Response } from 'express'
-import { PostService } from '../Services/post.service'
 import { UserService } from '../Services/user.service'
 import { HttpResponse } from '../Utils/http.response'
 
 export class UserController {
   constructor(
     private readonly userService: UserService = new UserService(),
-    private readonly httpResponse: HttpResponse = new HttpResponse(),
-    private readonly postService: PostService = new PostService()
+    private readonly httpResponse: HttpResponse = new HttpResponse()
   ) {}
 
   async createUser(req: Request, res: Response) {
