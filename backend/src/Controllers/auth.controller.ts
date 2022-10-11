@@ -48,4 +48,17 @@ export class AuthController extends AuthService {
       return this.httpResponse.Error(res, error)
     }
   }
+
+  async logout(req: Request, res: Response) {
+    try {
+      const user = req.user as IUser
+      const response = await this.userService.update(user.id, { refresh_token: null })
+      if (response.error) return this.httpResponse.NotFound(res, response.error)
+
+      return this.httpResponse.Ok(res, 'Logout successfully.')
+    } catch (error) {
+      console.error(error)
+      return this.httpResponse.Error(res, error)
+    }
+  }
 }

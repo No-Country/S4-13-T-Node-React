@@ -55,10 +55,15 @@ export class BaseMiddleware extends ConfigServer {
   }
 
   async getAccessToken(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers['access_token']
+    const token = String(req.headers['access_token'])
 
     if (!token) return this.httpResponse.Unauthorized(res, 'No access token provided.')
+    const decoded = jwt.verify(token, this.getEnvironment('JWT_SECRET')!)
 
+    const user = await this.userService.findById(Number(decoded.sub))
+    if (!user) return this.httpResponse.BadRequest(res, 'No user found.')
+
+    req.user = user
     req.access_token = token
 
     next()
