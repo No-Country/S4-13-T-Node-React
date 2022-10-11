@@ -36,7 +36,7 @@ export class UserController {
   async getUsers(req: Request, res: Response) {
     try {
       const { page = '1', size = '20', sort = 'desc' } = req.query
-      const [users, total, last_page] = await this.userService.getUsers(Number(page), Number(size), String(sort))
+      const [users, total, last_page] = await this.userService.findAll(Number(page), Number(size), String(sort))
       return this.httpResponse.Ok(res, { users, actual_page: Number(page), size: Number(size), total, last_page })
     } catch (error) {
       return this.httpResponse.Error(res, error)
@@ -46,7 +46,7 @@ export class UserController {
   async getUser(req: Request, res: Response) {
     try {
       const id = Number(req.params.id)
-      const user = await this.userService.getUser(id)
+      const user = await this.userService.findById(id)
 
       if (user) return this.httpResponse.Ok(res, { user })
 
@@ -60,7 +60,7 @@ export class UserController {
     try {
       const { page = '1', size = '20', sort = 'desc' } = req.query
       const id = Number(req.params.id)
-      const user = await this.userService.getUserWithPosts(id, Number(page), Number(size), String(sort))
+      const user = await this.userService.findByIdWithPosts(id, Number(page), Number(size), String(sort))
 
       if (user)
         return this.httpResponse.Ok(res, {
@@ -79,7 +79,7 @@ export class UserController {
     try {
       const { page = '1', size = '20', sort = 'desc' } = req.query
       const id = Number(req.params.id)
-      const user = await this.userService.getUserWithFavorites(id, Number(page), Number(size), String(sort))
+      const user = await this.userService.findByIdWithFavorites(id, Number(page), Number(size), String(sort))
 
       if (user) return this.httpResponse.Ok(res, { user })
 
@@ -93,7 +93,7 @@ export class UserController {
     try {
       const { page = '1', size = '20', sort = 'desc' } = req.query
       const id = Number(req.params.id)
-      const user = await this.userService.getUserWithLikes(id, Number(page), Number(size), String(sort))
+      const user = await this.userService.findByIdWithLikes(id, Number(page), Number(size), String(sort))
 
       if (user) return this.httpResponse.Ok(res, { user })
 
@@ -120,7 +120,7 @@ export class UserController {
         return this.httpResponse.BadRequest(res, 'Email already exist.')
       }
 
-      const user = await this.userService.updateUser(id, { username, email, password })
+      const user = await this.userService.update(id, { username, email, password })
       if (user.error) {
         return this.httpResponse.NotFound(res, user.error)
       }
@@ -133,7 +133,7 @@ export class UserController {
   async removeUser(req: Request, res: Response) {
     try {
       const id = Number(req.params.id)
-      const user = await this.userService.removeUser(id)
+      const user = await this.userService.remove(id)
       if (user.error) {
         return this.httpResponse.NotFound(res, user.error)
       }

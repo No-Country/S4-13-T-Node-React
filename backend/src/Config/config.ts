@@ -10,19 +10,19 @@ export abstract class ConfigServer {
     this.NODE_ENV = this.getEnvironment('NODE_ENV')
   }
 
-  public getEnvironment(k: string): string | undefined {
+  protected getEnvironment(k: string): string | undefined {
     return process.env[k]
   }
 
-  public getNumberEnv(k: string): number {
+  protected getNumberEnv(k: string): number {
     return Number(this.getEnvironment(k))
   }
 
-  public get nodeEnv(): string | undefined {
+  protected get nodeEnv(): string | undefined {
     return this.getEnvironment('NODE_ENV')?.trim() || ''
   }
 
-  public createPathEnv(path: string): string {
+  protected createPathEnv(path: string): string {
     const arrEnv: string[] = ['env']
 
     if (path.length > 0) {
@@ -32,7 +32,7 @@ export abstract class ConfigServer {
     return '.' + arrEnv.join('.')
   }
 
-  async dbConnect(): Promise<DataSource> {
+  protected async dbConnect(): Promise<DataSource> {
     try {
       return await this.typeoORMConfig.initialize()
     } catch (error) {
@@ -40,7 +40,7 @@ export abstract class ConfigServer {
     }
   }
 
-  public get typeoORMConfig(): DataSource {
+  protected get typeoORMConfig(): DataSource {
     const pathEntities = path.join(__dirname, '../**/*.entity{.ts,.js}')
     return new DataSource({
       type: 'postgres',
