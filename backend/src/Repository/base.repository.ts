@@ -1,6 +1,6 @@
 import { BaseEntity } from '../Entities/base.entity'
-import { DatabaseRepository, Id, Query, QueryList } from '../Interfaces/repository.interface'
-import { EntityTarget, FindOptionsWhere, IsNull, ObjectType, Repository, UpdateResult } from 'typeorm'
+import { DatabaseRepository, Query, QueryList } from '../Interfaces/repository.interface'
+import { EntityTarget, IsNull, Repository, UpdateResult } from 'typeorm'
 import { ConfigServer } from '../Config/config'
 
 export class BaseRepository<T extends BaseEntity> extends ConfigServer implements DatabaseRepository<T> {
@@ -17,7 +17,8 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
   }
 
   async create(data: T, query?: Query | undefined): Promise<T> {
-    return (await this.repository).save(data)
+    const builder = (await this.repository).create(data)
+    return (await this.repository).save(builder)
   }
 
   async list(alias: string, relation?: string, query?: QueryList): Promise<[T[], number]> {
@@ -43,32 +44,33 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
     return [list, total]
   }
 
-  async get(id: number, alias: string, relation?: string, query?: Query | undefined): Promise<T | null> {
+  async get(alias: string, query?: Query | undefined, addSelect?: string): Promise<T | null> {
     const builder = (await this.repository).createQueryBuilder(alias)
+    if (addSelect) builder.addSelect(addSelect)
 
-    if (relation) {
-      builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
-    }
-
-    return await builder.where({ id }).getOne()
+    return await builder.where({ ...query, deleted_at: IsNull() }).getOne()
   }
 
-  async update(id: any, data: any, query?: Query | undefined): Promise<UpdateResult> {
-    const builder = await (await this.repository)
+  async update(data: any, query?: Query | undefined): Promise<UpdateResult> {
+    const builder = await (
+      await this.repository
+    )
       .createQueryBuilder()
       .update(data)
-      .where({ id, deleted_at: IsNull() })
+      .where({ ...query, deleted_at: IsNull() })
       .returning('*')
       .execute()
 
     return builder
   }
 
-  async remove(id: Id, query?: Query | undefined): Promise<UpdateResult> {
-    const builder = await (await this.repository)
+  async remove(query?: Query | undefined): Promise<UpdateResult> {
+    const builder = await (
+      await this.repository
+    )
       .createQueryBuilder()
       .softDelete()
-      .where({ id, deleted_at: IsNull() })
+      .where({ ...query, deleted_at: IsNull() })
       .returning('*')
       .execute()
     return builder
