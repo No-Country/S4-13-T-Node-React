@@ -15,7 +15,7 @@ export class CommentMiddleware extends BaseMiddleware {
     const comment = await this.commentService.findWithUser({ id })
     if (!comment) return this.httpResponse.BadRequest(res, 'Comment not found.')
 
-    if (user.id === comment?.user.id) {
+    if (user.id === comment?.user?.id) {
       next()
     } else {
       return this.httpResponse.Unauthorized(res, 'Unauthorized')

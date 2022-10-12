@@ -5,6 +5,7 @@ import { NextFunction, Request, Response } from 'express'
 import { BaseMiddleware } from './base.middleware'
 import { PostService } from '../Services/post.service'
 import { RequestUser } from '../Interfaces/user.interfaces'
+import { CommentDTO } from '../DTO/comment.dto'
 
 export class PostMiddleware extends BaseMiddleware {
   constructor(private readonly postService: PostService = new PostService()) {
@@ -79,6 +80,21 @@ export class PostMiddleware extends BaseMiddleware {
     } else {
       return this.httpResponse.BadRequest(res, 'Need at least one value.')
     }
+  }
+
+  commentPostValidator(req: Request, res: Response, next: NextFunction) {
+    const { comment }: CommentDTO = req.body
+
+    const valid = new CommentDTO()
+
+    valid.comment = comment
+    validate(valid, { validationError: { target: false } }).then(err => {
+      if (err.length > 0) {
+        return this.httpResponse.BadRequest(res, err)
+      } else {
+        next()
+      }
+    })
   }
 }
 
