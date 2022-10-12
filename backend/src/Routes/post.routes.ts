@@ -11,10 +11,10 @@ export class PostRouter extends BaseRouter<PostController, PostMiddleware> {
     this.router
       .route('/post')
       .post(
-        this.middleware.passAuth('jwt', { session: false }),
         (req, res, next) => {
           this.middleware.createPostValidator(req, res, next)
         },
+        this.middleware.passAuth('jwt', { session: false }),
         (req, res) => {
           this.controller.create(req, res)
         }
@@ -60,6 +60,7 @@ export class PostRouter extends BaseRouter<PostController, PostMiddleware> {
 
     this.router.post(
       '/post/:id/comment',
+      (req, res, next) => this.middleware.commentPostValidator(req, res, next),
       this.middleware.passAuth('jwt', { session: false }),
       (req, res, next) => this.middleware.getAccessToken(req, res, next),
       (req, res) => this.controller.comment(req, res)
