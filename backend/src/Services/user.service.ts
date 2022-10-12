@@ -24,7 +24,7 @@ export class UserService extends BaseService {
   }
 
   async findById(id: number) {
-    return await this.userRepository.get(id, this.alias)
+    return await this.userRepository.get(this.alias, { id })
   }
 
   async findByIdWithPosts(id: number, page: number, size: number, sort: string) {
@@ -48,7 +48,7 @@ export class UserService extends BaseService {
       const hash = await this.encrypt(user.password)
       user.password = hash
     }
-    const updated = await this.userRepository.update(id, user)
+    const updated = await this.userRepository.update(user, { id })
     if (updated.affected === 0) {
       return { error: 'User not found or is deleted.' }
     }
@@ -56,7 +56,7 @@ export class UserService extends BaseService {
   }
 
   async remove(id: number) {
-    const deleted = await this.userRepository.remove(id)
+    const deleted = await this.userRepository.remove({ id })
     if (deleted.affected === 0) {
       return { error: 'User not found or already deleted.' }
     }
@@ -64,18 +64,18 @@ export class UserService extends BaseService {
   }
 
   async findByUsername(username: string) {
-    return await this.userRepository.findUserByUsername(username)
+    return await this.userRepository.get(this.alias, { username }, 'user.password')
   }
 
   async findByEmail(email: string) {
-    return await this.userRepository.findUserByEmail(email)
+    return await this.userRepository.get(this.alias, { email }, 'user.password')
   }
 
   async findByFacebookID(id: string) {
-    return await this.userRepository.findUserByFacebookID(id)
+    return await this.userRepository.get(this.alias, { facebook_id: id })
   }
 
   async findByIdWithRefreshToken(id: number) {
-    return await this.userRepository.findByIdWithRefreshToken(id)
+    return await this.userRepository.get(this.alias, { google_id: id })
   }
 }

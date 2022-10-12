@@ -12,3 +12,10 @@ export interface IPost extends IPostDTO {
   likesCount: number
   commentsCount: number
 }
+
+export interface UpdatePost {
+  title?: string
+  tags?: string[]
+  likesCount?: number
+  commentsCount?: number
+}

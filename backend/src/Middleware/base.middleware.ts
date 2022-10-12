@@ -33,7 +33,7 @@ export class BaseMiddleware extends ConfigServer {
   async checkUserIsPostOwner(req: Request, res: Response, next: NextFunction) {
     const user = req.user as RequestUser
 
-    const post = await this.postService.getPost(Number(req.params.id))
+    const post = await this.postService.findWithUser(Number(req.params.id))
 
     if (user.sub === post?.user?.id) {
       next()

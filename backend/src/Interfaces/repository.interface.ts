@@ -16,7 +16,7 @@ export type Id = number
 export interface DatabaseRepository<Entity extends BaseEntity> {
   create(data: Entity, query?: Query): Promise<Entity>
   list(alias: string, relation?: string, query?: Query | QueryList): Promise<[Entity[], number]>
-  get(id: Id, alias: string, relation?: string, query?: Query): Promise<Entity | null>
-  update(id: Id, data: Partial<Entity>, query?: Query): Promise<UpdateResult>
-  remove(id: Id, query?: Query): Promise<UpdateResult>
+  get(alias: string, query?: Query, addSelect?: string): Promise<Entity | null>
+  update(data: Partial<Entity>, query?: Query): Promise<UpdateResult>
+  remove(query?: Query): Promise<UpdateResult>
 }

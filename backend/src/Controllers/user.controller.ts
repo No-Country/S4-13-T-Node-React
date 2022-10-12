@@ -79,7 +79,7 @@ export class UserController {
       const id = Number(req.params.id)
       const user = await this.userService.findByIdWithFavorites(id, Number(page), Number(size), String(sort))
 
-      if (user) return this.httpResponse.Ok(res, { user })
+      if (user) return this.httpResponse.Ok(res, { user, actual_page: Number(page), size: Number(page) })
 
       return this.httpResponse.NotFound(res, 'User not found.')
     } catch (error) {
@@ -93,7 +93,7 @@ export class UserController {
       const id = Number(req.params.id)
       const user = await this.userService.findByIdWithLikes(id, Number(page), Number(size), String(sort))
 
-      if (user) return this.httpResponse.Ok(res, { user })
+      if (user) return this.httpResponse.Ok(res, { user, actual_page: Number(page), size: Number(page) })
 
       return this.httpResponse.NotFound(res, 'User not found.')
     } catch (error) {

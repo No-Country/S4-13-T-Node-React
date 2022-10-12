@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "API S4-13-T",
-    "description": "API Doc of team S4-13-T of NoCountry. **IMPORTANTE** Todas las respuestas retornan un objecto con 'statusCode', 'statusMsg' y 'data'. Todo lo que se mande a las respuestas van a estar en 'data'",
+    "description": "API Doc of team S4-13-T of NoCountry. **IMPORTANTE** Todas las respuestas retornan un objecto con 'statusCode', 'statusMsg' y 'data'. Todo lo que se mande a las respuestas van a estar en 'data'. Tener en cuenta que algunos datos no van a estar en la respuesta original.",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -110,6 +110,13 @@
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/user"
+          },
+          "readOnly": true
+        },
+        "comments": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/comments"
           },
           "readOnly": true
         }
@@ -231,7 +238,25 @@
         "responses": {
           "200": {
             "description": "Return a page of posts. Default page 1 with size of 20 posts.",
-            "schema": { "$ref": "#/definitions/post" }
+            "schema": {
+              "properties": {
+                "posts": { "$ref": "#/definitions/post" },
+                "actual_page": {
+                  "type": "number",
+                  "default": 1
+                },
+                "size": {
+                  "type": "number",
+                  "default": 20
+                },
+                "total": {
+                  "type": "number"
+                },
+                "last_page": {
+                  "type": "number"
+                }
+              }
+            }
           }
         }
       },
@@ -265,7 +290,29 @@
         "responses": {
           "200": {
             "description": "Post created.",
-            "schema": { "$ref": "#/definitions/post" }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Post Created Successfully."
+                    },
+                    "post": { "$ref": "#/definitions/post" }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -293,14 +340,32 @@
         "responses": {
           "200": {
             "description": "Return post by ID",
-            "schema": { "$ref": "#/definitions/post" }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "post": { "$ref": "#/definitions/post" }
+                  }
+                }
+              }
+            }
           },
           "404": { "$ref": "#/responses/NotFound" }
         }
       },
       "put": {
         "tags": ["posts"],
-        "summary": "Delete post by ID",
+        "summary": "Update post by ID",
         "parameters": [
           {
             "in": "path",
@@ -340,7 +405,29 @@
         "responses": {
           "200": {
             "description": "Post updated.",
-            "schema": { "$ref": "#/definitions/post" }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Post Updated Successfully."
+                    },
+                    "post": { "$ref": "#/definitions/post" }
+                  }
+                }
+              }
+            }
           },
           "400": { "$ref": "#/responses/BadRequest" },
           "404": {
@@ -353,7 +440,7 @@
       },
       "delete": {
         "tags": ["posts"],
-        "summary": "Update post by ID",
+        "summary": "Delete post by ID",
         "parameters": [
           {
             "in": "path",
@@ -374,13 +461,90 @@
         "responses": {
           "200": {
             "description": "Post deleted.",
-            "schema": { "$ref": "#/definitions/post" }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Post Deleted Successfully."
+                    },
+                    "post": { "$ref": "#/definitions/post" }
+                  }
+                }
+              }
+            }
           },
           "404": {
             "$ref": "#/responses/NotFound"
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/post/{id}/like": {
+      "post": {
+        "tags": ["posts"],
+        "summary": "Like or dislike post by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+            "minimum": 1,
+            "description": "Post ID."
+          },
+          {
+            "in": "header",
+            "name": "access_token",
+            "description": "A token for provide the user ID and the role.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like or dislike the post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "likesCount": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -396,7 +560,29 @@
             "description": "Values for create a user.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/user"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "User Created Successfully."
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
             }
           }
         ],
@@ -439,14 +625,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "access_token": {
-                  "type": "string"
+                "status": {
+                  "type": "number",
+                  "default": 200
                 },
-                "refresh_token": {
-                  "type": "string"
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
                 },
-                "user": {
-                  "$ref": "#/definitions/user"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "acces_token": {
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
                 }
               }
             }
@@ -475,14 +674,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "access_token": {
-                  "type": "string"
+                "status": {
+                  "type": "number",
+                  "default": 200
                 },
-                "refresh_token": {
-                  "type": "string"
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
                 },
-                "user": {
-                  "$ref": "#/definitions/user"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "acces_token": {
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
                 }
               }
             }
@@ -507,7 +719,29 @@
         ],
         "responses": {
           "200": {
-            "description": "Return message if user has logged out."
+            "description": "Return message if user has logged out.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Logout successfully."
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -557,7 +791,25 @@
           "200": {
             "description": "User by ID",
             "schema": {
-              "$ref": "#/definitions/user"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -594,7 +846,29 @@
           "200": {
             "description": "User updated.",
             "schema": {
-              "$ref": "#/definitions/user"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "User Updated."
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
             }
           },
           "401": {
@@ -626,7 +900,32 @@
         ],
         "responses": {
           "200": {
-            "description": "User deleted."
+            "description": "User deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "User Deleted."
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
@@ -653,18 +952,36 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user": {
-                  "allOf": [
-                    {
-                      "$ref": "#/definitions/user"
-                    }
-                  ],
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/definitions/post"
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "allOf": [{ "$ref": "#/definitions/user" }],
+                      "properties": {
+                        "posts": {
+                          "$ref": "#/definitions/post"
+                        },
+                        "total_posts": {
+                          "type": "number"
+                        }
                       }
+                    },
+                    "actual_page": {
+                      "type": "number",
+                      "default": 1
+                    },
+                    "size": {
+                      "type": "number",
+                      "default": 20
                     }
                   }
                 }
@@ -699,17 +1016,24 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user": {
-                  "allOf": [
-                    {
-                      "$ref": "#/definitions/user"
-                    }
-                  ],
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/definitions/post"
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "allOf": [{ "$ref": "#/definitions/user" }],
+                      "properties": {
+                        "likes": {
+                          "$ref": "#/definitions/post"
+                        }
                       }
                     }
                   }
@@ -745,17 +1069,29 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user": {
-                  "allOf": [
-                    {
-                      "$ref": "#/definitions/user"
-                    }
-                  ],
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/definitions/post"
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "allOf": [{ "$ref": "#/definitions/user" }],
+                      "properties": {
+                        "favorites": {
+                          "type": "object",
+                          "properties": {
+                            "post": {
+                              "$ref": "#/definitions/post"
+                            }
+                          }
+                        }
                       }
                     }
                   }
