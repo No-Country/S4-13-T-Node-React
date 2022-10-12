@@ -2,8 +2,14 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
+import { useAuthLogged } from '../hooks/usePrivateRoute';
 
 const Home: NextPage = () => {
+  const handleUploadMeme = () => {
+    //TODO: Redireccionar si no está logueado el usuario
+    // const data = useAuthSession();
+  };
+
   return (
     <div>
       <Head>
@@ -16,7 +22,10 @@ const Home: NextPage = () => {
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
             <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
-            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
+            <button
+              className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary"
+              onClick={handleUploadMeme}
+            >
               Subir meme
             </button>
           </div>

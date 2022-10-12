@@ -3,16 +3,14 @@ import React from 'react';
 import * as Yup from 'yup';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../redux/slice/userLoginSlice';
 import { getData } from '../../redux/slice/userDataSlice';
-import { GetUserData, LoginProps } from '../../interfaces';
+import { LoginProps } from '../../interfaces';
 import Link from 'next/link';
-
-import { postLogin } from '../../services/auth-calls';
 
 import { AiFillEye } from 'react-icons/ai';
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import useToggleView from '../../hooks/useToggleView';
+import { postLogin } from '../../services/auth-calls';
 
 const validateLoginSchema = Yup.object({
   username: Yup.string().min(5, 'muy corto!').required('Campo requerido'),
@@ -30,8 +28,9 @@ const FormLogin = () => {
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={(values: LoginProps, { resetForm }) => {
-            dispatch(login(values));
-
+            postLogin(values).then(res => {
+              res && dispatch(getData(res));
+            });
             resetForm();
           }}
           validationSchema={validateLoginSchema}
