@@ -16,7 +16,7 @@ const MenuList = ({ open }: OpensProps) => {
       <ItemMenu href="/" text="lo nuevo" />
       <ItemMenu href="/" text="mejores memes" />
       <ItemMenu text="memes random" href="/" />
-      <ItemMenu text="favoritos" href="/" />
+      <ItemMenu text="favoritos" href="/favs" />
       <ProfileItem text="mi perfil" icon={<BiUserCircle />} />
     </div>
   );

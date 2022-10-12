@@ -5,8 +5,14 @@ import FormRegister from '../../components/formRegister/FormRegister';
 import { HrComponent } from '../../components/formRegister/HrComponent';
 import { MediaContainer } from '../../components/formRegister/MediaContainer';
 import LayoutFormPages from '../../components/layout/LayoutFormPages';
+import { usePublicRoute } from '../../hooks/usePublicRoute';
 
 const Register: NextPage = () => {
+  const data = usePublicRoute();
+
+  // if (data?.access_token) return null;
+  if (localStorage.getItem('token')) return null;
+
   return (
     <div>
       <Head>

@@ -3,7 +3,13 @@ import Head from 'next/head';
 import Layout from '../../components/layout/Layout';
 import UpdatedMemesContainer from '../../components/uploadedMemes/UpdatedMemesContainer';
 import UserContainer from '../../components/user/UserContainer';
-const Register: NextPage = () => {
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
+const Profile: NextPage = () => {
+  const data = usePrivateRoute();
+
+  // if (!data?.access_token) return null;
+  if (!localStorage.getItem('token')) return null;
+
   return (
     <div>
       <Head>
@@ -26,4 +32,4 @@ const Register: NextPage = () => {
   );
 };
 
-export default Register;
+export default Profile;

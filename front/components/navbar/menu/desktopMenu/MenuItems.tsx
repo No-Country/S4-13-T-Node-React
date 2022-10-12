@@ -8,7 +8,7 @@ const MenuItems = () => {
       <ItemMenu href="/" text="lo nuevo" />
       <ItemMenu href="#" text="mejores memes" />
       <ItemMenu href="#" text="memes random" />
-      <ItemMenu href="#" text="favoritos" />
+      <ItemMenu href="/favs" text="favoritos" />
       <ProfileItem />
     </div>
   );

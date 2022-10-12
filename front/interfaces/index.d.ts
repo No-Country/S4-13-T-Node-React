@@ -43,16 +43,22 @@ export interface PostPropsAxios {
 
 export interface CardPostProps {
   imageUrl: string;
-  author: string;
+  id: string | number;
+  hrefPost?: IHrefPostProps;
   title?: string;
-  hrefPost?: { pathname: string; query: { id: string | number } };
+  author?: string;
+}
+
+export interface IHrefPostProps {
+  pathname: string;
+  query: { id: string | number};
 }
 
 export interface IPost {
   id: number;
   title: string;
   media_url: string;
-  tag: string;
+  tags: string[];
   likesCount: number;
   commentsCount: number;
   created_at: Date;

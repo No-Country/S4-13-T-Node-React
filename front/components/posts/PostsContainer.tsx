@@ -1,29 +1,46 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { IPost } from '../../interfaces';
 import { getPost } from '../../services/api-calls';
 import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
+import { getPosts, PostsState } from '../../redux/slice/postsSlice';
+import { RootState } from '../../redux/store';
 
 const PostsContainer = () => {
-  const [posts, setPosts] = useState<IPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [postsList, setPostsList] = useState<IPost[]>([]);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    getPost().then(posts => {
-      posts ? setPosts(posts) : null;
-      setLoading(false);
-    });
+    getPost().then(data => data && dispatch(getPosts(data)));
   }, []);
 
-  if (loading) {
+  const { isLoading, error, posts } = useSelector<RootState, PostsState>(state => {
+    return state.postsReducer;
+  });
+
+  useEffect(() => {
+    if (posts?.length) {
+      setPostsList(posts);
+    }
+  }, [posts]);
+
+  if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <div> Error: {error}</div>;
   }
 
   return (
     <div className="px-2 mx-auto">
-      {posts
-        ? posts.map(post => (
+      {postsList
+        ? postsList.map(post => (
             <CardPost
               key={post.id}
+              id={post.id}
               imageUrl={post.media_url}
               author={post.user.username}
               title={post.title}
