@@ -32,8 +32,9 @@ export class BaseMiddleware extends ConfigServer {
 
   async checkUserIsPostOwner(req: Request, res: Response, next: NextFunction) {
     const user = req.user as RequestUser
+    const id = Number(req.params.id)
 
-    const post = await this.postService.findWithUser(Number(req.params.id))
+    const post = await this.postService.findWithUser(id)
 
     if (user.sub === post?.user?.id) {
       next()
@@ -44,8 +45,9 @@ export class BaseMiddleware extends ConfigServer {
 
   async checkUserIsUserOwner(req: Request, res: Response, next: NextFunction) {
     const user = req.user as RequestUser
+    const id = Number(req.params.id)
 
-    const user_found = await this.userService.findById(Number(req.params.id))
+    const user_found = await this.userService.find({ id })
 
     if (user.sub === user_found?.id) {
       next()
@@ -59,8 +61,9 @@ export class BaseMiddleware extends ConfigServer {
 
     if (!token) return this.httpResponse.Unauthorized(res, 'No access token provided.')
     const decoded = jwt.verify(token, this.getEnvironment('JWT_SECRET')!)
+    const id = Number(decoded.sub)
 
-    const user = await this.userService.findById(Number(decoded.sub))
+    const user = await this.userService.find({ id })
     if (!user) return this.httpResponse.BadRequest(res, 'No user found.')
 
     req.user = user
@@ -75,8 +78,9 @@ export class BaseMiddleware extends ConfigServer {
     if (!token) return this.httpResponse.Unauthorized(res, 'No refresh token provided.')
 
     const decoded = jwt.verify(token, this.getEnvironment('JWT_REFRESH_SECRET')!)
+    const id = Number(decoded.sub)
 
-    const user = await this.userService.findById(Number(decoded.sub))
+    const user = await this.userService.find({ id })
     if (!user) return this.httpResponse.BadRequest(res, 'No user found.')
 
     req.user = user

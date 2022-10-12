@@ -1,3 +1,4 @@
+import { Query } from '../Interfaces/repository.interface'
 import { CreateUserDTO, RoleTypes, UpdateUser } from '../Interfaces/user.interfaces'
 import { UserRepository } from '../Repository/user.repository'
 import { BaseService } from './base.service'
@@ -9,7 +10,7 @@ export class UserService extends BaseService {
     this.alias = 'user'
   }
 
-  async createUser(user: CreateUserDTO) {
+  async create(user: CreateUserDTO) {
     const newUser = (await this.userRepository.repository).create(user)
     if (user.password) {
       newUser.password = await this.encrypt(user.password)
@@ -17,42 +18,42 @@ export class UserService extends BaseService {
     return await this.userRepository.create(newUser)
   }
 
-  async findAll(page: number = 1, size: number = 100, sort: string) {
+  async findAll(page: number, size: number, sort: string) {
     const [users, total] = await this.userRepository.list(this.alias, undefined, { size, page, sort })
     const last_page = Math.ceil(total / size)
     return [users, total, last_page]
   }
 
-  async findById(id: number) {
-    return await this.userRepository.get(this.alias, { id })
+  async find(query: Query, addSelect?: string) {
+    return await this.userRepository.find(this.alias, query, addSelect)
   }
 
   async findByIdWithPosts(id: number, page: number, size: number, sort: string) {
-    return await this.userRepository.getUserWithPosts(id, { page, size, sort })
+    return await this.userRepository.findWithPosts({ id }, { page, size, sort })
   }
 
   async findByIdWithFavorites(id: number, page: number, size: number, sort: string) {
-    return await this.userRepository.getUserWithFavorites(id, { page, size, sort })
+    return await this.userRepository.findWithFavorites({ id }, { page, size, sort })
   }
 
   async findByIdWithLikes(id: number, page: number, size: number, sort: string) {
-    return await this.userRepository.getUserWithLikes(id, { page, size, sort })
+    return await this.userRepository.findWithLikes({ id }, { page, size, sort })
   }
 
   async findByIdWithRole(id: number, role: RoleTypes[]) {
-    return await this.userRepository.getUserWithRole(id, role)
+    return await this.userRepository.findWithRole(id, role)
   }
 
-  async update(id: number, user: UpdateUser) {
+  async update(query: Query, user: UpdateUser) {
     if (user.password) {
       const hash = await this.encrypt(user.password)
       user.password = hash
     }
-    const updated = await this.userRepository.update(user, { id })
+    const updated = await this.userRepository.update(user, query)
     if (updated.affected === 0) {
       return { error: 'User not found or is deleted.' }
     }
-    return updated.raw
+    return { user: updated.raw }
   }
 
   async remove(id: number) {
@@ -60,22 +61,22 @@ export class UserService extends BaseService {
     if (deleted.affected === 0) {
       return { error: 'User not found or already deleted.' }
     }
-    return deleted.raw
+    return { user: deleted.raw }
   }
 
-  async findByUsername(username: string) {
-    return await this.userRepository.get(this.alias, { username }, 'user.password')
-  }
+  // async findByUsername(username: string) {
+  //   return await this.userRepository.find(this.alias, { username }, 'password')
+  // }
 
-  async findByEmail(email: string) {
-    return await this.userRepository.get(this.alias, { email }, 'user.password')
-  }
+  // async findByEmail(email: string) {
+  //   return await this.userRepository.find(this.alias, { email }, 'password')
+  // }
 
-  async findByFacebookID(id: string) {
-    return await this.userRepository.get(this.alias, { facebook_id: id })
-  }
+  // async findByFacebookID(facebook_id: string) {
+  //   return await this.userRepository.find(this.alias, { facebook_id })
+  // }
 
-  async findByIdWithRefreshToken(id: number) {
-    return await this.userRepository.get(this.alias, { google_id: id })
-  }
+  // async findByGoogleID(google_id: number) {
+  //   return await this.userRepository.find(this.alias, { google_id })
+  // }
 }

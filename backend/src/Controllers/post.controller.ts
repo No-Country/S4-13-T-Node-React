@@ -47,11 +47,11 @@ export class PostController extends ConfigServer {
     try {
       const id = Number(req.params.id)
       const data = req.body
-      const post = await this.postService.update(id, data)
-      if (post.error) {
-        return this.httpResponse.NotFound(res, post.error)
+      const { post, error } = await this.postService.update({ id }, data)
+      if (error) {
+        return this.httpResponse.NotFound(res, error)
       }
-      return this.httpResponse.Ok(res, { message: 'Post Updated Successfully.', post })
+      return this.httpResponse.Ok(res, { message: 'Post Updated Successfully.', post: post[0] })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }
@@ -60,11 +60,11 @@ export class PostController extends ConfigServer {
   async remove(req: Request, res: Response) {
     try {
       const id = Number(req.params.id)
-      const post = await this.postService.remove(id)
-      if (post.error) {
-        return this.httpResponse.NotFound(res, post.error)
+      const { post, error } = await this.postService.remove(id)
+      if (error) {
+        return this.httpResponse.NotFound(res, error)
       }
-      return this.httpResponse.Ok(res, { message: 'Post Deleted Successfully.', post })
+      return this.httpResponse.Ok(res, { message: 'Post Deleted Successfully.', post: post[0] })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }

@@ -13,16 +13,18 @@ const userService: UserService = new UserService()
 
 export class FacebookStrategy extends AuthService {
   async validate(req: Request, accesToken: string, refreshToken: string, profile: Profile, done: any) {
-    const { displayName, id } = profile
-    const user_found = await userService.findByFacebookID(id)
+    const { name, id, email, picture } = profile._json
+    const user_found = await userService.find({ facebook_id: id })
 
     if (user_found) {
       req.user = user_found
       return done(null, user_found)
     } else {
-      const user = await userService.createUser({
+      const user = await userService.create({
         facebook_id: id,
-        username: `${displayName.replace(/ /g, '.')}.${id}`,
+        email,
+        username: `${name.replace(/ /g, '.')}.${id}`,
+        avatar_url: picture.data.url,
       })
       req.user = user
       return done(null, user)
@@ -38,6 +40,7 @@ export class FacebookStrategy extends AuthService {
         clientSecret: this.getEnvironment('FACEBOOK_APP_SECRET')!,
         callbackURL: 'http://localhost:8080/login/facebook/callback',
         passReqToCallback: true,
+        profileFields: ['id', 'displayName', 'email', 'photos'],
       },
       this.validate
     )

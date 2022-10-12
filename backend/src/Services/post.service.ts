@@ -1,4 +1,5 @@
 import { IPost, UpdatePost } from '../Interfaces/post.interfaces'
+import { Query } from '../Interfaces/repository.interface'
 import { PostRepository } from '../Repository/post.repository'
 import { LikeService } from './like.service'
 
@@ -27,24 +28,24 @@ export class PostService {
     return [posts, total, last_page]
   }
 
-  async findByID(id: number) {
-    return await this.postRepository.get('post', { id })
+  async find(query: Query, addSelect?: string) {
+    return await this.postRepository.find(this.alias, query, addSelect)
   }
 
   async findWithUser(id: number) {
-    return await this.postRepository.findWithUser(id)
+    return await this.postRepository.findWithUser({ id })
   }
 
   async findWithComments(id: number) {
-    return await this.postRepository.findWithComments(id)
+    return await this.postRepository.findWithComments({ id })
   }
 
-  async update(id: number, data: UpdatePost) {
-    const updated = await this.postRepository.update(data, { id })
+  async update(query: Query, data: UpdatePost) {
+    const updated = await this.postRepository.update(data, query)
     if (updated.affected === 0) {
       return { error: 'Post not found or is deleted.' }
     }
-    return updated.raw
+    return { post: updated.raw }
   }
 
   async remove(id: number) {
@@ -52,25 +53,29 @@ export class PostService {
     if (deleted.affected === 0) {
       return { error: 'Post not found or already deleted.' }
     }
-    return deleted.raw
+    return { post: deleted.raw }
   }
 
-  async like(data: any) {
-    const { user, post } = data
-    const findPost = await this.findByID(post)
-    if (!findPost) return { error: 'Not found.' }
+  async like(ids: any) {
+    const post = await this.find({ id: ids.post })
+    if (!post) return { error: 'Post not found.' }
 
-    const userLike = await this.likeService.likeRepository.get('like', { user, post })
+    const userLike = await this.likeService.find({ user: ids.user, post: ids.post })
+
     if (userLike) {
-      await this.likeService.likeRepository.remove({ id: userLike.id })
-      await this.update(post, { likesCount: findPost.likesCount - 1 })
-      return { liked: false, message: 'Disliked.', likesCount: findPost.likesCount }
+      const deleted = await this.likeService.remove({ id: userLike.id })
+      if (deleted.error) return { error: 'Error while deleting Like with id: ' + userLike.id }
+
+      const updated = await this.update({ id: ids.post }, { likesCount: post.likesCount - 1 })
+      if (updated.error) return { error: 'Error while decrease likeCount on post with id: ' + ids.post }
+      return { liked: false, message: 'Like removed.', likesCount: updated.post[0].likesCount }
     }
 
-    await this.likeService.likeRepository.create(data)
+    await this.likeService.create(ids)
 
-    await this.update(post, { likesCount: findPost.likesCount + 1 })
+    const updated = await this.update({ id: ids.post }, { likesCount: post.likesCount + 1 })
+    if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + ids.post }
 
-    return { liked: true, message: 'Liked.', likesCount: findPost.likesCount }
+    return { liked: true, message: 'Liked.', likesCount: updated.post[0].likesCount }
   }
 }
