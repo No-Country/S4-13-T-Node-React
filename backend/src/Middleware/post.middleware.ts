@@ -3,10 +3,25 @@ import { IPostDTO } from '../Interfaces/post.interfaces'
 import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
 import { BaseMiddleware } from './base.middleware'
+import { PostService } from '../Services/post.service'
+import { RequestUser } from '../Interfaces/user.interfaces'
 
 export class PostMiddleware extends BaseMiddleware {
-  constructor() {
+  constructor(private readonly postService: PostService = new PostService()) {
     super()
+  }
+
+  async checkUserIsPostOwner(req: Request, res: Response, next: NextFunction) {
+    const user = req.user as RequestUser
+    const id = Number(req.params.id)
+
+    const post = await this.postService.findWithUser(id)
+
+    if (user.id === post?.user?.id) {
+      next()
+    } else {
+      return this.httpResponse.Unauthorized(res, 'Unauthorized.')
+    }
   }
 
   createPostValidator(req: Request, res: Response, next: NextFunction) {
