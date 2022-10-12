@@ -1,12 +1,12 @@
 import { BaseRepository } from './base.repository'
-import { ILike } from '../Interfaces/like.interface'
-import { Like } from '../Entities/like.entity'
+import { IComment } from '../Interfaces/comment.interface'
+import { Comment } from '../Entities/comment.entity'
 import { DeleteResult, IsNull } from 'typeorm'
 import { Query } from '../Interfaces/repository.interface'
 
-export class LikeRepository extends BaseRepository<ILike> {
+export class CommentRepository extends BaseRepository<IComment> {
   constructor() {
-    super(Like)
+    super(Comment)
   }
 
   async delete(query: Query): Promise<DeleteResult> {

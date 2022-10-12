@@ -18,8 +18,8 @@ export class LikeService extends BaseService {
     return await this.likeRepository.find(this.alias, query, addSelect)
   }
 
-  async remove(query: Query) {
-    const deleted = await this.likeRepository.remove(query)
+  async delete(query: Query) {
+    const deleted = await this.likeRepository.delete(query)
     if (deleted.affected === 0) {
       return { error: 'Like not found or already deleted.' }
     }

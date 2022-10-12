@@ -9,3 +9,5 @@ export interface ICommentDTO extends BaseDTO {
 
   post: Post
 }
+
+export interface IComment extends ICommentDTO {}

@@ -81,4 +81,17 @@ export class PostController extends ConfigServer {
       return this.httpResponse.Error(res, error)
     }
   }
+
+  async comment(req: Request, res: Response) {
+    try {
+      const user = req.user as IUser
+      const id = req.params.id
+      const { comment } = req.body
+      const response = await this.postService.comment({ user: user.id, post: id, comment })
+      if (response.error) return this.httpResponse.BadRequest(res, response.error)
+      return this.httpResponse.Ok(res, { ...response })
+    } catch (error) {
+      return this.httpResponse.Error(res, error)
+    }
+  }
 }

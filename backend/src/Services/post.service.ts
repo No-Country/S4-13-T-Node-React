@@ -1,6 +1,7 @@
 import { IPost, UpdatePost } from '../Interfaces/post.interfaces'
 import { Query } from '../Interfaces/repository.interface'
 import { PostRepository } from '../Repository/post.repository'
+import { CommentService } from './comment.service'
 import { LikeService } from './like.service'
 
 export class PostService {
@@ -8,7 +9,8 @@ export class PostService {
   private readonly relation: string
   constructor(
     private readonly postRepository: PostRepository = new PostRepository(),
-    private readonly likeService: LikeService = new LikeService()
+    private readonly likeService: LikeService = new LikeService(),
+    private readonly commentService: CommentService = new CommentService()
   ) {
     this.alias = 'post'
     this.relation = 'user'
@@ -56,26 +58,49 @@ export class PostService {
     return { post: deleted.raw }
   }
 
-  async like(ids: any) {
-    const post = await this.find({ id: ids.post })
+  async like(data: any) {
+    const post = await this.find({ id: data.post })
     if (!post) return { error: 'Post not found.' }
 
-    const userLike = await this.likeService.find({ user: ids.user, post: ids.post })
+    const userLike = await this.likeService.find({ user: data.user, post: data.post })
 
     if (userLike) {
-      const deleted = await this.likeService.remove({ id: userLike.id })
+      const deleted = await this.likeService.delete({ id: userLike.id })
       if (deleted.error) return { error: 'Error while deleting Like with id: ' + userLike.id }
 
-      const updated = await this.update({ id: ids.post }, { likesCount: post.likesCount - 1 })
-      if (updated.error) return { error: 'Error while decrease likeCount on post with id: ' + ids.post }
+      const updated = await this.update({ id: data.post }, { likesCount: post.likesCount - 1 })
+      if (updated.error) return { error: 'Error while decrease likeCount on post with id: ' + data.post }
       return { liked: false, message: 'Like removed.', likesCount: updated.post[0].likesCount }
     }
 
-    await this.likeService.create(ids)
+    await this.likeService.create(data)
 
-    const updated = await this.update({ id: ids.post }, { likesCount: post.likesCount + 1 })
-    if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + ids.post }
+    const updated = await this.update({ id: data.post }, { likesCount: post.likesCount + 1 })
+    if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + data.post }
 
-    return { liked: true, message: 'Liked.', likesCount: updated.post[0].likesCount }
+    return { liked: true, message: 'Like added.', likesCount: updated.post[0].likesCount }
+  }
+
+  async comment(data: any) {
+    const post = await this.find({ id: data.post })
+    if (!post) return { error: 'Post not found.' }
+
+    const userComment = await this.commentService.find({ user: data.user, post: data.post })
+
+    if (userComment) {
+      const deleted = await this.commentService.delete({ id: userComment.id })
+      if (deleted.error) return { error: 'Error while deleting Comment with id: ' + userComment.id }
+
+      const updated = await this.update({ id: data.post }, { commentsCount: post.commentsCount - 1 })
+      if (updated.error) return { error: 'Error while decrease likeCount on post with id: ' + data.post }
+      return { commented: false, message: 'Comment removed.', commentsCount: updated.post[0].commentsCount }
+    }
+
+    await this.likeService.create(data)
+
+    const updated = await this.update({ id: data.post }, { commentsCount: post.commentsCount + 1 })
+    if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + data.post }
+
+    return { commented: true, message: 'Comment added.', commentsCount: updated.post[0].commentsCount }
   }
 }
