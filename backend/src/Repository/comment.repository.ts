@@ -9,6 +9,16 @@ export class CommentRepository extends BaseRepository<IComment> {
     super(Comment)
   }
 
+  async findWithUser(query: Query): Promise<IComment | null> {
+    const builder = (await this.repository).createQueryBuilder('comment')
+
+    builder.leftJoinAndSelect('comment.user', 'user')
+
+    builder.where(query)
+
+    return await builder.getOne()
+  }
+
   async delete(query: Query): Promise<DeleteResult> {
     const { raw, affected } = await (
       await this.repository

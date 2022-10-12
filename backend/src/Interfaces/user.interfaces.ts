@@ -31,6 +31,7 @@ export interface IUser extends IUserDTO {
 }
 
 export interface RequestUser extends Express.User {
+  id: number
   sub: number
   role: RoleTypes[]
   iat: number

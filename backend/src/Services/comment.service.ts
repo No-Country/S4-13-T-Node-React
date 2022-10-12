@@ -18,6 +18,10 @@ export class CommentService extends BaseService {
     return await this.commentRepository.find(this.alias, query, addSelect)
   }
 
+  async findWithUser(query: Query) {
+    return await this.commentRepository.findWithUser(query)
+  }
+
   async delete(query: Query) {
     const deleted = await this.commentRepository.delete(query)
     if (deleted.affected === 0) {

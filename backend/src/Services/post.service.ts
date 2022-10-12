@@ -78,29 +78,18 @@ export class PostService {
     const updated = await this.update({ id: data.post }, { likesCount: post.likesCount + 1 })
     if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + data.post }
 
-    return { liked: true, message: 'Like added.', likesCount: updated.post[0].likesCount }
+    return { liked: true, message: 'Like added.', likesCount: post.likesCount + 1 }
   }
 
   async comment(data: any) {
     const post = await this.find({ id: data.post })
     if (!post) return { error: 'Post not found.' }
 
-    const userComment = await this.commentService.find({ user: data.user, post: data.post })
-
-    if (userComment) {
-      const deleted = await this.commentService.delete({ id: userComment.id })
-      if (deleted.error) return { error: 'Error while deleting Comment with id: ' + userComment.id }
-
-      const updated = await this.update({ id: data.post }, { commentsCount: post.commentsCount - 1 })
-      if (updated.error) return { error: 'Error while decrease likeCount on post with id: ' + data.post }
-      return { commented: false, message: 'Comment removed.', commentsCount: updated.post[0].commentsCount }
-    }
-
-    await this.likeService.create(data)
+    await this.commentService.create(data)
 
     const updated = await this.update({ id: data.post }, { commentsCount: post.commentsCount + 1 })
     if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + data.post }
 
-    return { commented: true, message: 'Comment added.', commentsCount: updated.post[0].commentsCount }
+    return { commented: true, message: 'Comment added.', commentsCount: post.commentsCount + 1 }
   }
 }

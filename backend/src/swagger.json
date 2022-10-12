@@ -132,13 +132,13 @@
         "comment": {
           "type": "string"
         },
-        "user": {
+        "user_id": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/user"
           }
         },
-        "post": {
+        "post_id": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/post"
@@ -153,13 +153,13 @@
         }
       ],
       "properties": {
-        "user": {
+        "user_id": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/user"
           }
         },
-        "post": {
+        "post_id": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/post"
@@ -174,13 +174,13 @@
         }
       ],
       "properties": {
-        "user": {
+        "user_id": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/user"
           }
         },
-        "post": {
+        "post_id": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/post"
@@ -193,6 +193,10 @@
     {
       "name": "posts",
       "description": "Posts of app"
+    },
+    {
+      "name": "comment",
+      "description": "Comments of posts"
     },
     {
       "name": "auth",
@@ -429,7 +433,9 @@
               }
             }
           },
-          "400": { "$ref": "#/responses/BadRequest" },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           },
@@ -490,6 +496,9 @@
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
           }
         }
       }
@@ -545,6 +554,133 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/post/{id}/comment": {
+      "post": {
+        "tags": ["posts"],
+        "summary": "Comment post by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+            "minimum": 1,
+            "description": "Post ID."
+          },
+          {
+            "in": "header",
+            "name": "access_token",
+            "description": "A token for provide the user ID and the role.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment the post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "commented": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "default": "Comment added."
+                    },
+                    "commentsCount": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/comment/{id}": {
+      "delete": {
+        "tags": ["comment"],
+        "summary": "Delete comment by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+            "minimum": 1,
+            "description": "Post ID."
+          },
+          {
+            "in": "header",
+            "name": "access_token",
+            "description": "A token for provide the user ID and the role.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete comment.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "$ref": "#/definitions/comments"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
           }
         }
       }
