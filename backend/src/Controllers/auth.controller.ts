@@ -22,6 +22,28 @@ export class AuthController extends AuthService {
       res.cookie('access_token', encode.access_token, { maxAge: 60000 * 15 })
       res.cookie('user', encode.user, { maxAge: 60000 * 15 })
       res.cookie('refresh_token', encode.refresh_token, { maxAge: 60000 * 86400 })
+      res.write(JSON.stringify(encode))
+      res.end()
+    } catch (error) {
+      console.error(error)
+      return this.httpResponse.Error(res, error)
+    }
+  }
+
+  async loginSocialMedial(req: Request, res: Response) {
+    try {
+      const userEncode = req.user as IUser
+
+      const encode = await this.generateJWT(userEncode)
+
+      if (!encode) {
+        return this.httpResponse.Unauthorized(res, 'No permissions.')
+      }
+
+      res.header('Content-Type', 'application/json')
+      res.cookie('access_token', encode.access_token, { maxAge: 60000 * 15 })
+      res.cookie('user', encode.user, { maxAge: 60000 * 15 })
+      res.cookie('refresh_token', encode.refresh_token, { maxAge: 60000 * 86400 })
       if (this.NODE_ENV == 'prod') {
         res.redirect('http://localhost:3000/')
       } else {
@@ -29,7 +51,6 @@ export class AuthController extends AuthService {
         res.end()
       }
     } catch (error) {
-      console.error(error)
       return this.httpResponse.Error(res, error)
     }
   }

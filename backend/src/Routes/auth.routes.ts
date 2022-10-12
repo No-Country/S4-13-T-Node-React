@@ -33,7 +33,7 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
           failureRedirect: '/login/failure',
         }),
         (req, res) => {
-          this.controller.login(req, res)
+          this.controller.loginSocialMedial(req, res)
         }
       )
       .get(
@@ -44,7 +44,7 @@ export class AuthRouter extends BaseRouter<AuthController, BaseMiddleware> {
         '/login/facebook/callback',
         this.middleware.passAuth('facebook', { session: false, failureRedirect: '/login/failure' }),
         (req, res) => {
-          this.controller.login(req, res)
+          this.controller.loginSocialMedial(req, res)
         }
       )
       .get('/login/failure', (req, res) => {
