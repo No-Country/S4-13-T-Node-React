@@ -560,7 +560,29 @@
             "description": "Values for create a user.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/user"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "User Created Successfully."
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
             }
           }
         ],
@@ -603,14 +625,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "access_token": {
-                  "type": "string"
+                "status": {
+                  "type": "number",
+                  "default": 200
                 },
-                "refresh_token": {
-                  "type": "string"
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
                 },
-                "user": {
-                  "$ref": "#/definitions/user"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "acces_token": {
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
                 }
               }
             }
@@ -639,14 +674,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "access_token": {
-                  "type": "string"
+                "status": {
+                  "type": "number",
+                  "default": 200
                 },
-                "refresh_token": {
-                  "type": "string"
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
                 },
-                "user": {
-                  "$ref": "#/definitions/user"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "acces_token": {
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
                 }
               }
             }
@@ -671,7 +719,29 @@
         ],
         "responses": {
           "200": {
-            "description": "Return message if user has logged out."
+            "description": "Return message if user has logged out.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Logout successfully."
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -721,7 +791,25 @@
           "200": {
             "description": "User by ID",
             "schema": {
-              "$ref": "#/definitions/user"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -758,7 +846,29 @@
           "200": {
             "description": "User updated.",
             "schema": {
-              "$ref": "#/definitions/user"
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "User Updated."
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
             }
           },
           "401": {
@@ -790,7 +900,32 @@
         ],
         "responses": {
           "200": {
-            "description": "User deleted."
+            "description": "User deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "User Deleted."
+                    },
+                    "user": {
+                      "$ref": "#/definitions/user"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
@@ -817,18 +952,36 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user": {
-                  "allOf": [
-                    {
-                      "$ref": "#/definitions/user"
-                    }
-                  ],
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/definitions/post"
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "allOf": [{ "$ref": "#/definitions/user" }],
+                      "properties": {
+                        "posts": {
+                          "$ref": "#/definitions/post"
+                        },
+                        "total_posts": {
+                          "type": "number"
+                        }
                       }
+                    },
+                    "actual_page": {
+                      "type": "number",
+                      "default": 1
+                    },
+                    "size": {
+                      "type": "number",
+                      "default": 20
                     }
                   }
                 }
