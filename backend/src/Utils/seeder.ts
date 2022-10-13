@@ -5,6 +5,8 @@ import { Post } from '../Entities/post.entity'
 import { User } from '../Entities/user.entity'
 import * as bcrypt from 'bcryptjs'
 import { RoleTypes } from '../Interfaces/user.interfaces'
+import { Comment } from '../Entities/comment.entity'
+import { Reply } from '../Entities/reply.entity'
 class Seeder extends ConfigServer {
   constructor() {
     super()
@@ -63,10 +65,59 @@ class Seeder extends ConfigServer {
     }
   }
 
+  async createComments(dataSource: DataSource) {
+    const comment = dataSource.getRepository(Comment)
+    const postCount = await dataSource.getRepository(Post).count()
+
+    const count = await comment.count()
+    if (count > 0) return
+
+    for (let i = 0; i < postCount; i++) {
+      for (let j = 0; j < 2; j++) {
+        const comments = comment.create({
+          comment: `Test comment ${j}`,
+          post: {
+            id: i + 1,
+          },
+          user: {
+            id: 1,
+          },
+        })
+        await comment.save(comments)
+        console.log(`Comment ${j} in Post ${i} created.`)
+      }
+    }
+  }
+
+  async createReplys(dataSource: DataSource) {
+    const reply = dataSource.getRepository(Reply)
+    const commentCount = await dataSource.getRepository(Comment).count()
+    const count = await reply.count()
+    if (count > 0) return
+
+    for (let i = 0; i < commentCount; i++) {
+      for (let j = 0; j < 2; j++) {
+        const replys = reply.create({
+          reply: `Test reply ${j}`,
+          user: {
+            id: 1,
+          },
+          comment: {
+            id: i + 2,
+          },
+        })
+        await reply.save(replys)
+        console.log(`Reply ${j} in Comment ${i} created.`)
+      }
+    }
+  }
+
   async main() {
     const dataSource = await this.dbConnect()
     await this.createUser(dataSource)
     await this.createPosts(dataSource)
+    await this.createComments(dataSource)
+    await this.createReplys(dataSource)
     process.exit()
   }
 }

@@ -15,6 +15,7 @@ export class PostRepository extends BaseRepository<IPost> {
     builder.leftJoinAndSelect('post.comments', 'comment')
     builder.leftJoinAndSelect('comment.user', 'user_comment')
     builder.leftJoinAndSelect('comment.replys', 'replys')
+    builder.leftJoinAndSelect('replys.user', 'user_reply')
 
     builder.where(query)
 
