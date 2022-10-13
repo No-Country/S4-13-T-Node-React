@@ -12,12 +12,6 @@ const Home: NextPage = () => {
     // const data = useAuthSession();
   };
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadAuthData());
-  }, [dispatch]);
-
   return (
     <div>
       <Head>

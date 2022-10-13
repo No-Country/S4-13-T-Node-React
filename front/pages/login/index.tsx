@@ -10,8 +10,7 @@ import { usePublicRoute } from '../../hooks/usePublicRoute';
 const Login: NextPage = () => {
   const data = usePublicRoute();
 
-  // if (data?.access_token) return null;
-  if (localStorage.getItem('token')) return null;
+  if (data?.access_token) return null;
 
   return (
     <div>

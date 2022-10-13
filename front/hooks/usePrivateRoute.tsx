@@ -5,11 +5,12 @@ import { UserDataState } from '../redux/slice/userDataSlice';
 import { RootState } from '../redux/store';
 
 export const usePrivateRoute = () => {
-  const { data } = useSelector<RootState, UserDataState>(state => {
+  const { data, logged } = useSelector<RootState, UserDataState>(state => {
     return state.userDataReducer;
   });
+
   useEffect(() => {
-    if (!localStorage.getItem('token')) Router.push('/login');
-  }, [data]);
+    if (!logged) Router.push('/login');
+  }, [logged]);
   return data;
 };

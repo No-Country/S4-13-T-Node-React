@@ -1,4 +1,4 @@
-import useAxios from '../hooks/useAxios';
+import {useAxios} from '../hooks/useAxios';
 import { AxiosGetPost, AxiosGetPostById, PostPropsAxios } from '../interfaces';
 
 const api = useAxios();
@@ -42,3 +42,11 @@ export const deletePost = async (id: number | string) => {
     console.log(err);
   }
 };
+
+export const postLike = async (id: number | string ) => {
+  try {
+    await api.post(`/post/${id}/like`).then(res=> console.log(res));
+  } catch (err) {
+    console.log(err);
+  }
+}

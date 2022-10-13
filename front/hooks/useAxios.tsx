@@ -1,13 +1,21 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { UserDataState } from '../redux/slice/userDataSlice';
+import { RootState } from '../redux/store';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const useAxios = () => {
+export const useAxios = () => {
+  // const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  // const access_token = data?.access_token || '';
+
+  // console.log(data);
+
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
     headers: {
-      // "access_token": //lo agarra de redux
+      // access_token: token,
     },
   });
 
@@ -19,5 +27,3 @@ const useAxios = () => {
 
   return axiosInstance;
 };
-
-export default useAxios;
