@@ -9,17 +9,17 @@ const userService: UserService = new UserService()
 
 export class GoogleStrategy extends AuthService {
   async validate(req: Request, accessToken: string, refreshToken: string, profile: any, done: VerifyCallback) {
-    const { email, given_name, family_name, id, picture = 'https://loremflickr.com/640/480/cats' } = profile
-    const user_found = await userService.findByEmail(email)
+    const { email, displayName, id, picture = 'https://loremflickr.com/640/480/cats' } = profile
+    const user_found = await userService.find({ email })
 
     if (user_found) {
       req.user = user_found
       return done(null, user_found)
     } else {
-      const user = await userService.createUser({
+      const user = await userService.create({
         google_id: id,
         email,
-        username: `${given_name}.${family_name}.${id}`,
+        username: `${displayName.replace(/ /g, '.')}.${id}`,
         avatar_url: picture,
       })
       req.user = user

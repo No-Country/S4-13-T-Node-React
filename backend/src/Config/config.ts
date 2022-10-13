@@ -36,6 +36,7 @@ export abstract class ConfigServer {
     try {
       return await this.typeoORMConfig.initialize()
     } catch (error) {
+      console.log(error)
       throw new Error(`Unexpected Server Error` + error)
     }
   }

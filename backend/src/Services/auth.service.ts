@@ -15,8 +15,7 @@ export class AuthService extends ConfigServer {
   }
 
   public async validateUser(username: string, password: string): Promise<IUser | null> {
-    const userByUsername = await this.userService.findByUsername(username)
-    const userByEmail = await this.userService.findByEmail(username)
+    const userByUsername = await this.userService.find({ username }, 'password')
 
     if (userByUsername) {
       const isMatch = await this.baseService.compare(password, userByUsername.password!)
@@ -24,6 +23,8 @@ export class AuthService extends ConfigServer {
         return userByUsername
       }
     }
+
+    const userByEmail = await this.userService.find({ email: username }, 'password')
 
     if (userByEmail) {
       const isMatch = await this.baseService.compare(password, userByEmail.password!)
@@ -49,6 +50,7 @@ export class AuthService extends ConfigServer {
 
     if (userConsult) {
       user.password = 'No permission.'
+      user.refresh_token = 'No permission.'
     }
 
     const access_token = this.sing(payload, this.getEnvironment('JWT_SECRET'), '15m')
@@ -65,14 +67,14 @@ export class AuthService extends ConfigServer {
 
   private async updateRefreshTokenUser(refresh_token: string, id: number) {
     const hash = await this.baseService.encrypt(refresh_token)
-    await this.userService.update(id, { refresh_token: hash })
+    await this.userService.update({ id }, { refresh_token: hash })
   }
 
   protected async compareRefreshToken(
     refresh_token: string,
     id: number
   ): Promise<{ access_token: string; refresh_token: string; user: IUser } | false> {
-    const user = await this.userService.findByIdWithRefreshToken(id)
+    const user = await this.userService.find({ id }, 'refresh_token')
     if (!user || !user.refresh_token) return false
 
     const isMatch = await this.baseService.compare(refresh_token, user?.refresh_token!)
@@ -81,7 +83,7 @@ export class AuthService extends ConfigServer {
 
     const encode = await this.generateJWT(user)
 
-    await this.userService.update(user.id, { refresh_token: encode.refresh_token })
+    await this.userService.update({ id: user.id }, { refresh_token: encode.refresh_token })
 
     return encode
   }

@@ -1,5 +1,5 @@
 import { BaseEntity } from '../Entities/base.entity'
-import { DatabaseRepository, Query, QueryList } from '../Interfaces/repository.interface'
+import { DatabaseRepository, Query, SetsList } from '../Interfaces/repository.interface'
 import { EntityTarget, IsNull, Repository, UpdateResult } from 'typeorm'
 import { ConfigServer } from '../Config/config'
 
@@ -16,13 +16,13 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
     return getConn.getRepository(this.entity)
   }
 
-  async create(data: T, query?: Query | undefined): Promise<T> {
+  async create(data: T): Promise<T> {
     const builder = (await this.repository).create(data)
     return (await this.repository).save(builder)
   }
 
-  async list(alias: string, relation?: string, query?: QueryList): Promise<[T[], number]> {
-    const { size, page, sort, word, property } = query!
+  async list(alias: string, relation?: string, sets?: SetsList): Promise<[T[], number]> {
+    const { size, page, sort, word, property } = sets!
 
     const builder = (await this.repository).createQueryBuilder(alias)
 
@@ -35,7 +35,6 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
       .limit(size)
       .orderBy(`${alias}.created_at`, sort.toUpperCase())
 
-    console.log(word && property)
     if (word && property) {
       builder.where(`${alias}.${property} like :word`, { word: `%${word}%` })
     }
@@ -44,9 +43,9 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
     return [list, total]
   }
 
-  async get(alias: string, query?: Query | undefined, addSelect?: string): Promise<T | null> {
+  async find(alias: string, query?: Query | undefined, addSelect?: string): Promise<T | null> {
     const builder = (await this.repository).createQueryBuilder(alias)
-    if (addSelect) builder.addSelect(addSelect)
+    if (addSelect) builder.addSelect(`${alias}.${addSelect}`)
 
     return await builder.where({ ...query, deleted_at: IsNull() }).getOne()
   }

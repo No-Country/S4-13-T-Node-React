@@ -5,7 +5,9 @@ import { User } from '../Entities/user.entity'
 export interface ICommentDTO extends BaseDTO {
   comment: string
 
-  user: User
+  user?: User
 
-  post: Post
+  post?: Post
 }
+
+export interface IComment extends ICommentDTO {}

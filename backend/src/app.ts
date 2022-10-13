@@ -11,6 +11,7 @@ import { JwtStrategy } from './Strategies/jwt.strategy'
 import { AuthRouter } from './Routes/auth.routes'
 import { GoogleStrategy } from './Strategies/google.strategy'
 import { FacebookStrategy } from './Strategies/facebook.strategy'
+import { CommentRouter } from './Routes/comment.routes'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -23,9 +24,11 @@ export class Server extends ConfigServer {
 
     this.passportUse()
 
-    this.dbConnect().then(() => {
-      console.log('Database connected.')
-    })
+    this.dbConnect()
+      .then(() => {
+        console.log('Database connected.')
+      })
+      .catch(err => console.log(err))
 
     this.app.get('/', (req, res) => {
       res.send('<a href="/login/google">Google</a><a href="/login/facebook">Facebook</a>') // Para probar el login de google
@@ -44,7 +47,7 @@ export class Server extends ConfigServer {
   }
 
   routers(): express.Router[] {
-    return [new PostRouter().router, new UserRouter().router, new AuthRouter().router]
+    return [new PostRouter().router, new UserRouter().router, new AuthRouter().router, new CommentRouter().router]
   }
 
   public listen() {
