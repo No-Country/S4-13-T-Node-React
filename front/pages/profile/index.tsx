@@ -7,8 +7,7 @@ import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 const Profile: NextPage = () => {
   const data = usePrivateRoute();
 
-  // if (!data?.access_token) return null;
-  if (!localStorage.getItem('token')) return null;
+  if (!data?.access_token) return null;
 
   return (
     <div>

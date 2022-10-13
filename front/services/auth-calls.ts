@@ -1,5 +1,5 @@
 import { LoginProps } from '../interfaces';
-import useAxios from '../hooks/useAxios';
+import {useAxios} from '../hooks/useAxios';
 
 const api = useAxios();
 
