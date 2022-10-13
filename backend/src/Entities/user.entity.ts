@@ -5,6 +5,7 @@ import { Comment } from './comment.entity'
 import { Favorite } from './favorite.entity'
 import { Like } from './like.entity'
 import { Post } from './post.entity'
+import { Reply } from './reply.entity'
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -43,4 +44,7 @@ export class User extends BaseEntity implements IUser {
 
   @OneToMany(() => Favorite, favorite => favorite.user)
   favorites: Favorite[]
+
+  @OneToMany(() => Reply, reply => reply.user)
+  replys: Reply[]
 }

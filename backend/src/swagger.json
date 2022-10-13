@@ -74,6 +74,21 @@
         "facebook_id": {
           "type": "string",
           "readOnly": true
+        },
+        "posts": {
+          "type": "array",
+          "$ref": "#/definitions/post",
+          "readOnly": true
+        },
+        "likes": {
+          "type": "array",
+          "$ref": "#/definitions/likes",
+          "readOnly": true
+        },
+        "favorites": {
+          "type": "array",
+          "$ref": "#/definitions/favorites",
+          "readOnly": true
         }
       }
     },
@@ -114,10 +129,8 @@
           "readOnly": true
         },
         "comments": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/comments"
-          },
+          "type": "array",
+          "$ref": "#/definitions/comments",
           "readOnly": true
         }
       }
@@ -142,6 +155,35 @@
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/post"
+          }
+        },
+        "replys": {
+          "type": "array",
+          "$ref": "#/definitions/reply",
+          "readOnly": true
+        }
+      }
+    },
+    "reply": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/base_model"
+        }
+      ],
+      "properties": {
+        "reply": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/user"
+          }
+        },
+        "comment_id": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/comments"
           }
         }
       }
@@ -669,6 +711,59 @@
                 },
                 "data": {
                   "$ref": "#/definitions/comments"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/comment/{id}/reply": {
+      "post": {
+        "tags": ["comment"],
+        "summary": "Reply comment by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+            "minimum": 1,
+            "description": "Post ID."
+          },
+          {
+            "in": "header",
+            "name": "access_token",
+            "description": "A token for provide the user ID and the role.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reply comment.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "default": 200
+                },
+                "statusMsg": {
+                  "type": "string",
+                  "default": "Success."
+                },
+                "data": {
+                  "$ref": "#/definitions/reply"
                 }
               }
             }
