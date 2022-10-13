@@ -1,19 +1,19 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
-import { ISubcommentDTO } from '../Interfaces/subcomment.interface'
+import { IReplyDTO } from '../Interfaces/reply.interface'
 import { BaseEntity } from './base.entity'
 import { Comment } from './comment.entity'
 import { User } from './user.entity'
 
 @Entity()
-export class Subcomment extends BaseEntity implements ISubcommentDTO {
+export class Reply extends BaseEntity implements IReplyDTO {
   @Column()
-  subcomment: string
+  reply: string
 
-  @ManyToOne(() => User, user => user.subcomments)
+  @ManyToOne(() => User, user => user.replys)
   @JoinColumn({ name: 'user_id' })
   user?: User
 
-  @ManyToOne(() => Comment, comment => comment.subcomments)
+  @ManyToOne(() => Comment, comment => comment.replys)
   @JoinColumn({ name: 'comment_id' })
   comment?: Comment
 }

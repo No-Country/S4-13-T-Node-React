@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { ICommentDTO } from '../Interfaces/comment.interface'
 import { BaseEntity } from './base.entity'
 import { Post } from './post.entity'
-import { Subcomment } from './subcomment.entity'
+import { Reply } from './reply.entity'
 import { User } from './user.entity'
 
 @Entity()
@@ -18,6 +18,6 @@ export class Comment extends BaseEntity implements ICommentDTO {
   @JoinColumn({ name: 'post_id' })
   post: Post
 
-  @OneToMany(() => Subcomment, subcomment => subcomment.comment)
-  subcomments: Subcomment[]
+  @OneToMany(() => Reply, reply => reply.comment)
+  replys: Reply[]
 }

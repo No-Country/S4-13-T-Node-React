@@ -2,10 +2,14 @@ import { IComment } from '../Interfaces/comment.interface'
 import { Query } from '../Interfaces/repository.interface'
 import { CommentRepository } from '../Repository/comment.repository'
 import { BaseService } from './base.service'
+import { ReplyService } from './reply.service'
 
 export class CommentService extends BaseService {
   private readonly alias
-  constructor(private readonly commentRepository: CommentRepository = new CommentRepository()) {
+  constructor(
+    private readonly commentRepository: CommentRepository = new CommentRepository(),
+    private readonly replyService: ReplyService = new ReplyService()
+  ) {
     super()
     this.alias = 'comment'
   }
@@ -28,5 +32,14 @@ export class CommentService extends BaseService {
       return { error: 'Comment not found or already deleted.' }
     }
     return { comment: deleted.raw }
+  }
+
+  async replyComment(data: any) {
+    const comment = await this.find({ id: data.comment })
+    if (!comment) return { error: 'Comment not found.' }
+
+    await this.replyService.create(data)
+
+    return { replied: true, message: 'Reply added.' }
   }
 }

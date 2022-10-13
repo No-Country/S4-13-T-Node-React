@@ -15,5 +15,12 @@ export class CommentRouter extends BaseRouter<CommentController, CommentMiddlewa
       (req, res, next) => this.middleware.checkUserIsCommentOwner(req, res, next),
       (req, res) => this.controller.deleteComment(req, res)
     )
+
+    this.router.post(
+      '/comment/:id/reply',
+      this.middleware.passAuth('jwt', { session: false }),
+      (req, res, next) => this.middleware.getAccessToken(req, res, next),
+      (req, res) => this.controller.replyComment(req, res)
+    )
   }
 }

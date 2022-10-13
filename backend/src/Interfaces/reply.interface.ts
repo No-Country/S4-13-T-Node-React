@@ -2,12 +2,12 @@ import { BaseDTO } from '../DTO/base.dto'
 import { Comment } from '../Entities/comment.entity'
 import { User } from '../Entities/user.entity'
 
-export interface ISubcommentDTO extends BaseDTO {
-  subcomment: string
+export interface IReplyDTO extends BaseDTO {
+  reply: string
 
   user?: User
 
   comment?: Comment
 }
 
-export interface ISubcomment extends ISubcommentDTO {}
+export interface IReply extends IReplyDTO {}
