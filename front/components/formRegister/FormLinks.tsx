@@ -14,5 +14,3 @@ const FormLinks = ({ question, anchor }: FormLinksProps) => {
 };
 
 export default FormLinks;
-
-//

@@ -9,7 +9,6 @@ export const usePrivateRoute = () => {
     return state.userDataReducer;
   });
   useEffect(() => {
-    // if (!data?.access_token) Router.push('/login');
     if (!localStorage.getItem('token')) Router.push('/login');
   }, [data]);
   return data;

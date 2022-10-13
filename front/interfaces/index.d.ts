@@ -112,5 +112,6 @@ export interface GetUserData {
     username: string;
     email: string;
     role: string[];
+    avatar_url: string;
   };
 }

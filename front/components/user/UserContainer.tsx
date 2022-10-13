@@ -4,7 +4,7 @@ import { logout } from '../../redux/slice/userDataSlice';
 import Avatar from './avatar/Avatar';
 import DataUser from './dataUser/DataUser';
 
-function UserContainer() {
+const UserContainer = () => {
   const dispatch = useDispatch();
 
   return (
@@ -26,6 +26,6 @@ function UserContainer() {
       </div>
     </>
   );
-}
+};
 
 export default UserContainer;

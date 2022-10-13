@@ -31,7 +31,7 @@ const Favs: NextPage = () => {
             <h2 className="font-orelega text-[20px] leading-[22px] text-center w-[250px]">
               Todavía no tenés memes marcados como favoritos
             </h2>
-            <div className="flex flex-col mt-4">
+            <div className="flex flex-col mt-4 gap-y-4">
               <Image src="/assets/favs-top.png" width={300} height={125} />
               <Image src="/assets/favs-bottom.png" width={300} height={125} />
             </div>
