@@ -10,7 +10,6 @@ export const usePublicRoute = () => {
   });
 
   useEffect(() => {
-    // if (data?.access_token || localStorage.getItem('token')) Router.push('/');
     if (localStorage.getItem('token')) Router.push('/');
   }, [data]);
   return data;
