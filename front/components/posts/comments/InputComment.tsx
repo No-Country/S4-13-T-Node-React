@@ -32,9 +32,9 @@ const InputComment = () => {
             <div className="flex justify-end my-2">
               <button
                 type="submit"
-                className={`font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary ${
+                className={`font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 ${
                   values.comment === '' && 'border-accent text-accent'
-                }`}
+                } ${values.comment !== '' && 'active:text-secondary active:border-secondary'}`}
                 disabled={values.comment === ''}
               >
                 Comentar

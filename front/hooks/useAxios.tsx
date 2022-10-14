@@ -5,17 +5,12 @@ import { RootState } from '../redux/store';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const useAxios = () => {
-  // const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
-  // const access_token = data?.access_token || '';
-
-  // console.log(data);
-
+export const useAxios = (token?: string) => {
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
     headers: {
-      // access_token: token,
+      access_token: token || '',
     },
   });
 

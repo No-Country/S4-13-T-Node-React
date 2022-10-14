@@ -1,10 +1,7 @@
-import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useDispatch } from 'react-redux';
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
-import { loadAuthData } from '../redux/slice/userDataSlice';
 
 const Home: NextPage = () => {
   const handleUploadMeme = () => {

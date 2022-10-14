@@ -18,7 +18,6 @@ const PostContainer = () => {
 
   const [postVisited, setPostVisited] = useState<Partial<IPost | null>>(null);
   const [showTags, setShowTags] = useState<boolean>(false);
-  const [response, setResponse] = useState<boolean>(true);
 
   const id = parseInt(router.query.id as string);
 
@@ -111,11 +110,18 @@ const PostContainer = () => {
         <div className="w-full mt-2" id="comments">
           <InputComment />
         </div>
-        <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px]">
-          <Comments />
-          <Comments />
-          <Comments response={response} />
-          <Comments />
+        <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
+          {postVisited?.comments?.map(comment => {
+            return (
+              <Comments
+                key={comment.id}
+                message={comment.comment}
+                user={comment.user}
+                createdAt={comment.created_at}
+                replys={comment.replys}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
