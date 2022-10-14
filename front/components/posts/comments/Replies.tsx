@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IReply } from '../../../interfaces';
 import Comments from './Comments';
 
-const Replys = ({ replys }: { replys: IReply[] | null }) => {
+const Replies = ({ replies }: { replies: IReply[] | null }) => {
   const [showResponse, setShowResponse] = useState<boolean>(false);
 
   const handleShowResponse = () => {
@@ -11,12 +11,12 @@ const Replys = ({ replys }: { replys: IReply[] | null }) => {
 
   return (
     <>
-      {replys && (
+      {replies && (
         <div className="flex flex-col pl-4 mt-2">
           <div className="flex items-center gap-x-1.5 text-xs text-accent">
             <div className="w-6 border-t-[1px]"></div>
             <p className="cursor-pointer active:text-secondary" onClick={handleShowResponse}>
-              {showResponse ? `Ocultar respuestas(${replys.length})` : `Ver respuestas(${replys.length})`}
+              {showResponse ? `Ocultar respuestas(${replies.length})` : `Ver respuestas(${replies.length})`}
             </p>
           </div>
           <div
@@ -26,12 +26,12 @@ const Replys = ({ replys }: { replys: IReply[] | null }) => {
           >
             {showResponse ? (
               <>
-                {replys?.map(reply => (
+                {replies?.map(reply => (
                   <Comments
                     key={reply.id}
                     createdAt={reply.created_at}
                     message={reply.reply}
-                    replys={reply.replys}
+                    replies={reply.replys}
                     user={reply.user}
                   />
                 ))}
@@ -44,4 +44,4 @@ const Replys = ({ replys }: { replys: IReply[] | null }) => {
   );
 };
 
-export default Replys;
+export default Replies;

@@ -1,10 +1,20 @@
-import { GetUserData, LoginProps } from './../../interfaces/index.d';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GetUserData, ILike, IPost, LoginProps } from './../../interfaces/index.d';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { postLogin } from '../../services/auth-calls';
 import { WritableDraft } from 'immer/dist/internal';
+import { getUserLikes } from '../../services/api-calls';
+import { useDispatch } from 'react-redux';
 
+// const fetchUserLikes = createAsyncThunk(
+//   'user/likes',
+//   async (id: number) => {
+//     const res = await getUserLikes(id);
+//     return res;
+//   }
+// )
 export interface UserDataState {
   data: GetUserData | null;
+  likes: ILike[];
   error: string | null;
   logged: boolean;
 }
@@ -13,11 +23,13 @@ const initialState: UserDataState = {
   data: {
   access_token: '',
   user: {
+    id: '',
     username: '',
     email: '',
     role: [],
     avatar_url: '',
   }},
+  likes: [],
   error: null,
   logged: false,
 };
@@ -33,6 +45,9 @@ const userDataSlice = createSlice({
       state.logged = true;
       return;
     },
+    getLikes: (state, action: PayloadAction<ILike[]>) => {
+      state.likes = action.payload;
+    },
     logout: (state) => {
       state.data = initialState.data
       localStorage.removeItem('token');
@@ -40,17 +55,18 @@ const userDataSlice = createSlice({
       state.logged = false;
       return;
     },
-    loadAuthData: (state) => {
+    loadAuthData: (state, action: PayloadAction<ILike[]>) => {
       if (localStorage.getItem('token')) {
         const access_token = JSON.parse(localStorage.getItem('token') || '');
         const user = JSON.parse(localStorage.getItem('user') || '');
         state.data = {access_token, user};
         state.logged = true;
+        state.likes = action.payload;
       }
     }
   },
 });
 
-export const { getData, logout, loadAuthData } = userDataSlice.actions;
+export const { getData, getLikes, logout, loadAuthData } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

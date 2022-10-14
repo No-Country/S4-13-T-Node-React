@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadAuthData } from '../redux/slice/userDataSlice';
+import { getUserLikes } from '../services/api-calls';
 
 const LoadAuth = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadAuthData());
+    if (localStorage.getItem('user') && localStorage.getItem('token')) {
+      const user = JSON.parse(localStorage.getItem('user') || '');
+      getUserLikes(user.id).then(res => res && dispatch(loadAuthData(res)));
+    }
   }, [dispatch]);
 
   return <>{children}</>;
