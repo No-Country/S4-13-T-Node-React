@@ -3,6 +3,8 @@ import { AxiosGetPost, AxiosGetPostById, PostPropsAxios } from '../interfaces';
 
 const api = useAxios();
 
+// Calls to posts
+
 export const getPost = async () => {
   try {
     return await api.get('/post').then(({ data }: AxiosGetPost) => data.data.posts);
@@ -50,3 +52,30 @@ export const postLike = async (id: number | string ) => {
     console.log(err);
   }
 }
+
+// Calls to users
+
+export const getUserPosts = async (id: number | string) => {
+  try {
+    return await api.get(`/user/${id}/posts`).then(res => console.log(res));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUserLikes = async (id: number | string) => {
+  try {
+    const response = await api.get(`/user/${id}/likes`)
+    return response.data.data.user.likes
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUserFavorites = async (id: number | string) => {
+  try {
+    return await api.get(`/user/${id}/favorites`).then(res => console.log(res));
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -2,17 +2,17 @@ import { useState } from 'react';
 import Image from 'next/image';
 import InputComment from './InputComment';
 import { IReply, IUser } from '../../../interfaces';
-import Replys from './Replys';
+import Replies from './Replies';
 import { calculateDates } from '../../../utils/calculateDates';
 
 interface CommentsProps {
   message: string;
   user: IUser;
   createdAt: string;
-  replys?: IReply[] | null;
+  replies?: IReply[] | null;
 }
 
-const Comments = ({ message, user, createdAt, replys }: CommentsProps) => {
+const Comments = ({ message, user, createdAt, replies }: CommentsProps) => {
   const [showInputResponse, setShowInputResponse] = useState<boolean>(false);
 
   return (
@@ -48,7 +48,7 @@ const Comments = ({ message, user, createdAt, replys }: CommentsProps) => {
             </>
           ) : null}
         </div>
-        <Replys replys={replys || null} />
+        <Replies replies={replies || null} />
       </div>
     </div>
   );
