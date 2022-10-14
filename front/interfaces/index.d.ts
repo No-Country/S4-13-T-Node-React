@@ -60,14 +60,38 @@ export interface IPost {
   media_url: string;
   tags: string[];
   likesCount: number;
+  comments: IComment[];
   commentsCount: number;
-  created_at: Date;
+  created_at: string;
   updated_at: Date;
   deleted_at: Date;
   user_id?: number;
   user: {
     username: string;
   };
+}
+
+export interface IComment {
+  comment: string;
+  created_at: string;
+  id: number;
+  user: IUser;
+  replys?: IReply[];
+}
+
+export interface IReply {
+  reply: string;
+  created_at: string;
+  id: number;
+  user: IUser;
+  replys?: IReply[];
+}
+
+export interface IUser {
+  username: string;
+  email: string;
+  role: string[];
+  avatar_url: string;
 }
 
 export interface AxiosGetPost extends AxiosResponse {
@@ -108,10 +132,5 @@ export interface MDProps {
 
 export interface GetUserData {
   access_token: string;
-  user: {
-    username: string;
-    email: string;
-    role: string[];
-    avatar_url: string;
-  };
+  user: IUser;
 }
