@@ -3,7 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['i.pravatar.cc', 'loremflickr.com'],
+    // domains: ['i.pravatar.cc', 'loremflickr.com', 'lh3.googleusercontent.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.*',
+      },
+    ],
   },
 };
 
