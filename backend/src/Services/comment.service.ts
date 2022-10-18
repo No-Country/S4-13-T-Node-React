@@ -38,7 +38,7 @@ export class CommentService extends BaseService {
     const comment = await this.find({ id: data.commentId })
     if (!comment) return { error: 'Comment not found.' }
 
-    await this.replyService.create(data)
+    this.replyService.create(data)
 
     return { replied: true, message: 'Reply added.' }
   }

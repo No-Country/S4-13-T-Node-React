@@ -92,10 +92,11 @@ export class PostService {
     const post = await this.find({ id: data.postId })
     if (!post) return { error: 'Post not found.' }
 
-    await this.commentService.create(data)
+    this.commentService.create(data)
 
-    const updated = await this.update({ id: data.postId }, { commentsCount: post.commentsCount + 1 })
-    if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + data.postId }
+    this.update({ id: data.postId }, { commentsCount: post.commentsCount + 1 })
+    // const updated = await this.update({ id: data.postId }, { commentsCount: post.commentsCount + 1 })
+    // if (updated.error) return { error: 'Error while increment likeCount on post with id: ' + data.postId }
 
     return { commented: true, message: 'Comment added.', commentsCount: post.commentsCount + 1 }
   }
