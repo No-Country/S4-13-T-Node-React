@@ -155,5 +155,6 @@ export interface MDProps {
 
 export interface GetUserData {
   access_token: string;
+  refresh_token?: string;
   user: IUserLikes;
 }
