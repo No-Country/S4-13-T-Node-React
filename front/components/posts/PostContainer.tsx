@@ -44,7 +44,7 @@ const PostContainer = () => {
   }, [post]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading message={'Sorprendete con el meme que viene'} />;
   }
 
   if (error) {
@@ -52,7 +52,7 @@ const PostContainer = () => {
   }
 
   return (
-    <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
+    <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
       <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
         <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
         <div className="flex items-center gap-x-2">

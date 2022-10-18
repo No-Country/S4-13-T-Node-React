@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 function Footer() {
   return (
-    <div className="inset-x-0 w-full mx-auto sm:w-[512px] lg:w-[1024px] font-roboto">
-      <div className="bg-accent h-18 min-screen mx-2 rounded-t-lg flex justify-around items-center text-white text-center">
-        <ul>
+    <div className="inset-x-0 w-full mx-auto sm:w-[512px] lg:w-[1024px] font-roboto text-sm lg:text-base">
+      <div className="bg-accent h-18 min-screen mx-2 rounded-t-lg flex justify-around items-center text-white text-center lg:justify-center">
+        <ul className="w-[140px] lg:flex lg:gap-x-10 lg:w-auto">
           <li>
             <Link href="#">
               <a>Privacidad</a>
@@ -17,8 +17,14 @@ function Footer() {
             </Link>
           </li>
         </ul>
-        <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
-        <ul>
+        <div className="lg:mx-10">
+          <Link href="/">
+            <a>
+              <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
+            </a>
+          </Link>
+        </div>
+        <ul className="w-[140px] lg:flex lg:gap-x-10 lg:w-auto">
           <li>
             <Link href="#">
               <a>Contacto</a>

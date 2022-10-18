@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
+        <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
             <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
             <button
