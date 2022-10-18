@@ -1,7 +1,4 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { UserDataState } from '../redux/slice/userDataSlice';
-import { RootState } from '../redux/store';
 
 const NODE_ENV = process.env.NODE_ENV;
 

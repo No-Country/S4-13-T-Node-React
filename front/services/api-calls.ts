@@ -65,8 +65,10 @@ export const getUserPosts = async (id: number | string) => {
 
 export const getUserLikes = async (id: number | string) => {
   try {
-    const response = await api.get(`/user/${id}/likes`)
-    return response.data.data.user.likes
+    if (id) {
+      const response = await api.get(`/user/${id}/likes`)
+      return response.data.data.user.likes
+    }
   } catch (error) {
     console.error(error);
   }
