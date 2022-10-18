@@ -33,7 +33,7 @@ _Deploy: (https://........./)
 - typescript
 - passport
 - jwt
-- typeorm o sequelize
+- typeorm
 - postgreSQL
 - jest
 
@@ -51,4 +51,3 @@ _Deploy: (https://........./)
 
 ### Back
 - **Julián Yachelini** - [ver Github de Julián](https://github.com/JYachelini)
-- **Kevin Huaza** - [ver Github de Kevin](https://github.com/khuaza9612)
