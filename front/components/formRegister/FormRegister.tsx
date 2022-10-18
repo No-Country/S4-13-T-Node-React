@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
@@ -7,11 +7,13 @@ import { signup } from '../../redux/slice/userSignupSlice';
 import { RegisterProps } from '../../interfaces';
 import useToggleView from '../../hooks/useToggleView';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { register } from '../../services/auth-calls';
+import { useRouter } from 'next/router';
 
 const validateRegisterSchema = Yup.object({
   email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
   username: Yup.string()
-    .min(2, 'El nombre de usuario es demasiado corto')
+    .min(4, 'El nombre de usuario es demasiado corto')
     .max(15, 'El nombre de usuario es demasiado largo')
     .required('Nombre de usuario requerido'),
   password: Yup.string().min(6, 'El password debe tener al menos 6 caracteres').required('Password requerido'),
@@ -19,20 +21,30 @@ const validateRegisterSchema = Yup.object({
 
 const FormRegister = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { handleToggle, toggleView } = useToggleView();
+  const [error, setError] = useState<string>('');
 
   return (
     <>
       <h4 className="text-sm max-w-[250px] py-6 text-center font-semibold text-black">
         Vas a poder hacer comentarios, agregar a favoritos y subir memes!
       </h4>
+      {error ? <p>{error}</p> : null} {/* TODO = Aplicar estilos a este error. */}
       {
         <Formik
           initialValues={{ email: '', username: '', password: '' }}
-          onSubmit={(values: RegisterProps, { resetForm }) => {
-            dispatch(signup(values));
-            resetForm();
+          onSubmit={async (values: RegisterProps, { resetForm }) => {
+            // dispatch(signup(values));
+            const { data, error } = await register(values);
+
+            if (error) {
+              setError(error.message);
+            } else {
+              router.push('/login');
+            }
+            // resetForm();
           }}
           validationSchema={validateRegisterSchema}
         >

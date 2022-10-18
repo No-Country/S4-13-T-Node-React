@@ -793,6 +793,25 @@
             "schema": {
               "type": "object",
               "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User register.",
+            "schema": {
+              "type": "object",
+              "properties": {
                 "status": {
                   "type": "number",
                   "default": 200
@@ -815,11 +834,6 @@
                 }
               }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User register."
           },
           "400": {
             "$ref": "#/responses/BadRequest"

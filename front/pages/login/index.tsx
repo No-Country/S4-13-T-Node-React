@@ -23,7 +23,7 @@ const Login: NextPage = () => {
       <LayoutFormPages heading="ingreso">
         <div className="flex flex-col justify-center items-center">
           <FormLogin />
-          <FormLinks question="¿no tenes cuenta?" anchor="Registrate" />
+          <FormLinks question="¿no tenes cuenta?" anchor="/signup" achorText="Registrate" />
           <HrComponent />
           <MediaContainer />
         </div>

@@ -24,8 +24,8 @@ export class UserController {
         return this.httpResponse.BadRequest(res, { message: 'Email already exist.' })
       }
 
-      const result = await this.userService.create(user)
-      return this.httpResponse.Ok(res, { message: 'User Created Successfully.', user: result })
+      const { email, id, username } = await this.userService.create(user)
+      return this.httpResponse.Ok(res, { message: 'User Created Successfully.', user: { email, id, username } })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }
