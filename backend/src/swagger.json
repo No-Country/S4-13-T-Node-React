@@ -628,6 +628,20 @@
             "description": "A token for provide the user ID and the role.",
             "type": "string",
             "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The value of comment",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
           }
         ],
         "responses": {
