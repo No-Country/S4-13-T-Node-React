@@ -78,9 +78,14 @@ const userDataSlice = createSlice({
         state.likes = action.payload;
       }
     },
+    setTokens: (state, action: PayloadAction<{ access_token: string; refresh_token: string }>) => {
+      state.data!.access_token = action.payload.access_token;
+      state.data!.refresh_token = action.payload.refresh_token;
+      return;
+    },
   },
 });
 
-export const { getData, getLikes, addRemoveLike, logout, loadAuthData } = userDataSlice.actions;
+export const { getData, getLikes, addRemoveLike, logout, loadAuthData, setTokens } = userDataSlice.actions;
 
 export default userDataSlice.reducer;
