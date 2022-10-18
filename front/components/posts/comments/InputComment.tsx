@@ -7,8 +7,11 @@ import { RootState } from '../../../redux/store';
 interface CommentProps {
   comment: string;
 }
+interface InputProps {
+  id?: number | string;
+}
 
-const InputComment = ({ id }: { id: number | string }) => {
+const InputComment = ({ id }: InputProps) => {
   const { data, likes } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const dispatch = useDispatch();
   const access_token = data?.access_token;
