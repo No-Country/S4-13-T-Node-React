@@ -14,8 +14,8 @@ export const TagsItemsCont = (props: OpensProps) => {
 
   return (
     <div
-      className={`absolute ${
-        props.open ? 'top-[53px]' : 'top-[-400px]'
+      className={`absolute top-[53px] ${
+        props.open ? 'opacity-100' : 'opacity-0'
       } left-12 border-2 border-primary rounded-b-3xl w-[212px] min-h-[420px] z-[-40] px-6 transition-all duration-500 ease-in select-none flex flex-col justify-center items-start gap-4`}
     >
       {fakeTags.map(el => (

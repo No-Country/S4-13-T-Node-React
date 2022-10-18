@@ -42,7 +42,9 @@ const RightIcons = ({ id }: { id: string | number }) => {
   };
 
   useEffect(() => {
-    getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
+    if (data?.access_token) {
+      getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
+    }
   }, [like]);
 
   return (
