@@ -9,7 +9,7 @@ const UserContainer = () => {
 
   return (
     <>
-      <div className="flex gap-x-32 justify-start content-between">
+      <div className="flex gap-x-32 justify-start content-between mt-[56px]">
         <div className="flex flex-col mt-5">
           <h1 className="text-text font-normal text-2xl font-orelega">Perfil</h1>
           <h6 className="text-accent text-xs">

@@ -55,16 +55,16 @@ export interface IHrefPostProps {
 }
 
 export interface IPost {
-  id: number;
-  title: string;
-  media_url: string;
-  tags: string[];
-  likesCount: number;
+  id: number | string;
+  title?: string;
+  media_url?: string;
+  tags?: string[];
+  likesCount?: number;
   comments?: IComment[];
-  commentsCount: number;
-  created_at: string;
-  updated_at: Date;
-  deleted_at: Date;
+  commentsCount?: number;
+  created_at?: string;
+  updated_at?: Date;
+  deleted_at?: Date;
   user_id?: number;
   user?: {
     username: string;
@@ -95,7 +95,6 @@ export interface IUser {
 }
 
 export interface ILike {
-  id: number;
   post: IPost;
 }
 

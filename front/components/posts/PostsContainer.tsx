@@ -27,7 +27,7 @@ const PostsContainer = () => {
   }, [posts]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading message={'Enseguida te vas a reir con los mejores memes'} />;
   }
 
   if (error) {
@@ -41,8 +41,8 @@ const PostsContainer = () => {
             <CardPost
               key={post.id}
               id={post.id}
-              imageUrl={post.media_url}
-              author={post.user.username}
+              imageUrl={post.media_url || ''}
+              author={post.user?.username}
               title={post.title}
               hrefPost={{ pathname: '/post', query: { id: post.id } }}
             />

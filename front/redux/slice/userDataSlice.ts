@@ -48,6 +48,14 @@ const userDataSlice = createSlice({
     getLikes: (state, action: PayloadAction<ILike[]>) => {
       state.likes = action.payload;
     },
+    addRemoveLike: (state, action: PayloadAction<ILike>) => {
+      if (!state.likes.find(like => like.post.id === action.payload.post.id)) {
+        state.likes.push(action.payload)
+      } else {
+        const likesArray = state.likes.filter(like => like.post.id !== action.payload.post.id)
+        console.log(likesArray);
+      }
+    },
     logout: (state) => {
       state.data = initialState.data
       localStorage.removeItem('token');
@@ -67,6 +75,6 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { getData, getLikes, logout, loadAuthData } = userDataSlice.actions;
+export const { getData, getLikes, addRemoveLike, logout, loadAuthData } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

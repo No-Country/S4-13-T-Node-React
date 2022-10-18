@@ -49,7 +49,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost }: CardPostProps) => {
           />
         )}
       </div>
-      <div className="flex justify-between items-center p-2 mt-1">
+      <div className="flex justify-between items-center py-1 px-0.5 mt-1">
         <LeftIcons hrefPost={hrefPost} />
         <RightIcons id={id} />
       </div>
