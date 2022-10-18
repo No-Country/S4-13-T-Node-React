@@ -3,7 +3,15 @@ import { useSelector } from 'react-redux';
 import { UserDataState } from '../redux/slice/userDataSlice';
 import { RootState } from '../redux/store';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const NODE_ENV = process.env.NODE_ENV;
+
+let BASE_URL: string | undefined;
+
+if (NODE_ENV === 'production') {
+  BASE_URL = process.env.NEXT_PUBLIC_API_URL_PRODUCTION;
+} else {
+  BASE_URL = process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT;
+}
 
 export const useAxios = (token?: string) => {
   const axiosInstance = axios.create({
