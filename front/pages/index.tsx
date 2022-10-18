@@ -4,6 +4,11 @@ import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
 
 const Home: NextPage = () => {
+  const handleUploadMeme = () => {
+    //TODO: Redireccionar si no está logueado el usuario
+    // const data = useAuthSession();
+  };
+
   return (
     <div>
       <Head>
@@ -13,10 +18,13 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
+        <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
             <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
-            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
+            <button
+              className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary"
+              onClick={handleUploadMeme}
+            >
               Subir meme
             </button>
           </div>

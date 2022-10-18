@@ -34,6 +34,10 @@ module.exports = {
       height: {
         18: '4.5rem',
       },
+      boxShadow: {
+        'header-shadow':
+          '0px 5px 10px 3px rgba(253, 138, 9, 0.1), 0px 3.24074px 5.85648px 3px rgba(253, 138, 9, 0.0759259), 0px 1.92593px 3.18519px 3px rgba(253, 138, 9, 0.0607407), 0px 1px 1.625px 3px rgba(253, 138, 9, 0.05), 0px 0.407407px 0.814815px 3px rgba(253, 138, 9, 0.0392593), 0px 0.0925926px 0.393519px 3px rgba(253, 138, 9, 0.0240741)',
+      },
       animation: {
         'spin-load': 'spinFast 2s cubic-bezier(0,.99,.27,.87) infinite',
       },

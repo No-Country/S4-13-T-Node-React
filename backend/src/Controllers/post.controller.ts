@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { PostService } from '../Services/post.service'
 import { HttpResponse } from '../Utils/http.response'
 import { ConfigServer } from '../Config/config'
-import { RequestUser } from '../Interfaces/user.interfaces'
+import { IUser, RequestUser } from '../Interfaces/user.interfaces'
 export class PostController extends ConfigServer {
   constructor(
     private readonly postService: PostService = new PostService(),
@@ -10,32 +10,32 @@ export class PostController extends ConfigServer {
   ) {
     super()
   }
-  async createPost(req: Request, res: Response) {
+  async create(req: Request, res: Response) {
     try {
       const user = req.user as RequestUser
       const post = req.body
       post.user = user.sub
-      const result = await this.postService.createPost(post)
+      const result = await this.postService.create(post)
       this.httpResponse.Ok(res, { message: 'Post Created Successfully.', post: result })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }
   }
 
-  async getPosts(req: Request, res: Response) {
+  async findAll(req: Request, res: Response) {
     try {
-      const { page = '1', size = '20', sort = 'desc' } = req.query
-      const [posts, total, last_page] = await this.postService.getPosts(Number(page), Number(size), String(sort))
+      const { page = '1', size = '20', sort = 'desc', word } = req.query
+      const [posts, total, last_page] = await this.postService.findAll(Number(page), Number(size), sort, word)
       return this.httpResponse.Ok(res, { posts, actual_page: Number(page), size: Number(size), total, last_page })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }
   }
 
-  async getPost(req: Request, res: Response) {
+  async findWithComments(req: Request, res: Response) {
     try {
       const id = Number(req.params.id)
-      const post = await this.postService.getPost(id)
+      const post = await this.postService.findWithComments(id)
       if (post) return this.httpResponse.Ok(res, { post })
       return this.httpResponse.NotFound(res, 'Post not found.')
     } catch (error) {
@@ -43,28 +43,53 @@ export class PostController extends ConfigServer {
     }
   }
 
-  async updatePost(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     try {
       const id = Number(req.params.id)
       const data = req.body
-      const post = await this.postService.updatePost(id, data)
-      if (post.error) {
-        return this.httpResponse.NotFound(res, post.error)
+      const { post, error } = await this.postService.update({ id }, data)
+      if (error) {
+        return this.httpResponse.NotFound(res, error)
       }
-      return this.httpResponse.Ok(res, { message: 'Post Updated Successfully.', post })
+      return this.httpResponse.Ok(res, { message: 'Post Updated Successfully.', post: post[0] })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }
   }
 
-  async removePost(req: Request, res: Response) {
+  async remove(req: Request, res: Response) {
     try {
       const id = Number(req.params.id)
-      const post = await this.postService.removePost(id)
-      if (post.error) {
-        return this.httpResponse.NotFound(res, post.error)
+      const { post, error } = await this.postService.remove(id)
+      if (error) {
+        return this.httpResponse.NotFound(res, error)
       }
-      return this.httpResponse.Ok(res, { message: 'Post Deleted Successfully.', post })
+      return this.httpResponse.Ok(res, { message: 'Post Deleted Successfully.', post: post[0] })
+    } catch (error) {
+      return this.httpResponse.Error(res, error)
+    }
+  }
+
+  async like(req: Request, res: Response) {
+    try {
+      const user = req.user as IUser
+      const id = Number(req.params.id)
+      const response = await this.postService.like({ user: user.id, post: id })
+      if (response.error) return this.httpResponse.BadRequest(res, response.error)
+      return this.httpResponse.Ok(res, { ...response })
+    } catch (error) {
+      return this.httpResponse.Error(res, error)
+    }
+  }
+
+  async comment(req: Request, res: Response) {
+    try {
+      const user = req.user as IUser
+      const id = Number(req.params.id)
+      const { comment } = req.body
+      const response = await this.postService.comment({ user: user.id, post: id, comment })
+      if (response.error) return this.httpResponse.BadRequest(res, response.error)
+      return this.httpResponse.Ok(res, { ...response })
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }

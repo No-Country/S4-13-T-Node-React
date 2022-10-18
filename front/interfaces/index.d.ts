@@ -43,36 +43,66 @@ export interface PostPropsAxios {
 
 export interface CardPostProps {
   imageUrl: string;
-  author: string;
+  id: string | number;
+  hrefPost?: IHrefPostProps;
   title?: string;
-  hrefPost?: { pathname: string; query: { id: string | number } };
+  author?: string;
+}
+
+export interface IHrefPostProps {
+  pathname: string;
+  query: { id: string | number};
 }
 
 export interface IPost {
-  id: number;
-  title: string;
-  media_url: string;
-  tag: string;
-  likesCount: number;
-  commentsCount: number;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
+  id: number | string;
+  title?: string;
+  media_url?: string;
+  tags?: string[];
+  likesCount?: number;
+  comments?: IComment[];
+  commentsCount?: number;
+  created_at?: string;
+  updated_at?: Date;
+  deleted_at?: Date;
   user_id?: number;
-  user: {
+  user?: {
     username: string;
-  }
+  };
+}
+
+export interface IComment {
+  comment: string;
+  created_at: string;
+  id: number;
+  user: IUser;
+  replys?: IReply[];
+}
+
+export interface IReply {
+  reply: string;
+  created_at: string;
+  id: number;
+  user: IUser;
+  replys?: IReply[];
+}
+
+export interface IUser {
+  username: string;
+  email: string;
+  role: string[];
+  avatar_url: string;
+}
+
+export interface ILike {
+  post: IPost;
 }
 
 export interface AxiosGetPost extends AxiosResponse {
   data: {
     data: {
       posts: IPost[];
-<<<<<<< HEAD
     };
-=======
-    }
->>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   };
 }
 
@@ -80,11 +110,7 @@ export interface AxiosGetPostById extends AxiosResponse {
   data: {
     data: {
       post: IPost;
-<<<<<<< HEAD
     };
-=======
-    }
->>>>>>> d40b08905245a41eb125d59ecc54d34b03be26ef
   };
 }
 
@@ -95,7 +121,7 @@ export interface RegisterProps {
 }
 export interface LoginProps {
   username?: string;
-  email: string;
+  email?: string;
   password: string;
 }
 
@@ -106,4 +132,9 @@ export interface FormLinksProps {
 
 export interface MDProps {
   social: string;
+}
+
+export interface GetUserData {
+  access_token: string;
+  user: IUserLikes;
 }

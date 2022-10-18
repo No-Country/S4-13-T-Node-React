@@ -4,6 +4,7 @@ import {
   IsIn,
   IsNotEmpty,
   IsNumber,
+  IsNumberString,
   IsOptional,
   IsString,
   IsUrl,
@@ -35,12 +36,10 @@ export class PostDTO extends BaseDTO implements IPostDTO {
 const sort = ['asc', 'ASC', 'desc', 'DESC']
 
 export class getPostRequest {
-  // @IsNumberString()
   @IsOptional()
   @Min(1)
   page: any
 
-  // @IsNumberString()
   @IsOptional()
   @Min(1)
   size: any

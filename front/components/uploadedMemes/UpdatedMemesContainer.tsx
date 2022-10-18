@@ -14,8 +14,9 @@ function UpdatedMemesContainer() {
           imageUrl={media_url || '/assets/meme-1.png'}
           author="el bromas"
           title={'Lorem ipsum dolor sit amet'}
+          id={Math.random()}
         />
-        <p className="text-right mr-[31px] text-sm max-w-[344px] sm:mx-auto">12 me gusta</p>
+        <p className="font-roboto text-right mr-[31px] text-sm max-w-[344px] sm:mx-auto">12 me gusta</p>
       </div>
       <TagsContainer />
     </div>

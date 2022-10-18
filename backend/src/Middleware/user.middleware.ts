@@ -1,12 +1,26 @@
 import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
 import { UpdateUserDTO, UserDTO } from '../DTO/user.dto'
-import { IUser } from '../Interfaces/user.interfaces'
+import { IUser, RequestUser } from '../Interfaces/user.interfaces'
+import { UserService } from '../Services/user.service'
 import { BaseMiddleware } from './base.middleware'
 
 export class UserMiddleware extends BaseMiddleware {
   constructor() {
     super()
+  }
+
+  async checkUserIsUserOwner(req: Request, res: Response, next: NextFunction) {
+    const user = req.user as RequestUser
+    const id = Number(req.params.id)
+
+    const user_found = await this.userService.find({ id })
+
+    if (user.sub === user_found?.id) {
+      next()
+    } else {
+      return this.httpResponse.Unauthorized(res), 'Unauthorized.'
+    }
   }
 
   registerValidator(req: Request, res: Response, next: NextFunction) {
@@ -16,7 +30,7 @@ export class UserMiddleware extends BaseMiddleware {
 
     valid.username = username
     valid.email = email
-    valid.password = password
+    valid.password = password!
 
     validate(valid, { validationError: { target: false } }).then(err => {
       if (err.length > 0) {

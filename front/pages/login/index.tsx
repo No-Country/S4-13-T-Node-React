@@ -5,8 +5,13 @@ import LayoutFormPages from '../../components/layout/LayoutFormPages';
 import FormLinks from '../../components/formRegister/FormLinks';
 import { HrComponent } from '../../components/formRegister/HrComponent';
 import { MediaContainer } from '../../components/formRegister/MediaContainer';
+import { usePublicRoute } from '../../hooks/usePublicRoute';
 
 const Login: NextPage = () => {
+  const data = usePublicRoute();
+
+  if (data?.access_token) return null;
+
   return (
     <div>
       <Head>

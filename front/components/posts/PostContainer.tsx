@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import { useRouter } from 'next/router';
 
 import { IPost } from '../../interfaces';
 
+import Loading from '../../components/loading/Loading';
 import CardPost from './cardPost/CardPost';
 import Comments from './comments/Comments';
-import Loading from '../../components/loading/Loading';
 import InputComment from './comments/InputComment';
 
 import { getPostById } from '../../services/api-calls';
+import { getPost, PostState } from '../../redux/slice/postSlice';
 
 const PostContainer = () => {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  const [postVisited, setPostVisited] = useState<Partial<IPost | null>>(null);
   const [showTags, setShowTags] = useState<boolean>(false);
-  const [postVisited, setPostVisited] = useState<Partial<IPost>>({});
-
-  const [response, setResponse] = useState<boolean>(true);
 
   const id = parseInt(router.query.id as string);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     getPostById(id).then(post => {
-      post ? setPostVisited(post) : null;
-      setLoading(false);
+      post && dispatch(getPost(post));
     });
   }, []);
 
@@ -32,14 +33,26 @@ const PostContainer = () => {
     setShowTags(prev => !prev);
   };
 
-  const { media_url, title, likesCount } = postVisited;
+  const { isLoading, error, post } = useSelector<RootState, PostState>(state => {
+    return state.postReducer;
+  });
 
-  if (loading) {
-    return <Loading />;
+  useEffect(() => {
+    if (post) {
+      setPostVisited(post);
+    }
+  }, [post]);
+
+  if (isLoading) {
+    return <Loading message={'Sorprendete con el meme que viene'} />;
+  }
+
+  if (error) {
+    return <div> Error: {error}</div>;
   }
 
   return (
-    <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px]">
+    <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
       <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
         <h1 className="font-orelega text-[24px] leading-[26px]">Lo nuevo</h1>
         <div className="flex items-center gap-x-2">
@@ -65,14 +78,15 @@ const PostContainer = () => {
       <div className="px-2 mx-auto">
         <CardPost
           // La propiedad imageUrl tira un error: Image is missing required "src" property. Al cargar la página
-          imageUrl={media_url || ''}
-          author="el bromas"
-          title={title}
+          imageUrl={postVisited?.media_url || ''}
+          author={postVisited?.user?.username}
+          title={postVisited?.title}
+          id={id}
         />
       </div>
       <div className="flex flex-col w-full justify-around items-center max-w-[344px] mx-auto px-5 mb-4">
         <div className="w-full h-3 flex justify-end font-roboto">
-          <p className="text-sm mt-1">{likesCount} me gusta</p>
+          <p className="text-sm mt-1">{postVisited?.likesCount} me gusta</p>
         </div>
         <div className="flex w-full font-roboto text-primary font-bold mb-2">
           <div className="overflow-hidden">
@@ -84,10 +98,11 @@ const PostContainer = () => {
                 showTags ? 'opacity-100 h-auto my-2' : 'opacity-0 h-0'
               }`}
             >
-              <p className="border-2 border-secondary rounded-3xl text-center py-1 px-4">Madre</p>
-              <p className="border-2 border-secondary rounded-3xl text-center py-1 px-4">Final Fantasy</p>
-              <p className="border-2 border-secondary rounded-3xl text-center py-1 px-4">Foto</p>
-              <p className="border-2 border-secondary rounded-3xl text-center py-1 px-4">Cosplay</p>
+              {postVisited?.tags?.map((tag, idx) => (
+                <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4">
+                  {tag}
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -95,11 +110,18 @@ const PostContainer = () => {
         <div className="w-full mt-2" id="comments">
           <InputComment />
         </div>
-        <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px]">
-          <Comments />
-          <Comments />
-          <Comments response={response} />
-          <Comments />
+        <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
+          {postVisited?.comments?.map(comment => {
+            return (
+              <Comments
+                key={comment.id}
+                message={comment.comment}
+                user={comment.user}
+                createdAt={comment.created_at}
+                replies={comment.replys}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
