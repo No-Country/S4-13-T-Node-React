@@ -3,3 +3,4 @@ dist
 backend/dist
 # .env
 .history
+backend/.gitignore

@@ -20,7 +20,7 @@ const UserContainer = () => {
           Subir meme
         </button>
       </div>
-      <div className="flex flex row">
+      <div className="flex row">
         <DataUser />
         <Avatar />
       </div>

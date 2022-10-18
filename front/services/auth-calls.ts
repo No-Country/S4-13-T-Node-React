@@ -1,5 +1,6 @@
-import { LoginProps } from '../interfaces';
-import {useAxios} from '../hooks/useAxios';
+import { LoginProps, RegisterProps, RegisterResponseError, RegisterResponseSuccess } from '../interfaces';
+import { useAxios } from '../hooks/useAxios';
+import { AxiosResponse } from 'axios';
 
 const api = useAxios();
 
@@ -15,14 +16,25 @@ export const getLoginGoogle = async () => {
   try {
     return await api.get('login/google').then(res => console.log(res));
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};
 
 export const getLoginFacebook = async () => {
   try {
     return await api.get('/login/facebook').then(res => console.log(res));
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};
+
+export const register = async (data: RegisterProps) => {
+  return await api
+    .post('/register', data)
+    .then((response: RegisterResponseSuccess) => {
+      return response.data;
+    })
+    .catch((response: RegisterResponseError) => {
+      return response.response.data;
+    });
+};
