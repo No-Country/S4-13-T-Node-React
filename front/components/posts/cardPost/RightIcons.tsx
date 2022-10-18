@@ -15,8 +15,9 @@ const RightIcons = ({ id }: { id: string | number }) => {
 
   const { data, likes } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const access_token = data?.access_token || '';
+  const refresh_token = data?.refresh_token;
 
-  const api = useAxios(access_token);
+  const api = useAxios(access_token, refresh_token, dispatch);
 
   // TODO: reducir el tiempo en el que tardan los likes
   // const handleLike = async (id: number | string) => {
@@ -42,7 +43,9 @@ const RightIcons = ({ id }: { id: string | number }) => {
   };
 
   useEffect(() => {
-    getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
+    if (data?.access_token !== '') {
+      getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
+    }
   }, [like]);
 
   return (

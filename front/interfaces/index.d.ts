@@ -1,5 +1,5 @@
 import { ChildrenProp } from './index.d';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 export interface ChildrenProp {
   children: React.ReactNode;
@@ -51,7 +51,7 @@ export interface CardPostProps {
 
 export interface IHrefPostProps {
   pathname: string;
-  query: { id: string | number};
+  query: { id: string | number };
 }
 
 export interface IPost {
@@ -119,6 +119,24 @@ export interface RegisterProps {
   email: string;
   password: string;
 }
+
+export interface RegisterResponseSuccess {
+  data: APIResponse;
+}
+
+export interface RegisterResponseError {
+  response: {
+    data: APIResponse;
+  };
+}
+
+export interface APIResponse {
+  status: number;
+  statusMsg: string;
+  error?: any;
+  data?: any;
+}
+
 export interface LoginProps {
   username?: string;
   email?: string;
@@ -128,6 +146,7 @@ export interface LoginProps {
 export interface FormLinksProps {
   question: string;
   anchor: string;
+  achorText: string;
 }
 
 export interface MDProps {
@@ -136,5 +155,6 @@ export interface MDProps {
 
 export interface GetUserData {
   access_token: string;
+  refresh_token?: string;
   user: IUserLikes;
 }

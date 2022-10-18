@@ -24,10 +24,12 @@ const PostContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPostById(id).then(post => {
-      post && dispatch(getPost(post));
-    });
-  }, []);
+    if (id) {
+      getPostById(id).then(post => {
+        post && dispatch(getPost(post));
+      });
+    }
+  }, [id]);
 
   const handleShowTags = () => {
     setShowTags(prev => !prev);
@@ -108,7 +110,7 @@ const PostContainer = () => {
         </div>
         <div className="w-full border-t-[1px] mb-2"></div>
         <div className="w-full mt-2" id="comments">
-          <InputComment />
+          <InputComment id={id} />
         </div>
         <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
           {postVisited?.comments?.map(comment => {

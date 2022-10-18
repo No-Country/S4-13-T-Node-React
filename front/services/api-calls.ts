@@ -1,4 +1,4 @@
-import {useAxios} from '../hooks/useAxios';
+import { useAxios } from '../hooks/useAxios';
 import { AxiosGetPost, AxiosGetPostById, PostPropsAxios } from '../interfaces';
 
 const api = useAxios();
@@ -15,7 +15,7 @@ export const getPost = async () => {
 
 export const getPostById = async (id: number | string) => {
   try {
-    return await api.get(`/post/${id}`).then(({data}: AxiosGetPostById) => data.data.post);
+    return await api.get(`/post/${id}`).then(({ data }: AxiosGetPostById) => data.data.post);
   } catch (err) {
     console.log(err);
   }
@@ -45,13 +45,13 @@ export const deletePost = async (id: number | string) => {
   }
 };
 
-export const postLike = async (id: number | string ) => {
+export const postLike = async (id: number | string) => {
   try {
-    await api.post(`/post/${id}/like`).then(res=> console.log(res));
+    await api.post(`/post/${id}/like`).then(res => console.log(res));
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 // Calls to users
 
@@ -65,8 +65,10 @@ export const getUserPosts = async (id: number | string) => {
 
 export const getUserLikes = async (id: number | string) => {
   try {
-    const response = await api.get(`/user/${id}/likes`)
-    return response.data.data.user.likes
+    if (id) {
+      const response = await api.get(`/user/${id}/likes`);
+      return response.data.data.user.likes;
+    }
   } catch (error) {
     console.error(error);
   }
