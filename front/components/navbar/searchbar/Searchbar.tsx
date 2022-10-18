@@ -28,8 +28,8 @@ export const Searchbar = () => {
       <input
         onChange={handleInput}
         name="search"
-        className="text-white placeholder:text-white peer cursor-pointer relative z-10 h-12 w-12 rounded-[50px] border border-transparent bg-transparent pl-12 outline-none focus:w-56 focus:cursor-text focus:border-primary focus:pl-16 focus:pr-4 focus:mr-4 ease-linear duration-500"
-        placeholder="search..."
+        className="font-roboto text-accent focus:bg-white placeholder:text-accent peer cursor-pointer relative z-10 h-12 w-12 rounded-[4px] border border-transparent bg-transparent pl-12 outline-none focus:w-56 focus:cursor-text focus:border-secondary focus:pl-4 focus:pr-4 focus:mr-4 ease-linear duration-500"
+        placeholder="Buscar"
       />
       {size.width >= 1440 ? (
         <svg
@@ -38,8 +38,8 @@ export const Searchbar = () => {
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-gray-500 px-3.5 peer-focus:border-white peer-focus:stroke-primary 
-        lg:text-primary lg:peer-focus:border-primary lg:outline lg:rounded-b lg:peer-focus:outline-none lg:h-16 lg:peer-focus:h-auto"
+          className="absolute inset-y-0 my-auto h-8 w-12 border-transparent stroke-gray-500 px-3.5 peer-focus:border-white peer-focus:stroke-primary 
+        lg:text-primary lg:peer-focus:border-primary lg:outline lg:rounded-b-3xl lg:peer-focus:outline-none lg:h-16 lg:peer-focus:h-auto"
         >
           <path
             d="M27.6094 25.7161L23.0761 21.1961C24.5387 19.3327 25.3324 17.0317 25.3294 14.6628C25.3294 12.5531 24.7038 10.4908 23.5318 8.73672C22.3597 6.9826 20.6938 5.61542 18.7447 4.80809C16.7956 4.00075 14.6509 3.78952 12.5818 4.20109C10.5127 4.61267 8.61205 5.62857 7.12029 7.12033C5.62853 8.61209 4.61263 10.5127 4.20106 12.5818C3.78948 14.651 4.00072 16.7957 4.80805 18.7448C5.61538 20.6938 6.98256 22.3597 8.73668 23.5318C10.4908 24.7039 12.5531 25.3295 14.6628 25.3295C17.0316 25.3324 19.3327 24.5388 21.1961 23.0761L25.7161 27.6095C25.8401 27.7344 25.9875 27.8336 26.15 27.9013C26.3125 27.969 26.4867 28.0039 26.6628 28.0039C26.8388 28.0039 27.0131 27.969 27.1755 27.9013C27.338 27.8336 27.4855 27.7344 27.6094 27.6095C27.7344 27.4855 27.8336 27.3381 27.9013 27.1756C27.969 27.0131 28.0038 26.8388 28.0038 26.6628C28.0038 26.4868 27.969 26.3125 27.9013 26.15C27.8336 25.9876 27.7344 25.8401 27.6094 25.7161ZM6.66277 14.6628C6.66277 13.0806 7.13196 11.5338 8.01101 10.2182C8.89006 8.90265 10.1395 7.87727 11.6013 7.27177C13.0631 6.66627 14.6716 6.50784 16.2235 6.81652C17.7753 7.1252 19.2008 7.88713 20.3196 9.00595C21.4384 10.1248 22.2004 11.5502 22.509 13.1021C22.8177 14.6539 22.6593 16.2625 22.0538 17.7243C21.4483 19.1861 20.4229 20.4355 19.1073 21.3146C17.7917 22.1936 16.245 22.6628 14.6628 22.6628C12.541 22.6628 10.5062 21.82 9.00591 20.3197C7.50562 18.8194 6.66277 16.7845 6.66277 14.6628Z"
