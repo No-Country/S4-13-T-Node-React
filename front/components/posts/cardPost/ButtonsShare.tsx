@@ -11,7 +11,7 @@ const ButtonsShare = ({ id }: { id: number | string }) => {
       text: 'Enlace copiado al portapapeles',
       duration: 1500,
       newWindow: true,
-      close: true,
+      close: false,
       gravity: 'bottom',
       position: 'center',
       stopOnFocus: true,
