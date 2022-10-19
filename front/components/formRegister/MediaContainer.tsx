@@ -9,10 +9,12 @@ import { getData } from '../../redux/slice/userDataSlice';
 export const MediaContainer = () => {
   const api = useAxios();
   const dispatch = useDispatch();
+  const googleID = process.env.NEXT_PUBLIC_GOOGLE;
+  const facebookID = process.env.NEXT_PUBLIC_FACEBOOK;
 
   return (
     <div className="flex flex-col gap-4">
-      <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID!}>
+      <GoogleOAuthProvider clientId={googleID!}>
         <GoogleLogin
           onSuccess={async credentialResponse => {
             await api
@@ -29,7 +31,7 @@ export const MediaContainer = () => {
           size="large"
         />
       </GoogleOAuthProvider>
-      <FacebookProvider appId="848423013179412">
+      <FacebookProvider appId={facebookID}>
         <LoginButton
           onSuccess={(response: any) => {
             console.log(response);

@@ -1,17 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import { MDProps } from '../../interfaces';
-
-const NODE_ENV = process.env.NODE_ENV;
-
-let BASE_URL: string | undefined;
-
-if (NODE_ENV === 'production') {
-  BASE_URL = process.env.NEXT_PUBLIC_API_URL_PRODUCTION;
-} else {
-  BASE_URL = process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT;
-}
 
 const MediaButton = ({ social }: MDProps) => {
   return (
