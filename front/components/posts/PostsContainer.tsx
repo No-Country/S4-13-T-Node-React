@@ -4,7 +4,7 @@ import { IPost } from '../../interfaces';
 import { getPost } from '../../services/api-calls';
 import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
-import { getPosts, PostsState } from '../../redux/slice/postsSlice';
+import { getPosts, PostsState, requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
 
 const PostsContainer = () => {
@@ -13,7 +13,10 @@ const PostsContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPost().then(data => data && dispatch(getPosts(data)));
+    dispatch(requestPosts());
+    getPost().then(data => {
+      data && dispatch(getPosts(data));
+    });
   }, []);
 
   const { isLoading, error, posts } = useSelector<RootState, PostsState>(state => {
@@ -31,7 +34,7 @@ const PostsContainer = () => {
   }
 
   if (error) {
-    return <div> Error: {error}</div>;
+    return <div>Error: {error}</div>;
   }
 
   return (

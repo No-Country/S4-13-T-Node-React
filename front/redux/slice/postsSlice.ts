@@ -17,6 +17,11 @@ const postsSlice = createSlice({
   name: 'posts',
     initialState,
   reducers: {
+    requestPosts: (state) => {
+      state.isLoading = true;
+      state.posts = [];
+      return
+    },
     getPosts: (state, action: PayloadAction<IPost[]>) => {
         state.posts = action.payload
         state.isLoading = false;
@@ -25,6 +30,6 @@ const postsSlice = createSlice({
   },
 });
 
-export const { getPosts } = postsSlice.actions;
+export const { getPosts, requestPosts } = postsSlice.actions;
 
 export default postsSlice.reducer;

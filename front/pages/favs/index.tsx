@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import Layout from '../../components/layout/Layout';
+import FavsContainer from '../../components/posts/FavsContainer';
 import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 const Favs: NextPage = () => {
@@ -27,13 +27,7 @@ const Favs: NextPage = () => {
             </button>
           </div>
           <div className="flex flex-col justify-center items-center min-h-[80vh]">
-            <h2 className="font-orelega text-[20px] leading-[22px] text-center w-[250px]">
-              Todavía no tenés memes marcados como favoritos
-            </h2>
-            <div className="flex flex-col mt-4 gap-y-4">
-              <Image src="/assets/favs-top.png" width={300} height={125} />
-              <Image src="/assets/favs-bottom.png" width={300} height={125} />
-            </div>
+            <FavsContainer />
           </div>
         </div>
       </Layout>

@@ -80,7 +80,10 @@ export const getUserLikes = async (id: number | string) => {
 
 export const getUserFavorites = async (id: number | string) => {
   try {
-    return await api.get(`/user/${id}/favorites`).then(res => console.log(res));
+    if (id) {
+      const response = await api.get(`/user/${id}/favorites`)
+      return response.data.data.user;
+    }
   } catch (error) {
     console.error(error);
   }
