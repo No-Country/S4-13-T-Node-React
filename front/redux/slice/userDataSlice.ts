@@ -65,6 +65,7 @@ const userDataSlice = createSlice({
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
+      state.likes = initialState.likes;
       state.logged = false;
       return;
     },

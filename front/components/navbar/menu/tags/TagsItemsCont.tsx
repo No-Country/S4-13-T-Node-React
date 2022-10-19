@@ -5,11 +5,11 @@ import { OpensProps } from '../../../../interfaces';
 
 export const TagsItemsCont = (props: OpensProps) => {
   const fakeTags = [
-    { tag: 'simpsons', href: '#' },
-    { tag: 'no way home', href: '#' },
-    { tag: 'mbappe', href: '#' },
-    { tag: 'mundial', href: '#' },
-    { tag: 'diosito', href: '#' },
+    { tag: 'simpsons', href: '' },
+    { tag: 'no way home', href: '' },
+    { tag: 'mbappe', href: '' },
+    { tag: 'mundial', href: '' },
+    { tag: 'diosito', href: '' },
   ];
 
   return (
