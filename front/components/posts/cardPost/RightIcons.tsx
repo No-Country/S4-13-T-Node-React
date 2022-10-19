@@ -32,12 +32,6 @@ const RightIcons = ({ id }: { id: string | number }) => {
     }
   };
 
-  useEffect(() => {
-    if (data?.access_token !== '') {
-      getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
-    }
-  }, []);
-
   return (
     <div className="flex justify-cennter items-center gap-x-3 px-1">
       <div className={`flex transition-all gap-0 ${share ? 'gap-x-4' : ''}`} onClick={() => setShare(true)}>
