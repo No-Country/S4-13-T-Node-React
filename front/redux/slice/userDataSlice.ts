@@ -57,7 +57,7 @@ const userDataSlice = createSlice({
         state.likes.push(action.payload);
       } else {
         const likesArray = state.likes.filter(like => like.post.id !== action.payload.post.id);
-        console.log(likesArray);
+        state.likes = likesArray;
       }
     },
     logout: state => {
