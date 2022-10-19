@@ -123,7 +123,7 @@ export interface RegisterProps {
   password: string;
 }
 
-export interface RegisterResponseSuccess {
+export interface APIResponseSuccess {
   data: APIResponse;
 }
 

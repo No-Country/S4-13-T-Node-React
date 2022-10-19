@@ -1,4 +1,6 @@
 import type { NextPage } from 'next';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import Head from 'next/head';
 import FormLogin from '../../components/formLogin/FormLogin';
 import LayoutFormPages from '../../components/layout/LayoutFormPages';
@@ -6,6 +8,7 @@ import FormLinks from '../../components/formRegister/FormLinks';
 import { HrComponent } from '../../components/formRegister/HrComponent';
 import { MediaContainer } from '../../components/formRegister/MediaContainer';
 import { usePublicRoute } from '../../hooks/usePublicRoute';
+import { FacebookProvider } from 'react-facebook';
 
 const Login: NextPage = () => {
   const data = usePublicRoute();

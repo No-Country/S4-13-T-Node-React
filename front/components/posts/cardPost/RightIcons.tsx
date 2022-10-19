@@ -43,8 +43,12 @@ const RightIcons = ({ id }: { id: string | number }) => {
   };
 
   useEffect(() => {
-    if (data?.access_token !== '') {
-      getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
+    if (like) {
+      if (data?.access_token !== '') {
+        getUserLikes(data?.user.id).then(res => res && dispatch(getLikes(res)));
+        // No hace falta volver a llamar a la api para conseguir los likes del usuario
+        // Cuando se hace like en un posteo se puede pushear el mismo posteo al array que esta en Redux
+      }
     }
   }, [like]);
 
@@ -74,7 +78,34 @@ const RightIcons = ({ id }: { id: string | number }) => {
           />
         )}
       </div>
-      {likes.some(like => like.post.id == id) ? (
+      <ButtonIcon
+        icon={
+          <svg
+            className="cursor-pointer"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            onClick={() => handleLike(id)}
+          >
+            {likes.some(like => like.post.id == id) ? (
+              <path
+                d="M15.9971 27L21.9971 21L28.9971 12L28.4971 8.5L25.4971 5.5H19.4971L15.9971 8L13.4971 5.5L7.49707 5L3.99707 7.5L2.49707 12L10.4971 21.5L15.9971 27Z"
+                fill="#FD8A09"
+              />
+            ) : (
+              ''
+            )}
+            <path
+              d="M22.4498 5.5C23.1779 5.49939 23.8988 5.64413 24.5702 5.92575C25.2416 6.20736 25.85 6.62018 26.3598 7.14C27.4102 8.20638 27.999 9.64316 27.999 11.14C27.999 12.6368 27.4102 14.0736 26.3598 15.14L15.9998 25.63L5.63978 15.14C4.58936 14.0736 4.00057 12.6368 4.00057 11.14C4.00057 9.64316 4.58936 8.20638 5.63978 7.14C6.14987 6.62055 6.75836 6.20795 7.42969 5.92629C8.10103 5.64464 8.82175 5.49957 9.54978 5.49957C10.2778 5.49957 10.9986 5.64464 11.6699 5.92629C12.3412 6.20795 12.9497 6.62055 13.4598 7.14L15.9998 9.74L18.5298 7.16C19.0381 6.63398 19.6472 6.21586 20.3207 5.93064C20.9942 5.64542 21.7184 5.49895 22.4498 5.5ZM22.4498 3.5C21.4554 3.49916 20.4709 3.69686 19.5539 4.0815C18.637 4.46615 17.806 5.03 17.1098 5.74L15.9998 6.86L14.8898 5.74C14.1928 5.03129 13.3616 4.46841 12.4448 4.08419C11.528 3.69997 10.5439 3.5021 9.54978 3.5021C8.55572 3.5021 7.5716 3.69997 6.65479 4.08419C5.73798 4.46841 4.90683 5.03129 4.20978 5.74C2.79166 7.18363 1.99707 9.12636 1.99707 11.15C1.99707 13.1736 2.79166 15.1164 4.20978 16.56L15.9998 28.5L27.7898 16.56C29.2079 15.1164 30.0025 13.1736 30.0025 11.15C30.0025 9.12636 29.2079 7.18363 27.7898 5.74C27.0929 5.03091 26.2619 4.46765 25.3451 4.08306C24.4282 3.69848 23.444 3.50028 22.4498 3.5Z"
+              fill="#7F32EC"
+            />
+          </svg>
+        }
+        iconName="Me gusta"
+      />
+      {/* {likes.some(like => like.post.id == id) ? (
         <ButtonIcon
           icon={
             <svg
@@ -118,7 +149,7 @@ const RightIcons = ({ id }: { id: string | number }) => {
           }
           iconName="Me gusta"
         />
-      )}
+      )} */}
     </div>
   );
 };

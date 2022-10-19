@@ -24,12 +24,6 @@ export const useAxios = (access_token?: string, refresh_token?: string, dispatch
     },
   });
 
-  // axiosInstance.interceptors.request.use(async req => {
-  //   await axios.post(`${BASE_URL}/post`, {}).then(res => console.log(res));
-
-  //   return req;
-  // });
-
   axiosInstance.interceptors.request.use(async req => {
     if (access_token && dispatch) {
       req.headers!['access_token'] = access_token;

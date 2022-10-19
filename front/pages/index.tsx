@@ -1,35 +1,13 @@
-import { AxiosResponse } from 'axios';
-import { getCookies, hasCookie } from 'cookies-next';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
-import { useAxios } from '../hooks/useAxios';
-import { getData } from '../redux/slice/userDataSlice';
 
 const Home: NextPage = () => {
   const handleUploadMeme = () => {
     //TODO: Redireccionar si no está logueado el usuario
     // const data = useAuthSession();
   };
-
-  const existCookieAccess = hasCookie('access_token');
-  const existCookieRefresh = hasCookie('refresh_token');
-  const cookies = getCookies() as { access_token: string; refresh_token: string };
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (existCookieAccess && existCookieRefresh) {
-      const api = useAxios(cookies.access_token, cookies.refresh_token);
-      api.get('/myinfo').then(({ data }: AxiosResponse) => {
-        dispatch(
-          getData({ user: { ...data }, access_token: cookies.access_token, refresh_token: cookies.refresh_token })
-        );
-      });
-    }
-  }, [cookies]);
 
   return (
     <div>

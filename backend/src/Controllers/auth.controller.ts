@@ -1,4 +1,6 @@
 import { Request, Response } from 'express'
+import jwt_decode from 'jwt-decode'
+import { LoginSocialMedia } from '../Interfaces/auth.interface'
 import { IUser } from '../Interfaces/user.interfaces'
 import { AuthService } from '../Services/auth.service'
 import { HttpResponse } from '../Utils/http.response'
@@ -29,25 +31,18 @@ export class AuthController extends AuthService {
     }
   }
 
-  async loginSocialMedial(req: Request, res: Response) {
+  async loginSocialMedia(req: Request, res: Response) {
     try {
-      const userEncode = req.user as IUser
+      const { token } = req.body
+      const decoded: LoginSocialMedia = jwt_decode(token)
 
-      const encode = await this.generateJWT(userEncode)
-
+      const user = await this.validateSocialMedia(decoded)
+      const encode = await this.generateJWT(user)
       if (!encode) {
         return this.httpResponse.Unauthorized(res, 'No permissions.')
       }
 
-      res.header('Content-Type', 'application/json')
-      res.cookie('access_token', encode.access_token, { maxAge: 60000 * 15 })
-      res.cookie('refresh_token', encode.refresh_token, { maxAge: 60000 * 86400 })
-      if (this.NODE_ENV == 'prod') {
-        res.redirect('http://localhost:3000/')
-      } else {
-        res.write(JSON.stringify(encode))
-        res.end()
-      }
+      return this.httpResponse.Ok(res, encode)
     } catch (error) {
       return this.httpResponse.Error(res, error)
     }
