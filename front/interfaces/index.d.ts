@@ -47,6 +47,7 @@ export interface CardPostProps {
   hrefPost?: IHrefPostProps;
   title?: string;
   author?: string;
+  authorId: string | number;
 }
 
 export interface IHrefPostProps {
@@ -68,6 +69,7 @@ export interface IPost {
   user_id?: number;
   user?: {
     username: string;
+    id: string | number;
   };
 }
 
@@ -92,6 +94,7 @@ export interface IUser {
   email: string;
   role: string[];
   avatar_url: string;
+  total_likes?: number;
 }
 
 export interface ILike {
@@ -120,7 +123,7 @@ export interface RegisterProps {
   password: string;
 }
 
-export interface RegisterResponseSuccess {
+export interface APIResponseSuccess {
   data: APIResponse;
 }
 

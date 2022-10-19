@@ -1,11 +1,28 @@
 import Link from 'next/link';
 import React from 'react';
 import ButtonIcon from './ButtonIcon';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 
 const ButtonsShare = ({ id }: { id: number | string }) => {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`https://www.memex.com/post?id=${id}`);
-    alert(`Enlace copiado al portapapeles`);
+    Toastify({
+      text: 'Enlace copiado al portapapeles',
+      duration: 1500,
+      newWindow: true,
+      close: true,
+      gravity: 'bottom',
+      position: 'center',
+      stopOnFocus: true,
+      className: 'font-roboto select-none',
+      style: {
+        background: '#fff',
+        color: '#000',
+        border: '1px solid #FD8A09',
+        borderRadius: '8px',
+      },
+    }).showToast();
   };
 
   return (

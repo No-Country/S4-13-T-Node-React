@@ -1,4 +1,4 @@
-import { LoginProps, RegisterProps, RegisterResponseError, RegisterResponseSuccess } from '../interfaces';
+import { LoginProps, RegisterProps, RegisterResponseError, APIResponseSuccess } from '../interfaces';
 import { useAxios } from '../hooks/useAxios';
 import { AxiosResponse } from 'axios';
 
@@ -31,7 +31,7 @@ export const getLoginFacebook = async () => {
 export const register = async (data: RegisterProps) => {
   return await api
     .post('/register', data)
-    .then((response: RegisterResponseSuccess) => {
+    .then((response: APIResponseSuccess) => {
       return response.data;
     })
     .catch((response: RegisterResponseError) => {

@@ -9,7 +9,7 @@ export const ProfileItem = (props: MenuItem) => {
   return (
     <div
       className={`flex justify-center items-center w-[180px] h-[42px] lg:w-auto lg:px-4 ${
-        router.pathname == props.href ? 'border-2 border-secondary rounded-3xl' : ''
+        router.asPath == props.href ? 'border-2 border-secondary rounded-3xl' : ''
       }`}
     >
       <Link href={props.href}>

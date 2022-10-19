@@ -1,13 +1,35 @@
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Layout from '../../components/layout/Layout';
+import Loading from '../../components/loading/Loading';
 import UpdatedMemesContainer from '../../components/uploadedMemes/UpdatedMemesContainer';
 import UserContainer from '../../components/user/UserContainer';
-import { usePrivateRoute } from '../../hooks/usePrivateRoute';
-const Profile: NextPage = () => {
-  const data = usePrivateRoute();
+import { getUserPosts } from '../../services/api-calls';
+import { IPost, IUser } from '../../interfaces';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { UserDataState } from '../../redux/slice/userDataSlice';
 
-  if (!data?.access_token) return null;
+const Profile: NextPage = () => {
+  const router = useRouter();
+
+  const id = parseInt(router.query.id as string);
+
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
+  const [user, setUser] = useState<IUser | null>(null);
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getUserPosts(id).then(res => {
+      setUser(res);
+      setPosts(res?.post);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <div>
@@ -18,14 +40,27 @@ const Profile: NextPage = () => {
       </Head>
 
       <Layout>
-        <>
-          <UserContainer />
-          <div className="px-2 mt-8 sm:mx-auto">
-            <h2 className="pl-6 font-orelega text-xl mb-4">Mis memes subidos</h2>
-            <UpdatedMemesContainer />
-            <UpdatedMemesContainer />
-          </div>
-        </>
+        {loading ? (
+          <Loading
+            message={
+              id == data?.user.id
+                ? 'Estás accediendo a tu perfil'
+                : 'Ingresando al perfil de otra persona, podrás ver todos los memes que subió'
+            }
+          />
+        ) : (
+          <>
+            <UserContainer user={user} />
+            <div className="px-2 mt-8 sm:mx-auto">
+              <h2 className="pl-6 font-orelega text-xl mb-4">
+                {id == data?.user.id ? 'Mis memes subidos' : 'Sus memes subidos'}
+              </h2>
+              {posts?.map((post, idx) => (
+                <UpdatedMemesContainer key={idx} post={post} />
+              ))}
+            </div>
+          </>
+        )}
       </Layout>
     </div>
   );

@@ -84,6 +84,7 @@ const PostContainer = () => {
           author={postVisited?.user?.username}
           title={postVisited?.title}
           id={id}
+          authorId={postVisited?.user?.id || ''}
         />
       </div>
       <div className="flex flex-col w-full justify-around items-center max-w-[344px] mx-auto px-5 mb-4">

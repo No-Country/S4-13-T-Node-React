@@ -1,8 +1,4 @@
-const Avatar = () => {
-  const user = localStorage.getItem('user') || '';
-
-  const img = JSON.parse(user).avatar_url;
-
+const Avatar = ({ user }: { user: any }) => {
   return (
     <div className="flex flex-col ">
       <div className="relative">
@@ -14,10 +10,10 @@ const Avatar = () => {
         />
         <img
           className="pointer-events-none absolute bottom-0 opacity-100 mt-6 ml-3 rounded-full border border-secondary w-[127px] h-[127px]"
-          src={img}
+          src={user?.avatar_url}
         />
       </div>
-      <h3 className="ml-3 font-roboto text-center font-bold">48 me gusta totales</h3>
+      <h3 className="ml-3 font-roboto text-center font-bold">{user?.total_likes} me gusta totales</h3>
     </div>
   );
 };
