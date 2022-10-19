@@ -11,7 +11,7 @@ const Replies = ({ replies }: { replies: IReply[] | null }) => {
 
   return (
     <>
-      {replies && (
+      {replies?.length ? (
         <div className="flex flex-col pl-4 mt-2">
           <div className="flex items-center gap-x-1.5 text-xs text-accent">
             <div className="w-6 border-t-[1px]"></div>
@@ -39,7 +39,7 @@ const Replies = ({ replies }: { replies: IReply[] | null }) => {
             ) : null}
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 };

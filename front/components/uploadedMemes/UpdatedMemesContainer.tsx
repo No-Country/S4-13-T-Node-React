@@ -1,26 +1,26 @@
-import { useState } from 'react';
-import CardPost from '../posts/cardPost/CardPost';
 import { IPost } from '../../interfaces';
+import CardPost from '../posts/cardPost/CardPost';
 import TagsContainer from './TagsContainer';
 
-function UpdatedMemesContainer() {
-  const [postUpdated, setPostUpdated] = useState<Partial<IPost>>({});
-  const { media_url, title, likesCount } = postUpdated;
+const UpdatedMemesContainer = ({ post }: { post: IPost }) => {
   return (
     <div>
       <div>
         <CardPost
-          // La propiedad imageUrl tira un error: Image is missing required "src" property. Al cargar la página
-          imageUrl={media_url || '/assets/meme-1.png'}
-          author="el bromas"
-          title={'Lorem ipsum dolor sit amet'}
-          id={Math.random()}
+          imageUrl={post?.media_url || ''}
+          title={post?.title}
+          id={post?.id || Math.random()}
+          hrefPost={{ pathname: '/post', query: { id: post?.id } }}
+          authorId={post?.user?.id || ''}
+          author={post.user?.username}
         />
-        <p className="font-roboto text-right mr-[31px] text-sm max-w-[344px] sm:mx-auto">12 me gusta</p>
+        <p className="font-roboto text-right mr-[31px] mt-[-24px] text-sm max-w-[344px] sm:mx-auto">
+          {post?.likesCount} me gusta
+        </p>
       </div>
-      <TagsContainer />
+      <TagsContainer tags={post?.tags || []} />
     </div>
   );
-}
+};
 
 export default UpdatedMemesContainer;

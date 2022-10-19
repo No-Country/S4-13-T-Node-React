@@ -45,6 +45,7 @@ const PostsContainer = () => {
               author={post.user?.username}
               title={post.title}
               hrefPost={{ pathname: '/post', query: { id: post.id } }}
+              authorId={post.user?.id || ''}
             />
           ))
         : 'loading...'}

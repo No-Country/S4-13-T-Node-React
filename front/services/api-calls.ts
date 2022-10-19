@@ -57,7 +57,11 @@ export const postLike = async (id: number | string) => {
 
 export const getUserPosts = async (id: number | string) => {
   try {
-    return await api.get(`/user/${id}/posts`).then(res => console.log(res));
+    if (id) {
+      const response = await api.get(`/user/${id}/posts`);
+      return response.data.data.user;
+    }
+    return 
   } catch (error) {
     console.error(error);
   }
