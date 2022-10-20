@@ -45,7 +45,6 @@ _Deploy: (https://s413t.vercel.app/)
 - **Adrián Fermanelli** - _UX UI Designer_ - [ver Behance de Adrián](https://www.behance.net/adrianfermane)
 
 ### Front
-- **José Sandino** - [ver Github de José](https://github.com/josesandino)
 - **Gabriel Chazarreta** - [ver Github de Gabriel](https://github.com/gfchaza09)
 
 ### Back
