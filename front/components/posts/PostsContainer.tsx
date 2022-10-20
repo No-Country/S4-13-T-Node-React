@@ -8,24 +8,28 @@ import { RootState } from '../../redux/store';
 import { useAxios } from '../../hooks/useAxios';
 
 const PostsContainer = () => {
+  const dispatch = useDispatch();
+  const api = useAxios();
+
   const [postsList, setPostsList] = useState<IPost[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const api = useAxios();
-
-  const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [wordSearch, setWordSearch] = useState<string>('');
+  const [sizeList, setSizeList] = useState<number>(20);
 
   useEffect(() => {
     dispatch(requestPosts());
     api
-      .get('/post')
+      .get(`/post?page=${pageNumber}`)
       .then(({ data }: AxiosGetPost) => {
-        const posts = data.data.posts;
+        console.log(data.data);
+        const { posts, actual_page, last_page, size, total } = data.data;
         setPostsList(posts);
         dispatch(getPosts(posts));
       })
       .catch(err => setError(err));
-  }, []);
+  }, [pageNumber]);
 
   const { isLoading } = useSelector<RootState, PostsState>(state => {
     return state.postsReducer;

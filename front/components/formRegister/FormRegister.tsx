@@ -79,11 +79,11 @@ const FormRegister = () => {
                     className="placeholder:text-accent font-roboto border-[1px] rounded-[4px] border-accent w-[295px] px-2 py-1"
                   />
                   <div className="absolute top-2 right-5 text-xl">
-                    <AiFillEye
+                    <AiFillEyeInvisible
                       className={`cursor-pointer ${toggleView ? 'hidden' : 'block'} `}
                       onClick={handleToggle}
                     />
-                    <AiFillEyeInvisible
+                    <AiFillEye
                       className={`cursor-pointer ${toggleView ? 'block' : 'hidden'} `}
                       onClick={handleToggle}
                     />

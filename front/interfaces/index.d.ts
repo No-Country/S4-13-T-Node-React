@@ -110,6 +110,10 @@ export interface AxiosGetPost extends AxiosResponse {
   data: {
     data: {
       posts: IPost[];
+      actual_page: number;
+      last_page: number;
+      size: number;
+      total: number;
     };
   };
 }

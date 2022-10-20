@@ -62,11 +62,11 @@ const FormLogin = () => {
                     className="font-roboto border-[1px] border-accent rounded-[4px] w-[295px] pl-4 py-1"
                   />
                   <div className="absolute top-2 right-5 text-xl">
-                    <AiFillEye
+                    <AiFillEyeInvisible
                       className={`cursor-pointer ${toggleView ? 'hidden' : 'block'} `}
                       onClick={handleToggle}
                     />
-                    <AiFillEyeInvisible
+                    <AiFillEye
                       className={`cursor-pointer ${toggleView ? 'block' : 'hidden'} `}
                       onClick={handleToggle}
                     />

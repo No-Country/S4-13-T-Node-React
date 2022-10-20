@@ -21,7 +21,7 @@ const PostContainer = () => {
   const [showTags, setShowTags] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { isLoading, comments } = useSelector<RootState, PostState>(state => {
+  const { isLoading, comments, post } = useSelector<RootState, PostState>(state => {
     return state.postReducer;
   });
 
@@ -35,12 +35,15 @@ const PostContainer = () => {
         .get(`/post/${id}`)
         .then(({ data }: AxiosGetPostById) => {
           const post = data.data.post;
-          setPostVisited(post);
           dispatch(getPost(post));
         })
         .catch(err => setError(err));
     }
   }, [id]);
+
+  useEffect(() => {
+    setPostVisited(post);
+  }, [post]);
 
   const handleShowTags = () => {
     setShowTags(prev => !prev);
