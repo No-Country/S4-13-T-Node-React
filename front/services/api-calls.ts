@@ -45,14 +45,6 @@ export const deletePost = async (id: number | string) => {
   }
 };
 
-export const postLike = async (id: number | string) => {
-  try {
-    await api.post(`/post/${id}/like`).then(res => console.log(res));
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 // Calls to users
 
 export const getUserPosts = async (id: number | string) => {
@@ -82,6 +74,7 @@ export const getUserFavorites = async (id: number | string) => {
   try {
     if (id) {
       const response = await api.get(`/user/${id}/favorites`)
+      console.log(response)
       return response.data.data.user;
     }
   } catch (error) {

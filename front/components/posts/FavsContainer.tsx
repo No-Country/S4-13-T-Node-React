@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { IPost } from '../../interfaces';
 import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
-import { getPosts, PostsState, requestPosts } from '../../redux/slice/postsSlice';
+import { getPosts, PostsState, requestFailure, requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
 import { getUserFavorites } from '../../services/api-calls';
 import { UserDataState } from '../../redux/slice/userDataSlice';
@@ -19,9 +19,12 @@ const FavsContainer = () => {
 
   useEffect(() => {
     dispatch(requestPosts());
-    getUserFavorites(data?.user.id).then(res => {
-      dispatch(getPosts(res.favs));
-    });
+    getUserFavorites(data?.user.id)
+      .then(user => {
+        console.log(user);
+        user && dispatch(getPosts(user.favs));
+      })
+      .catch(err => dispatch(requestFailure(err)));
   }, []);
 
   const { isLoading, error, posts } = useSelector<RootState, PostsState>(state => {
