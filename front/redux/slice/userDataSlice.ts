@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 export interface UserDataState {
   data: GetUserData | null;
   likes: ILike[];
+  favorites: IPost[];
   error: string | null;
   logged: boolean;
 }
@@ -32,6 +33,7 @@ const initialState: UserDataState = {
     },
   },
   likes: [],
+  favorites: [],
   error: null,
   logged: false,
 };
@@ -58,6 +60,9 @@ const userDataSlice = createSlice({
         const likesArray = state.likes.filter(like => like.post.id !== action.payload.post.id);
         state.likes = likesArray;
       }
+    },
+    getFavorites: (state, action: PayloadAction<IPost[]>) => {
+      state.favorites = action.payload;
     },
     logout: state => {
       state.data = initialState.data;
@@ -86,6 +91,6 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { getData, getLikes, addRemoveLike, logout, loadAuthData, setTokens } = userDataSlice.actions;
+export const { getData, getLikes, addRemoveLike, getFavorites, logout, loadAuthData, setTokens } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

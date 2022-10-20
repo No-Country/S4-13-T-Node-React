@@ -8,7 +8,7 @@ import Loading from '../loading/Loading';
 import { getPosts, PostsState, requestFailure, requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
 import { getUserFavorites } from '../../services/api-calls';
-import { UserDataState } from '../../redux/slice/userDataSlice';
+import { getFavorites, UserDataState } from '../../redux/slice/userDataSlice';
 
 const FavsContainer = () => {
   const [postsList, setPostsList] = useState<IPost[]>([]);
@@ -21,8 +21,8 @@ const FavsContainer = () => {
     dispatch(requestPosts());
     getUserFavorites(data?.user.id)
       .then(user => {
-        console.log(user);
-        user && dispatch(getPosts(user.favs));
+        user && dispatch(getFavorites(user.favorites.map(favorite => favorite.post)));
+        user && dispatch(getPosts(user.favorites.map(favorite => favorite.post)));
       })
       .catch(err => dispatch(requestFailure(err)));
   }, []);

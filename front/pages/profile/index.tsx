@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UserDataState } from '../../redux/slice/userDataSlice';
 import { useAxios } from '../../hooks/useAxios';
+import Image from 'next/image';
 
 const Profile: NextPage = () => {
   const router = useRouter();
@@ -40,6 +41,8 @@ const Profile: NextPage = () => {
     }
   }, [id]);
 
+  console.log(user);
+
   return (
     <div>
       <Head>
@@ -60,13 +63,24 @@ const Profile: NextPage = () => {
         ) : (
           <>
             <UserContainer user={user} id={id} />
-            <div className="px-2 mt-8 sm:mx-auto">
-              <h2 className="pl-6 font-orelega text-xl mb-4">
+            <div className="px-2 mt-8 sm:mx-auto min-h-[60vh]">
+              <h2 className={`font-orelega text-xl mb-4 ml-4 ${id == data?.user.id ? 'ml-[-36px]' : ''}`}>
                 {id == data?.user.id ? 'Mis memes subidos' : 'Sus memes subidos'}
               </h2>
-              {user?.post?.map((post, idx) => (
-                <UpdatedMemesContainer key={idx} post={post} />
-              ))}
+              {user?.post?.length ? (
+                user?.post?.map((post, idx) => <UpdatedMemesContainer key={idx} post={post} />)
+              ) : (
+                <div className="h-[400px] flex flex-col justify-center items-center gap-y-4">
+                  <p className="font-roboto max-w-[240px] text-[14px]">
+                    {id == data?.user.id
+                      ? 'Aquí van a estar los memes que subas. Además sumas los me gusta de cada uno'
+                      : ''}
+                  </p>
+                  <div className="flex justify-center items-center bg-primary rounded-[6px] py-[8px] px-[6px]">
+                    <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
