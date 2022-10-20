@@ -43,7 +43,7 @@ export interface PostPropsAxios {
 
 export interface CardPostProps {
   imageUrl: string;
-  id: string | number;
+  id: number;
   hrefPost?: IHrefPostProps;
   title?: string;
   author?: string;
@@ -56,7 +56,7 @@ export interface IHrefPostProps {
 }
 
 export interface IPost {
-  id: number | string;
+  id: number;
   title?: string;
   media_url?: string;
   tags?: string[];

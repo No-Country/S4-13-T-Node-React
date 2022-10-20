@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { v4 } from 'uuid';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../services/firebase';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UserDataState } from '../../redux/slice/userDataSlice';
 import { useAxios } from '../../hooks/useAxios';
@@ -18,8 +18,7 @@ interface FormValues {
 const FormUpload = () => {
   const [imageUpload, setImageUpload] = useState<File | null>(null);
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
-  const dispatch = useDispatch();
-  const api = useAxios(data?.access_token, data?.refresh_token, dispatch);
+  const api = useAxios();
 
   const validateUploadSchema = Yup.object({
     title: Yup.string().min(6, '').required('Campo requerido'),

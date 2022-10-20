@@ -13,10 +13,6 @@ import RightIcons from './RightIcons';
 const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
 
-  const router = useRouter();
-
-  const idRoute = parseInt(router.query.id as string);
-
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   return (
@@ -35,7 +31,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
         {author ? (
           <div
             className={`max-w-[120px] flex flex-col justify-end font-bold cursor-pointer ${
-              authorId == idRoute ? 'text-accent' : 'text-primary'
+              authorId == id ? 'text-accent' : 'text-primary'
             }`}
           >
             <Link href={`/profile?id=${authorId}`}>
@@ -107,7 +103,8 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
         )}
       </div>
       <div className="flex justify-between items-center py-1 px-0.5 mt-1">
-        <LeftIcons hrefPost={hrefPost} idPost={id} />
+        <LeftIcons hrefPost={hrefPost} id={id} />
+
         <RightIcons id={id} />
       </div>
     </div>

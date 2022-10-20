@@ -1,35 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAxios } from '../../../hooks/useAxios';
+import { AxiosGetPostById } from '../../../interfaces';
 import { getPost } from '../../../redux/slice/postSlice';
-import { addRemoveLike, getLikes, UserDataState } from '../../../redux/slice/userDataSlice';
+import { addRemoveLike, UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
-import { getPostById, getUserLikes } from '../../../services/api-calls';
 import ButtonIcon from './ButtonIcon';
 import ButtonsShare from './ButtonsShare';
 
-const RightIcons = ({ id }: { id: string | number }) => {
+const RightIcons = ({ id }: { id: number }) => {
   const dispatch = useDispatch();
 
   const [share, setShare] = useState(false);
 
-  const { data, likes } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
-  const access_token = data?.access_token || '';
-  const refresh_token = data?.refresh_token;
+  const { likes } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
-  const api = useAxios(access_token, refresh_token, dispatch);
+  const api = useAxios();
 
-  const handleLike = async () => {
-    try {
-      await api.post(`/post/${id}/like`).then(res => {
+  const handleLike = () => {
+    api
+      .post(`/post/${id}/like`)
+      .then(res => {
         if (res.status === 200) {
-          dispatch(addRemoveLike({ post: { id: id } }));
-          getPostById(id).then(post => post && dispatch(getPost(post)));
+          dispatch(addRemoveLike({ post: { id } }));
+          api
+            .get(`/post/${id}`)
+            .then(({ data }: AxiosGetPostById) => {
+              const post = data.data.post;
+              dispatch(getPost(post));
+            })
+            .catch(err => console.log(err));
         }
-      });
-    } catch (err) {
-      console.log(err);
-    }
+      })
+      .catch(err => console.log(err));
   };
 
   return (

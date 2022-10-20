@@ -1,9 +1,5 @@
 import { GetUserData, ILike, IPost, LoginProps } from './../../interfaces/index.d';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { postLogin } from '../../services/auth-calls';
-import { WritableDraft } from 'immer/dist/internal';
-import { getUserLikes } from '../../services/api-calls';
-import { useDispatch } from 'react-redux';
 
 // const fetchUserLikes = createAsyncThunk(
 //   'user/likes',
@@ -100,6 +96,7 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { getData, getLikes, addRemoveLike, getFavorites, addRemoveFav, logout, loadAuthData, setTokens } = userDataSlice.actions;
+export const { getData, getLikes, addRemoveLike, getFavorites, addRemoveFav, logout, loadAuthData, setTokens } =
+  userDataSlice.actions;
 
 export default userDataSlice.reducer;
