@@ -18,6 +18,9 @@ const PostContainer = () => {
 
   const [postVisited, setPostVisited] = useState<Partial<IPost | null>>(null);
   const [showTags, setShowTags] = useState<boolean>(false);
+  const { isLoading, error, post, comments } = useSelector<RootState, PostState>(state => {
+    return state.postReducer;
+  });
 
   const id = parseInt(router.query.id as string);
 
@@ -34,10 +37,6 @@ const PostContainer = () => {
   const handleShowTags = () => {
     setShowTags(prev => !prev);
   };
-
-  const { isLoading, error, post } = useSelector<RootState, PostState>(state => {
-    return state.postReducer;
-  });
 
   useEffect(() => {
     if (post) {
@@ -114,13 +113,13 @@ const PostContainer = () => {
           <InputComment id={id} />
         </div>
         <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
-          {postVisited?.comments?.map(comment => {
+          {comments.map(comment => {
             return (
               <Comments
                 key={comment.id}
                 message={comment.comment}
                 user={comment.user}
-                createdAt={comment.created_at}
+                createdAt={comment.created_at!}
                 replies={comment.replys}
               />
             );

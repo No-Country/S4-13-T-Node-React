@@ -6,30 +6,39 @@ import Layout from '../../components/layout/Layout';
 import Loading from '../../components/loading/Loading';
 import UpdatedMemesContainer from '../../components/uploadedMemes/UpdatedMemesContainer';
 import UserContainer from '../../components/user/UserContainer';
-import { getUserPosts } from '../../services/api-calls';
-import { IPost, IUser } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UserDataState } from '../../redux/slice/userDataSlice';
+import { useAxios } from '../../hooks/useAxios';
 
 const Profile: NextPage = () => {
   const router = useRouter();
+  const api = useAxios();
 
   const id = parseInt(router.query.id as string);
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const [user, setUser] = useState<IUser | null>(null);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getUserPosts(id).then(res => {
-      setUser(res);
-      setPosts(res?.post);
-      setLoading(false);
-    });
-  }, []);
+    // getUserPosts(id).then(res => {
+    //   setUser(res);
+    //   setPosts(res?.post);
+    //   setLoading(false);
+    // });
+    if (id) {
+      api
+        .get(`/user/${id}`)
+        .then(res => {
+          setUser(res.data.data.user);
+          setLoading(false);
+        })
+        .catch(err => console.log(err));
+    }
+  }, [id]);
 
   return (
     <div>
@@ -50,12 +59,12 @@ const Profile: NextPage = () => {
           />
         ) : (
           <>
-            <UserContainer user={user} />
+            <UserContainer user={user} id={id} />
             <div className="px-2 mt-8 sm:mx-auto">
               <h2 className="pl-6 font-orelega text-xl mb-4">
                 {id == data?.user.id ? 'Mis memes subidos' : 'Sus memes subidos'}
               </h2>
-              {posts?.map((post, idx) => (
+              {user?.post?.map((post, idx) => (
                 <UpdatedMemesContainer key={idx} post={post} />
               ))}
             </div>

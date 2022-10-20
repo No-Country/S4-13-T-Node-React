@@ -79,7 +79,7 @@ const FormLogin = () => {
                   type="submit"
                   className="border-2 border-primary rounded-[8px] font-bold w-[295px] font-roboto px-4 py-1 text-primary"
                 >
-                  Login
+                  Ingresar
                 </button>
               </Form>
             );
