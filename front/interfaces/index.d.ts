@@ -73,7 +73,7 @@ export interface IPost {
   };
 }
 
-export interface IFav{
+export interface IFav {
   post?: IPost;
 }
 
@@ -87,7 +87,7 @@ export interface IComment {
 
 export interface IReply {
   reply: string;
-  created_at: string;
+  created_at: Date;
   id: number;
   user: IUser;
   replys?: IReply[];
