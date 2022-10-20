@@ -23,7 +23,6 @@ const PostsContainer = () => {
     api
       .get(`/post?page=${pageNumber}`)
       .then(({ data }: AxiosGetPost) => {
-        console.log(data.data);
         const { posts, actual_page, last_page, size, total } = data.data;
         setPostsList(posts);
         dispatch(getPosts(posts));

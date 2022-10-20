@@ -47,8 +47,6 @@ const postsSlice = createSlice({
         },
       ];
 
-      console.log(state.comments);
-
       state.isLoading = false;
 
       return;

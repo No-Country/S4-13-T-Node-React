@@ -158,7 +158,7 @@ export interface LoginProps {
 export interface FormLinksProps {
   question: string;
   anchor: string;
-  achorText: string;
+  anchorText: string;
 }
 
 export interface MDProps {

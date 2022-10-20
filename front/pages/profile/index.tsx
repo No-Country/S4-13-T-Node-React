@@ -25,17 +25,11 @@ const Profile: NextPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // getUserPosts(id).then(res => {
-    //   setUser(res);
-    //   setPosts(res?.post);
-    //   setLoading(false);
-    // });
     if (id) {
       api
         .get(`/user/${id}`)
         .then(res => {
           setUser(res.data.data.user);
-          console.log(user);
           setLoading(false);
         })
         .catch(err => console.log(err));

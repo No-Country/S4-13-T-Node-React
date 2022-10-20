@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, UserDataState } from '../../redux/slice/userDataSlice';
 import { RootState } from '../../redux/store';
@@ -8,11 +8,13 @@ import DataUser from './dataUser/DataUser';
 
 const UserContainer = ({ user, id }: { user: any; id: number }) => {
   const dispatch = useDispatch();
+  const route = useRouter();
 
   const { data, logged } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const handleLogout = () => {
     dispatch(logout());
+    route.push('/');
   };
 
   return (

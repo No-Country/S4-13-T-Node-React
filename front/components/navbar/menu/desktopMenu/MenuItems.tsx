@@ -8,13 +8,14 @@ const MenuItems = () => {
   const { data } = useSelector<RootState, UserDataState>(state => {
     return state.userDataReducer;
   });
+
   return (
     <div className="hidden lg:flex lg:flex-row lg:items-center font-orelega lg:justify-center lg:gap-3 lg:pr-8 select-none">
       <ItemMenu href="/" text="lo nuevo" />
       <ItemMenu href="/best-memes" text="mejores memes" />
       <ItemMenu href="/random" text="memes random" />
       <ItemMenu href="/favs" text="favoritos" />
-      <ProfileItem href={data?.user.id ? `/profile?id=${data?.user?.id}` : '/login'} text="mi perfil" />
+      <ProfileItem href={data?.user.id ? `/profile?id=${data?.user?.id}` : ''} text="mi perfil" />
     </div>
   );
 };
