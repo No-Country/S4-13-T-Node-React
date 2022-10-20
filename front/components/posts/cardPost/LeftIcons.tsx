@@ -4,24 +4,29 @@ import { IHrefPostProps } from '../../../interfaces';
 import ButtonIcon from './ButtonIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import { UserDataState } from '../../../redux/slice/userDataSlice';
+import { addRemoveFav, UserDataState } from '../../../redux/slice/userDataSlice';
 import { useAxios } from '../../../hooks/useAxios';
 
-const LeftIcons = ({ hrefPost }: { hrefPost?: IHrefPostProps }) => {
+const LeftIcons = ({ hrefPost, idPost }: { hrefPost?: IHrefPostProps; idPost: string | number }) => {
   const { data, favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const access_token = data?.access_token;
   const refresh_token = data?.refresh_token;
-  const dispach = useDispatch();
-  const id = hrefPost?.query.id;
-
-  const api = useAxios(access_token, refresh_token, dispach);
+  const dispatch = useDispatch();
+  const id = hrefPost?.query.id || '';
+  // Revisar porque el favoritos no funciona dentro de un post. Por eso agregue el idPost, se puede borrar
+  const api = useAxios(access_token, refresh_token, dispatch);
 
   const handleFavorite = () => {
     api
-      .post(`/post/${id}/favorite`)
-      .then(res => console.log(res))
+      .post(`/post/${idPost}/favorite`)
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(addRemoveFav({ id: id }));
+        }
+      })
       .catch(err => console.log(err));
   };
+
   return (
     <div className="flex px-2 gap-x-2">
       <div onClick={handleFavorite}>

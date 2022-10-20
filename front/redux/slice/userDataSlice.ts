@@ -64,12 +64,21 @@ const userDataSlice = createSlice({
     getFavorites: (state, action: PayloadAction<IPost[]>) => {
       state.favorites = action.payload;
     },
+    addRemoveFav: (state, action: PayloadAction<IPost>) => {
+      if (!state.favorites.find(fav => fav.id === action.payload.id)) {
+        state.favorites.push(action.payload);
+      } else {
+        const likesArray = state.favorites.filter(fav => fav.id !== action.payload.id);
+        state.favorites = likesArray;
+      }
+    },
     logout: state => {
       state.data = initialState.data;
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
       state.likes = initialState.likes;
+      state.favorites = initialState.favorites;
       state.logged = false;
       return;
     },
@@ -91,6 +100,6 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { getData, getLikes, addRemoveLike, getFavorites, logout, loadAuthData, setTokens } = userDataSlice.actions;
+export const { getData, getLikes, addRemoveLike, getFavorites, addRemoveFav, logout, loadAuthData, setTokens } = userDataSlice.actions;
 
 export default userDataSlice.reducer;
