@@ -2,19 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { IHrefPostProps } from '../../../interfaces';
 import ButtonIcon from './ButtonIcon';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { useAxios } from '../../../hooks/useAxios';
 
-const LeftIcons = ({ hrefPost }: { hrefPost?: IHrefPostProps }) => {
-  const { data, favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
-  const access_token = data?.access_token;
-  const refresh_token = data?.refresh_token;
-  const dispach = useDispatch();
-  const id = hrefPost?.query.id;
+const LeftIcons = ({ hrefPost, id }: { hrefPost?: IHrefPostProps; id?: number }) => {
+  const { favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
-  const api = useAxios(access_token, refresh_token, dispach);
+  const api = useAxios();
 
   const handleFavorite = () => {
     api

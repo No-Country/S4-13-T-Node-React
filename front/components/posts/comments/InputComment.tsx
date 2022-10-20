@@ -15,11 +15,9 @@ interface InputProps {
 const InputComment = ({ id }: InputProps) => {
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const dispatch = useDispatch();
-  const access_token = data?.access_token;
-  const refresh_token = data?.refresh_token;
   const user = data?.user;
 
-  const api = useAxios(access_token, refresh_token, dispatch);
+  const api = useAxios();
   const handleSubmit = (values: CommentProps) => {
     api
       .post(`/post/${id}/comment`, { comment: values.comment })

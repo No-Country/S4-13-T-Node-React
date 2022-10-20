@@ -1,4 +1,3 @@
-import { postLogin } from './../../services/auth-calls';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { LoginProps } from '../../interfaces';
@@ -15,11 +14,11 @@ export const userLoginSlice = createSlice({
     login: (state, action: PayloadAction<LoginProps>) => {
       //todo peticion al back para que verifique si existe el usuario
       state = action.payload;
-      postLogin(state).then(resp => {
-        const userData = resp;
-        console.log(userData);
-        return userData;
-      });
+      // postLogin(state).then(resp => {
+      //   const userData = resp;
+      //   console.log(userData);
+      //   return userData;
+      // });
       return;
     },
   },

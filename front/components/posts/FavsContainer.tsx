@@ -7,33 +7,34 @@ import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
 import { getPosts, PostsState, requestFailure, requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
-import { getUserFavorites } from '../../services/api-calls';
 import { getFavorites, UserDataState } from '../../redux/slice/userDataSlice';
+import { useAxios } from '../../hooks/useAxios';
 
 const FavsContainer = () => {
   const [postsList, setPostsList] = useState<IPost[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
+  const api = useAxios();
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   useEffect(() => {
     dispatch(requestPosts());
-    getUserFavorites(data?.user.id)
-      .then(user => {
-        user && dispatch(getFavorites(user.favorites.map(favorite => favorite.post)));
-        user && dispatch(getPosts(user.favorites.map(favorite => favorite.post)));
+    api
+      .get(`/user/${data?.user.id}/favorites`)
+      .then(res => {
+        const favorites = res.data.data.user.favorites.map((favorite: any) => favorite.post);
+        setPostsList(favorites);
+        dispatch(getFavorites(favorites));
+        dispatch(getPosts(favorites));
       })
-      .catch(err => dispatch(requestFailure(err)));
+      .catch(err => setError(err));
   }, []);
 
-  const { isLoading, error, posts } = useSelector<RootState, PostsState>(state => {
+  const { isLoading } = useSelector<RootState, PostsState>(state => {
     return state.postsReducer;
   });
-
-  useEffect(() => {
-    setPostsList(posts);
-  }, [posts]);
 
   if (isLoading) {
     return <Loading message={'Los que elegiste como favoritos'} />;

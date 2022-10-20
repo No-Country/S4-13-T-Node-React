@@ -1,12 +1,19 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
-import { setTokens } from '../redux/slice/userDataSlice';
+import { setTokens, UserDataState } from '../redux/slice/userDataSlice';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 const NODE_ENV = process.env.NODE_ENV;
 let BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const useAxios = (access_token?: string, refresh_token?: string, dispatch?: Dispatch<AnyAction>) => {
+export const useAxios = () => {
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const access_token = data?.access_token;
+  const refresh_token = data?.refresh_token;
+  const dispatch = useDispatch();
+
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
