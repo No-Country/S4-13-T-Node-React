@@ -1,17 +1,13 @@
 import { Formik, Form, Field } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
-
 import { useDispatch } from 'react-redux';
 import { getData, getLikes } from '../../redux/slice/userDataSlice';
 import { LoginProps } from '../../interfaces';
-
 import Link from 'next/link';
-
 import { AiFillEye } from 'react-icons/ai';
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import useToggleView from '../../hooks/useToggleView';
-
 import { useAxios } from '../../hooks/useAxios';
 
 const validateLoginSchema = Yup.object({

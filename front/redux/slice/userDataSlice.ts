@@ -96,7 +96,11 @@ const userDataSlice = createSlice({
   },
 });
 
+<<<<<<< HEAD
 export const { getData, getLikes, addRemoveLike, getFavorites, addRemoveFav, logout, loadAuthData, setTokens } =
+=======
+export const { getData, getLikes, addRemoveLike, getFavorites, logout, loadAuthData, setTokens } =
+>>>>>>> dev
   userDataSlice.actions;
 
 export default userDataSlice.reducer;

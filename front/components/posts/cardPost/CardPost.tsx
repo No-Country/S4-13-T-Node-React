@@ -103,8 +103,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
         )}
       </div>
       <div className="flex justify-between items-center py-1 px-0.5 mt-1">
-        <LeftIcons hrefPost={hrefPost} id={id} />
-
+        <LeftIcons id={id} hrefPost={hrefPost} />
         <RightIcons id={id} />
       </div>
     </div>
