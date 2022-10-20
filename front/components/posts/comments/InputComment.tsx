@@ -1,6 +1,7 @@
 import { Form, Field, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAxios } from '../../../hooks/useAxios';
+import { addComment } from '../../../redux/slice/postSlice';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
 
@@ -12,16 +13,26 @@ interface InputProps {
 }
 
 const InputComment = ({ id }: InputProps) => {
-  const { data, likes } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const dispatch = useDispatch();
   const access_token = data?.access_token;
   const refresh_token = data?.refresh_token;
+  const user = data?.user;
 
   const api = useAxios(access_token, refresh_token, dispatch);
   const handleSubmit = (values: CommentProps) => {
     api
       .post(`/post/${id}/comment`, { comment: values.comment })
-      .then(res => console.log(res))
+      .then(res => {
+        dispatch(
+          addComment({
+            comment: values.comment,
+            email: user.email,
+            username: user.username,
+            avatar_url: user.avatar_url,
+          })
+        );
+      })
       .catch(error => console.log(error));
   };
 

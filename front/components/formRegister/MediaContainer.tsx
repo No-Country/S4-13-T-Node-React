@@ -29,9 +29,10 @@ export const MediaContainer = () => {
           type="icon"
           shape="square"
           size="large"
+          useOneTap
         />
       </GoogleOAuthProvider>
-      <FacebookProvider appId={facebookID}>
+      {/* <FacebookProvider appId={facebookID}>
         <LoginButton
           onSuccess={(response: any) => {
             console.log(response);
@@ -40,7 +41,7 @@ export const MediaContainer = () => {
         >
           Continuar con Facebook
         </LoginButton>
-      </FacebookProvider>
+      </FacebookProvider> */}
       {/* <MediaButton social="facebook" /> */}
     </div>
   );

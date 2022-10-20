@@ -11,7 +11,7 @@ const LoadAuth = ({ children }: { children: JSX.Element }) => {
       const user = JSON.parse(localStorage.getItem('user') || '');
       getUserLikes(user.id).then(res => res && dispatch(loadAuthData(res)));
     }
-  }, [dispatch]);
+  }, []);
 
   return <>{children}</>;
 };

@@ -19,7 +19,7 @@ const RightIcons = ({ id }: { id: string | number }) => {
 
   const api = useAxios(access_token, refresh_token, dispatch);
 
-  const handleLike = async (id: number | string) => {
+  const handleLike = async () => {
     try {
       await api.post(`/post/${id}/like`).then(res => {
         if (res.status === 200) {
@@ -67,7 +67,7 @@ const RightIcons = ({ id }: { id: string | number }) => {
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            onClick={() => handleLike(id)}
+            onClick={handleLike}
           >
             {likes.some(like => like.post.id == id) ? (
               <path

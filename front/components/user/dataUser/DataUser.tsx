@@ -3,11 +3,7 @@ import { useSelector } from 'react-redux';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
 
-const DataUser = ({ user }: { user: any }) => {
-  const router = useRouter();
-
-  const id = parseInt(router.query.id as string);
-
+const DataUser = ({ user, id }: { user: any; id: number }) => {
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   return (

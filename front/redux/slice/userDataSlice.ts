@@ -4,7 +4,6 @@ import { postLogin } from '../../services/auth-calls';
 import { WritableDraft } from 'immer/dist/internal';
 import { getUserLikes } from '../../services/api-calls';
 import { useDispatch } from 'react-redux';
-import { getCookies } from 'cookies-next';
 
 // const fetchUserLikes = createAsyncThunk(
 //   'user/likes',

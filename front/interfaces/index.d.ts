@@ -75,8 +75,8 @@ export interface IPost {
 
 export interface IComment {
   comment: string;
-  created_at: string;
-  id: number;
+  created_at?: Date;
+  id?: number;
   user: IUser;
   replys?: IReply[];
 }
@@ -92,9 +92,10 @@ export interface IReply {
 export interface IUser {
   username: string;
   email: string;
-  role: string[];
-  avatar_url: string;
+  role?: string[];
+  avatar_url?: string;
   total_likes?: number;
+  post?: IPost[];
 }
 
 export interface ILike {

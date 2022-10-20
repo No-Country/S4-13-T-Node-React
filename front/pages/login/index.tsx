@@ -1,6 +1,4 @@
 import type { NextPage } from 'next';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-
 import Head from 'next/head';
 import FormLogin from '../../components/formLogin/FormLogin';
 import LayoutFormPages from '../../components/layout/LayoutFormPages';
@@ -8,7 +6,6 @@ import FormLinks from '../../components/formRegister/FormLinks';
 import { HrComponent } from '../../components/formRegister/HrComponent';
 import { MediaContainer } from '../../components/formRegister/MediaContainer';
 import { usePublicRoute } from '../../hooks/usePublicRoute';
-import { FacebookProvider } from 'react-facebook';
 
 const Login: NextPage = () => {
   const data = usePublicRoute();
@@ -26,7 +23,7 @@ const Login: NextPage = () => {
       <LayoutFormPages heading="ingreso">
         <div className="flex flex-col justify-center items-center">
           <FormLogin />
-          <FormLinks question="¿no tenes cuenta?" anchor="/signup" achorText="Registrate" />
+          <FormLinks question="¿no tenés cuenta?" anchor="/signup" achorText="Registrate" />
           <HrComponent />
           <MediaContainer />
         </div>
