@@ -14,6 +14,8 @@ const Home: NextPage = () => {
   const handleUploadMeme = () => {
     if (!data?.access_token) {
       router.push('/login');
+    } else {
+      router.push('/upload');
     }
     //TODO: Redireccionar si no está logueado el usuario
     // const data = useAuthSession();

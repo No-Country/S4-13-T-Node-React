@@ -3,16 +3,8 @@ import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { setTokens } from '../redux/slice/userDataSlice';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
-
 const NODE_ENV = process.env.NODE_ENV;
-
-let BASE_URL: string | undefined;
-
-if (NODE_ENV === 'production') {
-  BASE_URL = process.env.NEXT_PUBLIC_API_URL_PRODUCTION;
-} else {
-  BASE_URL = process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT;
-}
+let BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const useAxios = (access_token?: string, refresh_token?: string, dispatch?: Dispatch<AnyAction>) => {
   const axiosInstance = axios.create({
