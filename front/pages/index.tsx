@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
@@ -17,9 +18,9 @@ const Home: NextPage = () => {
     } else {
       router.push('/upload');
     }
-    //TODO: Redireccionar si no está logueado el usuario
-    // const data = useAuthSession();
   };
+
+  const listInnerRef = useRef();
 
   return (
     <div>
