@@ -40,7 +40,7 @@ const InputComment = ({ id }: InputProps) => {
           <Form>
             <Field
               as="textarea"
-              className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none focus:outline-none focus-visible:border-secondary"
+              className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none focus-visible:ring-secondary focus:outline-none focus-visible:border-none"
               placeholder="Escribí aquí tu comentario"
               name="comment"
             />

@@ -4,6 +4,19 @@ import { IHrefPostProps } from '../../../interfaces';
 import ButtonIcon from './ButtonIcon';
 
 const LeftIcons = ({ hrefPost }: { hrefPost?: IHrefPostProps }) => {
+  // const handleFav = async (id: number | string) => {
+  //   try {
+  //     await api.post(`/post/${id}/favorite`).then(res => {
+  //       if (res.status === 200) {
+  //         dispatch(addRemoveLike({ post: { id: id } }));
+  //         getPostById(id).then(post => post && dispatch(getPost(post)));
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   return (
     <div className="flex px-2 gap-x-2">
       <ButtonIcon

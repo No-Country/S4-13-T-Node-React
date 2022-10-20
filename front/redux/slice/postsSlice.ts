@@ -26,10 +26,13 @@ const postsSlice = createSlice({
         state.posts = action.payload
         state.isLoading = false;
         return
+    },
+    requestFailure: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
     }
   },
 });
 
-export const { getPosts, requestPosts } = postsSlice.actions;
+export const { getPosts, requestPosts, requestFailure } = postsSlice.actions;
 
 export default postsSlice.reducer;
