@@ -43,7 +43,7 @@ export interface PostPropsAxios {
 
 export interface CardPostProps {
   imageUrl: string;
-  id: string | number;
+  id: number;
   hrefPost?: IHrefPostProps;
   title?: string;
   author?: string;
@@ -56,7 +56,7 @@ export interface IHrefPostProps {
 }
 
 export interface IPost {
-  id: number | string;
+  id: number;
   title?: string;
   media_url?: string;
   tags?: string[];
@@ -73,10 +73,14 @@ export interface IPost {
   };
 }
 
+export interface IFav{
+  post?: IPost;
+}
+
 export interface IComment {
   comment: string;
-  created_at: string;
-  id: number;
+  created_at?: Date;
+  id?: number;
   user: IUser;
   replys?: IReply[];
 }
@@ -92,9 +96,10 @@ export interface IReply {
 export interface IUser {
   username: string;
   email: string;
-  role: string[];
-  avatar_url: string;
+  role?: string[];
+  avatar_url?: string;
   total_likes?: number;
+  post?: IPost[];
 }
 
 export interface ILike {

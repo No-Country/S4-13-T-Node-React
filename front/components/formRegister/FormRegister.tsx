@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-import { useDispatch } from 'react-redux';
-import { signup } from '../../redux/slice/userSignupSlice';
 import { RegisterProps } from '../../interfaces';
 import useToggleView from '../../hooks/useToggleView';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { register } from '../../services/auth-calls';
 import { useRouter } from 'next/router';
+import { useAxios } from '../../hooks/useAxios';
 
 const validateRegisterSchema = Yup.object({
   email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
@@ -20,8 +18,8 @@ const validateRegisterSchema = Yup.object({
 });
 
 const FormRegister = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
+  const api = useAxios();
 
   const { handleToggle, toggleView } = useToggleView();
   const [error, setError] = useState<string>('');
@@ -36,15 +34,21 @@ const FormRegister = () => {
         <Formik
           initialValues={{ email: '', username: '', password: '' }}
           onSubmit={async (values: RegisterProps, { resetForm }) => {
-            // dispatch(signup(values));
-            const { data, error } = await register(values);
-
-            if (error) {
-              setError(error.message);
-            } else {
-              router.push('/login');
-            }
-            // resetForm();
+            api
+              .post('/register', values)
+              .then(res => {
+                router.push('/login');
+              })
+              .catch(err => {
+                const errorMessage = err.response.data.error.message;
+                if (errorMessage === 'User already exist.') {
+                  setError('El usuario ya existe!');
+                } else if (errorMessage === 'Email already exist.') {
+                  setError('El email ya existe!');
+                } else {
+                  setError(errorMessage);
+                }
+              });
           }}
           validationSchema={validateRegisterSchema}
         >

@@ -13,10 +13,6 @@ import RightIcons from './RightIcons';
 const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
 
-  const router = useRouter();
-
-  const idRoute = parseInt(router.query.id as string);
-
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   return (
@@ -25,22 +21,22 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
         {hrefPost ? (
           <Link href={hrefPost}>
             <a>
-              <p className="pointer">{title}</p>
+              <p className="cursor-pointer truncate">{title}</p>
             </a>
           </Link>
         ) : (
-          <p className="pointer">{title}</p>
+          <p className="pointer truncate">{title}</p>
         )}
 
         {author ? (
           <div
-            className={`flex flex-col justify-end font-bold cursor-pointer ${
-              authorId == idRoute ? 'text-accent' : 'text-primary'
+            className={`max-w-[120px] flex flex-col justify-end font-bold cursor-pointer ${
+              authorId == id ? 'text-accent' : 'text-primary'
             }`}
           >
             <Link href={`/profile?id=${authorId}`}>
               <a>
-                <p className="leading-none">{author}</p>
+                <p className="leading-none truncate">{author}</p>
               </a>
             </Link>
           </div>
@@ -107,7 +103,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
         )}
       </div>
       <div className="flex justify-between items-center py-1 px-0.5 mt-1">
-        <LeftIcons hrefPost={hrefPost} />
+        <LeftIcons id={id} hrefPost={hrefPost} />
         <RightIcons id={id} />
       </div>
     </div>

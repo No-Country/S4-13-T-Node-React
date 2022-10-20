@@ -6,12 +6,8 @@ import { RootState } from '../../redux/store';
 import Avatar from './avatar/Avatar';
 import DataUser from './dataUser/DataUser';
 
-const UserContainer = ({ user }: { user: any }) => {
+const UserContainer = ({ user, id }: { user: any; id: number }) => {
   const dispatch = useDispatch();
-
-  const router = useRouter();
-
-  const id = parseInt(router.query.id as string);
 
   const { data, logged } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
@@ -21,19 +17,27 @@ const UserContainer = ({ user }: { user: any }) => {
 
   return (
     <>
-      <div className="flex gap-x-32 justify-center items-center mt-[56px]">
+      <div className="flex gap-x-36 justify-center items-center mt-[56px]">
         <div className="flex flex-col mt-5">
           <h1 className="text-text font-normal text-2xl font-orelega">Perfil</h1>
-          <h6 className="text-accent text-xs">
-            {id == data?.user.id && <button onClick={handleLogout}>Cerrar Sesión</button>}
-          </h6>
+          {id == data?.user.id && (
+            <h6 className="text-accent text-xs">
+              <button onClick={handleLogout}>Cerrar Sesión</button>
+            </h6>
+          )}
         </div>
-        <button className="h-[40px] mt-4 font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-1 px-4 active:text-secondary active:border-secondary">
+        {/* {id == data?.user.id && ( */}
+        <button
+          className={`h-[40px] mt-4 font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-1 px-4 active:text-secondary active:border-secondary ${
+            id === data?.user.id || 'opacity-0 cursor-default'
+          }`}
+        >
           Subir meme
         </button>
+        {/* )} */}
       </div>
       <div className="flex row">
-        <DataUser user={user} />
+        <DataUser user={user} id={id} />
         <Avatar user={user} />
       </div>
     </>

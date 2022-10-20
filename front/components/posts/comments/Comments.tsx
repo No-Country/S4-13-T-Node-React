@@ -8,7 +8,7 @@ import { calculateDates } from '../../../utils/calculateDates';
 interface CommentsProps {
   message: string;
   user: IUser;
-  createdAt: string;
+  createdAt: Date;
   replies?: IReply[] | null;
 }
 
@@ -18,7 +18,7 @@ const Comments = ({ message, user, createdAt, replies }: CommentsProps) => {
   return (
     <div className="flex w-full gap-x-2">
       <div className="min-w-[36px] min-h-[36px] mt-1 select-none">
-        <Image src={user?.avatar_url} width={36} height={36} className="rounded-full" />
+        <Image src={user?.avatar_url!} width={36} height={36} className="rounded-full" />
       </div>
       <div className="flex flex-col font-roboto max-[260px] w-full">
         <div>

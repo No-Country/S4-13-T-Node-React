@@ -1,6 +1,6 @@
 import { BaseEntity } from '../Entities/base.entity'
 import { DatabaseRepository, Query, SetsList } from '../Interfaces/repository.interface'
-import { EntityTarget, IsNull, Repository, UpdateResult } from 'typeorm'
+import { DeleteResult, EntityTarget, IsNull, Repository, UpdateResult } from 'typeorm'
 import { ConfigServer } from '../Config/config'
 
 export class BaseRepository<T extends BaseEntity> extends ConfigServer implements DatabaseRepository<T> {
@@ -30,10 +30,13 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
       builder.leftJoinAndSelect(`${alias}.${relation}`, relation)
     }
 
-    builder
-      .offset((page - 1) * size)
-      .limit(size)
-      .orderBy(`${alias}.created_at`, sort.toUpperCase())
+    builder.offset((page - 1) * size).limit(size)
+
+    if (sort === 'random') builder.orderBy('RANDOM()')
+
+    if (sort === 'desc' || sort === 'asc') builder.orderBy(`${alias}.created_at`, sort.toUpperCase())
+
+    if (sort === 'like') builder.orderBy(`${alias}.likesCount`, 'DESC')
 
     if (word && property) {
       builder.where(`${alias}.${property} like :word`, { word: `%${word}%` })
@@ -73,5 +76,18 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
       .returning('*')
       .execute()
     return builder
+  }
+
+  async delete(query: Query): Promise<DeleteResult> {
+    const { raw, affected } = await (
+      await this.repository
+    )
+      .createQueryBuilder()
+      .delete()
+      .where({ ...query, deleted_at: IsNull() })
+      .returning('*')
+      .execute()
+
+    return { raw, affected }
   }
 }

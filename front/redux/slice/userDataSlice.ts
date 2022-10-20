@@ -1,10 +1,5 @@
 import { GetUserData, ILike, IPost, LoginProps } from './../../interfaces/index.d';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { postLogin } from '../../services/auth-calls';
-import { WritableDraft } from 'immer/dist/internal';
-import { getUserLikes } from '../../services/api-calls';
-import { useDispatch } from 'react-redux';
-import { getCookies } from 'cookies-next';
 
 // const fetchUserLikes = createAsyncThunk(
 //   'user/likes',
@@ -16,6 +11,7 @@ import { getCookies } from 'cookies-next';
 export interface UserDataState {
   data: GetUserData | null;
   likes: ILike[];
+  favorites: IPost[];
   error: string | null;
   logged: boolean;
 }
@@ -33,6 +29,7 @@ const initialState: UserDataState = {
     },
   },
   likes: [],
+  favorites: [],
   error: null,
   logged: false,
 };
@@ -57,7 +54,18 @@ const userDataSlice = createSlice({
         state.likes.push(action.payload);
       } else {
         const likesArray = state.likes.filter(like => like.post.id !== action.payload.post.id);
-        console.log(likesArray);
+        state.likes = likesArray;
+      }
+    },
+    getFavorites: (state, action: PayloadAction<IPost[]>) => {
+      state.favorites = action.payload;
+    },
+    addRemoveFav: (state, action: PayloadAction<IPost>) => {
+      if (!state.favorites.find(fav => fav.id === action.payload.id)) {
+        state.favorites.push(action.payload);
+      } else {
+        const likesArray = state.favorites.filter(fav => fav.id !== action.payload.id);
+        state.favorites = likesArray;
       }
     },
     logout: state => {
@@ -66,6 +74,7 @@ const userDataSlice = createSlice({
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
       state.likes = initialState.likes;
+      state.favorites = initialState.favorites;
       state.logged = false;
       return;
     },
@@ -87,6 +96,11 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { getData, getLikes, addRemoveLike, logout, loadAuthData, setTokens } = userDataSlice.actions;
+<<<<<<< HEAD
+export const { getData, getLikes, addRemoveLike, getFavorites, addRemoveFav, logout, loadAuthData, setTokens } =
+=======
+export const { getData, getLikes, addRemoveLike, getFavorites, logout, loadAuthData, setTokens } =
+>>>>>>> dev
+  userDataSlice.actions;
 
 export default userDataSlice.reducer;

@@ -6,30 +6,42 @@ import Layout from '../../components/layout/Layout';
 import Loading from '../../components/loading/Loading';
 import UpdatedMemesContainer from '../../components/uploadedMemes/UpdatedMemesContainer';
 import UserContainer from '../../components/user/UserContainer';
-import { getUserPosts } from '../../services/api-calls';
-import { IPost, IUser } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UserDataState } from '../../redux/slice/userDataSlice';
+import { useAxios } from '../../hooks/useAxios';
+import Image from 'next/image';
 
 const Profile: NextPage = () => {
   const router = useRouter();
+  const api = useAxios();
 
   const id = parseInt(router.query.id as string);
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const [user, setUser] = useState<IUser | null>(null);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getUserPosts(id).then(res => {
-      setUser(res);
-      setPosts(res?.post);
-      setLoading(false);
-    });
-  }, []);
+    // getUserPosts(id).then(res => {
+    //   setUser(res);
+    //   setPosts(res?.post);
+    //   setLoading(false);
+    // });
+    if (id) {
+      api
+        .get(`/user/${id}`)
+        .then(res => {
+          setUser(res.data.data.user);
+          setLoading(false);
+        })
+        .catch(err => console.log(err));
+    }
+  }, [id]);
+
+  console.log(user);
 
   return (
     <div>
@@ -50,14 +62,25 @@ const Profile: NextPage = () => {
           />
         ) : (
           <>
-            <UserContainer user={user} />
-            <div className="px-2 mt-8 sm:mx-auto">
-              <h2 className="pl-6 font-orelega text-xl mb-4">
+            <UserContainer user={user} id={id} />
+            <div className="px-2 mt-8 sm:mx-auto min-h-[60vh]">
+              <h2 className={`font-orelega text-xl mb-4 ml-4 ${id == data?.user.id ? 'ml-[-36px]' : ''}`}>
                 {id == data?.user.id ? 'Mis memes subidos' : 'Sus memes subidos'}
               </h2>
-              {posts?.map((post, idx) => (
-                <UpdatedMemesContainer key={idx} post={post} />
-              ))}
+              {user?.post?.length ? (
+                user?.post?.map((post, idx) => <UpdatedMemesContainer key={idx} post={post} />)
+              ) : (
+                <div className="h-[400px] flex flex-col justify-center items-center gap-y-4">
+                  <p className="font-roboto max-w-[240px] text-[14px]">
+                    {id == data?.user.id
+                      ? 'Aquí van a estar los memes que subas. Además sumas los me gusta de cada uno'
+                      : ''}
+                  </p>
+                  <div className="flex justify-center items-center bg-primary rounded-[6px] py-[8px] px-[6px]">
+                    <Image src="/assets/logo/logoMobile.png" width="54px" height="43px" />
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}

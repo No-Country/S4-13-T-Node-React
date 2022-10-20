@@ -2,31 +2,65 @@ import React from 'react';
 import Link from 'next/link';
 import { IHrefPostProps } from '../../../interfaces';
 import ButtonIcon from './ButtonIcon';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { addRemoveFav, UserDataState } from '../../../redux/slice/userDataSlice';
+import { useAxios } from '../../../hooks/useAxios';
 
-const LeftIcons = ({ hrefPost }: { hrefPost?: IHrefPostProps }) => {
+const LeftIcons = ({ hrefPost, id }: { hrefPost?: IHrefPostProps; id: number }) => {
+  const { favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const dispatch = useDispatch();
+  // Revisar porque el favoritos no funciona dentro de un post. Por eso agregue el idPost, se puede borrar
+
+  const api = useAxios();
+
+  const handleFavorite = () => {
+    api
+      .post(`/post/${id}/favorite`)
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(addRemoveFav({ id }));
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <div className="flex px-2 gap-x-2">
-      <ButtonIcon
-        icon={
-          <svg
-            className="cursor-pointer"
-            width="24"
-            height="26"
-            viewBox="0 0 24 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.3335 3.94132V23.3893C1.3335 24.576 2.7695 25.172 3.6095 24.332L12.0002 15.9413L20.3908 24.332C21.2308 25.172 22.6668 24.5773 22.6668 23.3893V3.94132C22.6668 3.23408 22.3859 2.5558 21.8858 2.05571C21.3857 1.55561 20.7074 1.27466 20.0002 1.27466H4.00016C3.29292 1.27466 2.61464 1.55561 2.11454 2.05571C1.61445 2.5558 1.3335 3.23408 1.3335 3.94132V3.94132Z"
-              stroke="#7F32EC"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        }
-        iconName="Favoritos"
-      />
+      <div onClick={handleFavorite}>
+        <ButtonIcon
+          icon={
+            <svg
+              className="cursor-pointer"
+              width="24"
+              height="26"
+              viewBox="0 0 24 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {favorites.some(favorite => favorite.id === id) ? (
+                <path
+                  d="M1.33325 3.94136V23.3894C1.33325 24.576 2.76925 25.172 3.60925 24.332L11.9999 15.9414L20.3906 24.332C21.2306 25.172 22.6666 24.5774 22.6666 23.3894V3.94136C22.6666 3.23411 22.3856 2.55583 21.8855 2.05574C21.3854 1.55564 20.7072 1.27469 19.9999 1.27469H3.99992C3.29267 1.27469 2.6144 1.55564 2.1143 2.05574C1.6142 2.55583 1.33325 3.23411 1.33325 3.94136Z"
+                  fill="#FD8A09"
+                  stroke="#7F32EC"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              ) : (
+                <path
+                  d="M1.3335 3.94132V23.3893C1.3335 24.576 2.7695 25.172 3.6095 24.332L12.0002 15.9413L20.3908 24.332C21.2308 25.172 22.6668 24.5773 22.6668 23.3893V3.94132C22.6668 3.23408 22.3859 2.5558 21.8858 2.05571C21.3857 1.55561 20.7074 1.27466 20.0002 1.27466H4.00016C3.29292 1.27466 2.61464 1.55561 2.11454 2.05571C1.61445 2.5558 1.3335 3.23408 1.3335 3.94132V3.94132Z"
+                  stroke="#7F32EC"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
+            </svg>
+          }
+          iconName="Favoritos"
+        />
+      </div>
 
       <ButtonIcon
         icon={

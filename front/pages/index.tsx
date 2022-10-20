@@ -1,10 +1,22 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
+import { UserDataState } from '../redux/slice/userDataSlice';
+import { RootState } from '../redux/store';
 
 const Home: NextPage = () => {
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const router = useRouter();
+
   const handleUploadMeme = () => {
+    if (!data?.access_token) {
+      router.push('/login');
+    } else {
+      router.push('/upload');
+    }
     //TODO: Redireccionar si no está logueado el usuario
     // const data = useAuthSession();
   };

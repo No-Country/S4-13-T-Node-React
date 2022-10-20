@@ -9,7 +9,7 @@ const NavForms = ({ title }: test) => {
       <h1 className="text-white font-orelega text-[24px] capitalize">{title}</h1>
       <Link href="/">
         <a>
-          <Image src="/assets/logo/frame.png" width="134px" height="56px" className="object-contain" />
+          <Image src="/assets/logo/Frame.png" width="134px" height="56px" className="object-contain" />
         </a>
       </Link>
     </div>

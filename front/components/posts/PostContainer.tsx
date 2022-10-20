@@ -3,21 +3,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useRouter } from 'next/router';
 
-import { IPost } from '../../interfaces';
+import { AxiosGetPostById, IPost } from '../../interfaces';
 
 import Loading from '../../components/loading/Loading';
 import CardPost from './cardPost/CardPost';
 import Comments from './comments/Comments';
 import InputComment from './comments/InputComment';
 
-import { getPostById } from '../../services/api-calls';
 import { getPost, PostState } from '../../redux/slice/postSlice';
+import { useAxios } from '../../hooks/useAxios';
 
 const PostContainer = () => {
   const router = useRouter();
+  const api = useAxios();
 
   const [postVisited, setPostVisited] = useState<Partial<IPost | null>>(null);
   const [showTags, setShowTags] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { isLoading, comments } = useSelector<RootState, PostState>(state => {
+    return state.postReducer;
+  });
 
   const id = parseInt(router.query.id as string);
 
@@ -25,25 +31,20 @@ const PostContainer = () => {
 
   useEffect(() => {
     if (id) {
-      getPostById(id).then(post => {
-        post && dispatch(getPost(post));
-      });
+      api
+        .get(`/post/${id}`)
+        .then(({ data }: AxiosGetPostById) => {
+          const post = data.data.post;
+          setPostVisited(post);
+          dispatch(getPost(post));
+        })
+        .catch(err => setError(err));
     }
   }, [id]);
 
   const handleShowTags = () => {
     setShowTags(prev => !prev);
   };
-
-  const { isLoading, error, post } = useSelector<RootState, PostState>(state => {
-    return state.postReducer;
-  });
-
-  useEffect(() => {
-    if (post) {
-      setPostVisited(post);
-    }
-  }, [post]);
 
   if (isLoading) {
     return <Loading message={'Sorprendete con el meme que viene'} />;
@@ -114,13 +115,13 @@ const PostContainer = () => {
           <InputComment id={id} />
         </div>
         <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
-          {postVisited?.comments?.map(comment => {
+          {comments.map(comment => {
             return (
               <Comments
                 key={comment.id}
                 message={comment.comment}
                 user={comment.user}
-                createdAt={comment.created_at}
+                createdAt={comment.created_at!}
                 replies={comment.replys}
               />
             );

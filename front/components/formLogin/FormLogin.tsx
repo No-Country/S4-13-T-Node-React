@@ -1,17 +1,14 @@
 import { Formik, Form, Field } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getData, getLikes } from '../../redux/slice/userDataSlice';
 import { LoginProps } from '../../interfaces';
 import Link from 'next/link';
-
 import { AiFillEye } from 'react-icons/ai';
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import useToggleView from '../../hooks/useToggleView';
-import { postLogin } from '../../services/auth-calls';
-import { getUserLikes } from '../../services/api-calls';
+import { useAxios } from '../../hooks/useAxios';
 
 const validateLoginSchema = Yup.object({
   username: Yup.string().min(5, 'muy corto!').required('Campo requerido'),
@@ -20,6 +17,7 @@ const validateLoginSchema = Yup.object({
 
 const FormLogin = () => {
   const dispatch = useDispatch();
+  const api = useAxios();
 
   const { handleToggle, toggleView } = useToggleView();
 
@@ -29,11 +27,17 @@ const FormLogin = () => {
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={(values: LoginProps, { resetForm }) => {
-            postLogin(values).then(res => {
-              res && dispatch(getData(res));
-              getUserLikes(res.user.id).then(res => {
-                res && dispatch(getLikes(res));
-              });
+            api.post('/login', values).then(res => {
+              const userData = res.data;
+              dispatch(getData(userData));
+              const id = userData.user.id;
+              api
+                .get(`/user/${id}/likes`)
+                .then(response => {
+                  const likes = response.data.data.user.likes;
+                  dispatch(getLikes(likes));
+                })
+                .catch(err => console.log(err));
             });
             resetForm();
           }}
@@ -79,7 +83,7 @@ const FormLogin = () => {
                   type="submit"
                   className="border-2 border-primary rounded-[8px] font-bold w-[295px] font-roboto px-4 py-1 text-primary"
                 >
-                  Login
+                  Ingresar
                 </button>
               </Form>
             );

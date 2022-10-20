@@ -17,14 +17,22 @@ const postsSlice = createSlice({
   name: 'posts',
     initialState,
   reducers: {
+    requestPosts: (state) => {
+      state.isLoading = true;
+      state.posts = [];
+      return
+    },
     getPosts: (state, action: PayloadAction<IPost[]>) => {
         state.posts = action.payload
         state.isLoading = false;
         return
+    },
+    requestFailure: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
     }
   },
 });
 
-export const { getPosts } = postsSlice.actions;
+export const { getPosts, requestPosts, requestFailure } = postsSlice.actions;
 
 export default postsSlice.reducer;
