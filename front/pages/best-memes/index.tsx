@@ -1,9 +1,25 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Layout from '../../components/layout/Layout';
+import { handleModal } from '../../redux/slice/modalSlice';
+import { UserDataState } from '../../redux/slice/userDataSlice';
+import { RootState } from '../../redux/store';
 
 const BestMemes: NextPage = () => {
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+  const handleUploadMeme = () => {
+    if (!data?.access_token) {
+      dispatch(handleModal(true));
+    } else {
+      router.push('/upload');
+    }
+  };
   return (
     <div>
       <Head>
@@ -16,7 +32,10 @@ const BestMemes: NextPage = () => {
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
             <h1 className="font-orelega text-[24px] leading-[26px]">Mejores memes</h1>
-            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
+            <button
+              className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary"
+              onClick={handleUploadMeme}
+            >
               Subir meme
             </button>
           </div>

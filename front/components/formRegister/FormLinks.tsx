@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { FormLinksProps } from '../../interfaces';
 import { handleToOpen } from '../../redux/slice/modalSlice';
 
-const FormLinks = ({ question, anchor, anchorText }: FormLinksProps) => {
+const FormLinks = ({ question, anchorText }: FormLinksProps) => {
   const dispatch = useDispatch();
   const changeModal = () => {
     if (anchorText === 'Ingresá') {

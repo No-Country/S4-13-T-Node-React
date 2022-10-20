@@ -2,13 +2,8 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import FormUpload from '../../components/formUpload/FormUpload';
 import Layout from '../../components/layout/Layout';
-import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 const Upload: NextPage = () => {
-  //   const data = usePrivateRoute();
-
-  //   if (data?.access_token) return null;
-
   return (
     <div>
       <Head>

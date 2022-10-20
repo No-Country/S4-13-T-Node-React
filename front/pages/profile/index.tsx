@@ -14,12 +14,11 @@ import { useAxios } from '../../hooks/useAxios';
 import Image from 'next/image';
 
 const Profile: NextPage = () => {
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const router = useRouter();
   const api = useAxios();
 
   const id = parseInt(router.query.id as string);
-
-  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);

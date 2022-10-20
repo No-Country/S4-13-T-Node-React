@@ -19,7 +19,7 @@ const LeftIcons = ({ hrefPost, id }: { hrefPost?: IHrefPostProps; id: number }) 
       .post(`/post/${id}/favorite`)
       .then(res => {
         if (res.status === 200) {
-          dispatch(addRemoveFav({ id }));
+          dispatch(addRemoveFav({ post: { id } }));
         }
       })
       .catch(err => console.log(err));
@@ -38,7 +38,7 @@ const LeftIcons = ({ hrefPost, id }: { hrefPost?: IHrefPostProps; id: number }) 
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {favorites.some(favorite => favorite.id === id) ? (
+              {favorites.some(favorite => favorite.post.id === id) ? (
                 <path
                   d="M1.33325 3.94136V23.3894C1.33325 24.576 2.76925 25.172 3.60925 24.332L11.9999 15.9414L20.3906 24.332C21.2306 25.172 22.6666 24.5774 22.6666 23.3894V3.94136C22.6666 3.23411 22.3856 2.55583 21.8855 2.05574C21.3854 1.55564 20.7072 1.27469 19.9999 1.27469H3.99992C3.29267 1.27469 2.6144 1.55564 2.1143 2.05574C1.6142 2.55583 1.33325 3.23411 1.33325 3.94136Z"
                   fill="#FD8A09"

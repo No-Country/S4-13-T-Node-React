@@ -9,6 +9,7 @@ import { AiFillEye } from 'react-icons/ai';
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import useToggleView from '../../hooks/useToggleView';
 import { useAxios } from '../../hooks/useAxios';
+import { handleModal } from '../../redux/slice/modalSlice';
 
 const validateLoginSchema = Yup.object({
   username: Yup.string().min(5, 'muy corto!').required('Campo requerido'),
@@ -30,6 +31,7 @@ const FormLogin = () => {
             api.post('/login', values).then(res => {
               const userData = res.data;
               dispatch(getData(userData));
+              dispatch(handleModal(false));
               const id = userData.user.id;
               api
                 .get(`/user/${id}/likes`)

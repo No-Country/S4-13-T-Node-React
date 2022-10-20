@@ -104,6 +104,16 @@ export interface IUser {
 
 export interface ILike {
   post: IPost;
+  id?: number;
+  postId?: number;
+  userId?: number;
+}
+
+export interface IFavorite {
+  post: IPost;
+  id?: number;
+  postId?: number;
+  userId?: number;
 }
 
 export interface AxiosGetPost extends AxiosResponse {
@@ -157,7 +167,6 @@ export interface LoginProps {
 
 export interface FormLinksProps {
   question: string;
-  anchor: string;
   anchorText: string;
 }
 

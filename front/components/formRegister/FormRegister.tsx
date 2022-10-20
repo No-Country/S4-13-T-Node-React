@@ -7,6 +7,8 @@ import useToggleView from '../../hooks/useToggleView';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useAxios } from '../../hooks/useAxios';
+import { useDispatch } from 'react-redux';
+import { handleToOpen } from '../../redux/slice/modalSlice';
 
 const validateRegisterSchema = Yup.object({
   email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
@@ -18,7 +20,7 @@ const validateRegisterSchema = Yup.object({
 });
 
 const FormRegister = () => {
-  const router = useRouter();
+  const dispatch = useDispatch();
   const api = useAxios();
 
   const { handleToggle, toggleView } = useToggleView();
@@ -37,7 +39,7 @@ const FormRegister = () => {
             api
               .post('/register', values)
               .then(res => {
-                router.push('/login');
+                dispatch(handleToOpen('login'));
               })
               .catch(err => {
                 const errorMessage = err.response.data.error.message;

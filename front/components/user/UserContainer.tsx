@@ -13,8 +13,8 @@ const UserContainer = ({ user, id }: { user: any; id: number }) => {
   const { data, logged } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const handleLogout = () => {
-    dispatch(logout());
     route.push('/');
+    dispatch(logout());
   };
 
   return (
