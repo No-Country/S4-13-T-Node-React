@@ -74,7 +74,6 @@ export const getUserFavorites = async (id: number | string) => {
   try {
     if (id) {
       const response = await api.get(`/user/${id}/favorites`)
-      console.log(response)
       return response.data.data.user;
     }
   } catch (error) {

@@ -73,6 +73,10 @@ export interface IPost {
   };
 }
 
+export interface IFav{
+  post?: IPost;
+}
+
 export interface IComment {
   comment: string;
   created_at?: Date;

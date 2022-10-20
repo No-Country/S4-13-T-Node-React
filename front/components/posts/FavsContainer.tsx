@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 
-import { IPost } from '../../interfaces';
+import { IFav, IPost } from '../../interfaces';
 import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
 import { getPosts, PostsState, requestFailure, requestPosts } from '../../redux/slice/postsSlice';
@@ -21,8 +21,8 @@ const FavsContainer = () => {
     dispatch(requestPosts());
     getUserFavorites(data?.user.id)
       .then(user => {
-        user && dispatch(getFavorites(user.favorites.map(favorite => favorite.post)));
-        user && dispatch(getPosts(user.favorites.map(favorite => favorite.post)));
+        user && dispatch(getFavorites(user.favorites.map((favorite: IFav) => favorite.post)));
+        user && dispatch(getPosts(user.favorites.map((favorite: IFav) => favorite.post)));
       })
       .catch(err => dispatch(requestFailure(err)));
   }, []);
