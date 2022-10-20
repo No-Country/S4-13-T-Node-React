@@ -13,6 +13,7 @@ module.exports = {
       bgCard: '#FDFDFD',
       white: '#fff',
       black: '#000',
+      error: '#FF0000',
     },
     fontFamily: {
       orelega: 'Orelega One, cursive',
