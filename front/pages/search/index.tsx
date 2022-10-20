@@ -1,10 +1,37 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Layout from '../../components/layout/Layout';
 import SearchContainer from '../../components/posts/SearchContainer';
+import { useAxios } from '../../hooks/useAxios';
+import { IPost } from '../../interfaces';
+import { handleLoading } from '../../redux/slice/postsSlice';
 
 const Search: NextPage = () => {
+  const [postsList, setPostsList] = useState<IPost[]>([]);
+  const [error, setError] = useState<string>();
+
+  const dispatch = useDispatch();
+  const api = useAxios();
+
+  const router = useRouter();
+
+  const word = router.query.word as string;
+
+  useEffect(() => {
+    if (word) {
+      api
+        .get(`/post?word=${word}`)
+        .then(res => {
+          setPostsList(res.data.data.posts);
+          dispatch(handleLoading());
+        })
+        .catch(err => setError(err));
+    }
+  }, [word]);
   return (
     <div>
       <Head>
@@ -16,13 +43,13 @@ const Search: NextPage = () => {
       <Layout>
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
           <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
-            <h1 className="font-orelega text-[24px] leading-[26px]">Palabra clave</h1>
+            <h1 className="font-orelega text-[24px] leading-[26px]">{word}</h1>
             <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
               Subir meme
             </button>
           </div>
           <div className="flex flex-col justify-center items-center min-h-[80vh]">
-            <SearchContainer />
+            <SearchContainer postsList={postsList} error={error} />
           </div>
         </div>
       </Layout>

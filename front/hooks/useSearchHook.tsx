@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { SearchProp } from "../interfaces";
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { SearchProp } from '../interfaces';
 
 const useSearchHook = () => {
-  const [inputValue, setInputValue] = useState<SearchProp["text"]>();
+  const [inputValue, setInputValue] = useState<SearchProp['text']>();
+  const router = useRouter();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -10,7 +12,7 @@ const useSearchHook = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("busqueda:", inputValue);
+    router.push(`/search?word=${inputValue}`);
   };
 
   return {

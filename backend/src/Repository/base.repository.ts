@@ -39,7 +39,7 @@ export class BaseRepository<T extends BaseEntity> extends ConfigServer implement
     if (sort === 'like') builder.orderBy(`${alias}.likesCount`, 'DESC')
 
     if (word && property) {
-      builder.where(`${alias}.${property} like :word`, { word: `%${word}%` })
+      builder.where(`LOWER(${alias}.${property}) Like LOWER('%${word}%')`)
     }
 
     const [list, total] = await builder.getManyAndCount()
