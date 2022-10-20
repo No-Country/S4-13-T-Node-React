@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
 import { UserDataState } from '../redux/slice/userDataSlice';

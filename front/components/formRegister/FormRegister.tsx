@@ -26,8 +26,8 @@ const FormRegister = () => {
 
   return (
     <>
-      <h4 className="text-sm max-w-[250px] py-6 text-center font-semibold text-black">
-        Vas a poder hacer comentarios, agregar a favoritos y subir memes!
+      <h4 className="font-roboto text-sm max-w-[270px] py-6 text-center text-black">
+        Vas a poder hacer comentarios, dar likes y agregar favoritos. También subir memes.
       </h4>
       {error ? <p>{error}</p> : null} {/* TODO = Aplicar estilos a este error. */}
       {
