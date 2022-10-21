@@ -33,6 +33,7 @@ const Replies = ({ replies }: { replies: IReply[] | null }) => {
                     message={reply.reply}
                     replies={reply.replys}
                     user={reply.user}
+                    id={reply.id}
                   />
                 ))}
               </>

@@ -4,16 +4,32 @@ import InputComment from './InputComment';
 import { IReply, IUser } from '../../../interfaces';
 import Replies from './Replies';
 import { calculateDates } from '../../../utils/calculateDates';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { UserDataState } from '../../../redux/slice/userDataSlice';
+import { useAxios } from '../../../hooks/useAxios';
 
 interface CommentsProps {
   message: string;
   user: IUser;
   createdAt: Date;
   replies?: IReply[] | null;
+  id: string | number;
 }
 
-const Comments = ({ message, user, createdAt, replies }: CommentsProps) => {
+const Comments = ({ message, user, createdAt, replies, id }: CommentsProps) => {
   const [showInputResponse, setShowInputResponse] = useState<boolean>(false);
+
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
+  const api = useAxios();
+
+  const handleDeleteComment = () => {
+    api
+      .delete(`/comment/${id}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
 
   return (
     <div className="flex w-full gap-x-2">
@@ -27,14 +43,19 @@ const Comments = ({ message, user, createdAt, replies }: CommentsProps) => {
             {message}
           </p>
         </div>
-        <div className="text-xs text-accent mt-2 select-none">
-          <span className="mr-4">{calculateDates(createdAt)}</span>
+        <div className="flex gap-x-4 text-xs text-accent mt-2 select-none">
+          <span>{calculateDates(createdAt)}</span>
           <span
             className="cursor-pointer active:text-secondary"
             onClick={() => setShowInputResponse(!showInputResponse)}
           >
             Responder
           </span>
+          {user.username === data?.user.username && (
+            <span className="cursor-pointer active:text-secondary" onClick={handleDeleteComment}>
+              Eliminar
+            </span>
+          )}
         </div>
         <div
           className={`transition-all duration-500 ease-in-out ${

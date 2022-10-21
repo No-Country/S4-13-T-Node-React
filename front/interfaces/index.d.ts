@@ -80,7 +80,7 @@ export interface IFav {
 export interface IComment {
   comment: string;
   created_at?: Date;
-  id?: number;
+  id: number | string;
   user: IUser;
   replys?: IReply[];
 }
