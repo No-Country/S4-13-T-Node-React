@@ -1,6 +1,5 @@
 ![Logo Big](https://user-images.githubusercontent.com/104604865/193927706-5b37a81d-4752-474d-8196-77f400778222.png)
 
-
 # Memex 🤩 (Equipo: S4-13-T-Node-React)
 
 Este trabajo es en el contexto del seleccionado de No Country.
@@ -11,14 +10,14 @@ _También pudimos constatar que un **80% de las personas prefieren los memes gr�
 
 _Por esto surgió_ **Memex** _un sitio web que contiene exclusivamente **memes gráficos en español**._
 
-
 ## Comenzando 🚀
 
-_Deploy: (https://s413t.vercel.app/)
+\_Deploy: (https://s413t.vercel.app/)
 
 ## Construido con 🛠️
 
 ### Front
+
 - React JS
 - Next.js
 - Redux toolkit
@@ -26,17 +25,15 @@ _Deploy: (https://s413t.vercel.app/)
 - Typescript
 - Jest
 
-
 ### Back
+
 - Node JS
 - express
 - typescript
-- passport
 - jwt
 - typeorm
 - postgreSQL
 - jest
-
 
 ## Autores ✒️
 
@@ -45,7 +42,9 @@ _Deploy: (https://s413t.vercel.app/)
 - **Adrián Fermanelli** - _UX UI Designer_ - [ver Behance de Adrián](https://www.behance.net/adrianfermane)
 
 ### Front
+
 - **Gabriel Chazarreta** - [ver Github de Gabriel](https://github.com/gfchaza09)
 
 ### Back
+
 - **Julián Yachelini** - [ver Github de Julián](https://github.com/JYachelini)
