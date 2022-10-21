@@ -25,7 +25,7 @@ const Filterbar = () => {
           value="today"
           checked={filterValue == 'today'}
           onChange={handleChange}
-          className="text-primary focus:ring-primary"
+          className="text-primary focus:ring-primary cursor-pointer"
         />
       </label>
       <label
@@ -40,7 +40,7 @@ const Filterbar = () => {
           value="week"
           checked={filterValue == 'week'}
           onChange={handleChange}
-          className="text-primary focus:ring-primary"
+          className="text-primary focus:ring-primary cursor-pointer"
         />
       </label>
       <label
@@ -55,7 +55,7 @@ const Filterbar = () => {
           value="month"
           checked={filterValue == 'month'}
           onChange={handleChange}
-          className="h-4 w-4 text-primary border-[#79747E] focus:ring-primary"
+          className="h-4 w-4 text-primary focus:ring-primary cursor-pointer"
         />
       </label>
       <label
@@ -70,7 +70,7 @@ const Filterbar = () => {
           value="all"
           checked={filterValue == 'all'}
           onChange={handleChange}
-          className="text-primary focus:ring-primary"
+          className="text-primary focus:ring-primary cursor-pointer"
         />
       </label>
     </div>
