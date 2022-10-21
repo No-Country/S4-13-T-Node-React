@@ -1,5 +1,5 @@
-import { GetUserData, ILike, IPost, LoginProps } from './../../interfaces/index.d';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GetUserData, IFavorite, ILike, IPost } from './../../interfaces/index.d';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // const fetchUserLikes = createAsyncThunk(
 //   'user/likes',
@@ -11,7 +11,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface UserDataState {
   data: GetUserData | null;
   likes: ILike[];
-  favorites: IPost[];
+  favorites: IFavorite[];
   error: string | null;
   logged: boolean;
 }
@@ -57,10 +57,10 @@ const userDataSlice = createSlice({
         state.likes = likesArray;
       }
     },
-    getFavorites: (state, action: PayloadAction<IPost[]>) => {
+    getFavorites: (state, action: PayloadAction<IFavorite[]>) => {
       state.favorites = action.payload;
     },
-    addRemoveFav: (state, action: PayloadAction<IPost>) => {
+    addRemoveFav: (state, action: PayloadAction<IFavorite>) => {
       if (!state.favorites.find(fav => fav.id === action.payload.id)) {
         state.favorites.push(action.payload);
       } else {
@@ -78,14 +78,15 @@ const userDataSlice = createSlice({
       state.logged = false;
       return;
     },
-    loadAuthData: (state, action: PayloadAction<ILike[]>) => {
+    loadAuthData: (state, action: PayloadAction<{ likes: ILike[]; favorites: IFavorite[] }>) => {
       if (localStorage.getItem('access_token')) {
         const access_token = JSON.parse(localStorage.getItem('access_token') || '');
         const refresh_token = JSON.parse(localStorage.getItem('refresh_token') || '');
         const user = JSON.parse(localStorage.getItem('user') || '');
         state.data = { access_token, user, refresh_token };
         state.logged = true;
-        state.likes = action.payload;
+        state.likes = action.payload.likes;
+        state.favorites = action.payload.favorites;
       }
     },
     setTokens: (state, action: PayloadAction<{ access_token: string; refresh_token: string }>) => {

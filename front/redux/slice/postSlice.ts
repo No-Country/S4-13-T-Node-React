@@ -4,7 +4,6 @@ import { IComment, IPost } from '../../interfaces';
 export interface PostState {
   post: IPost | null;
   comments: IComment[];
-  isLoading: boolean;
   error: string | null;
 }
 
@@ -18,7 +17,6 @@ export interface PayloadAddComment {
 const initialState: PostState = {
   post: null,
   comments: [],
-  isLoading: true,
   error: '',
 };
 
@@ -29,7 +27,6 @@ const postsSlice = createSlice({
     getPost: (state, action: PayloadAction<IPost>) => {
       state.post = action.payload;
       state.comments = action.payload.comments!;
-      state.isLoading = false;
       return;
     },
     addComment: (state, action: PayloadAction<PayloadAddComment>) => {
@@ -46,8 +43,6 @@ const postsSlice = createSlice({
           created_at: date,
         },
       ];
-
-      state.isLoading = false;
 
       return;
     },

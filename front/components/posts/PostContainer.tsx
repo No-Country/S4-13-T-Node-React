@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 } from 'uuid';
 import { RootState } from '../../redux/store';
 import { useRouter } from 'next/router';
 
@@ -20,8 +21,9 @@ const PostContainer = () => {
   const [postVisited, setPostVisited] = useState<Partial<IPost | null>>(null);
   const [showTags, setShowTags] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { isLoading, comments, post } = useSelector<RootState, PostState>(state => {
+  const { comments, post } = useSelector<RootState, PostState>(state => {
     return state.postReducer;
   });
 
@@ -36,8 +38,12 @@ const PostContainer = () => {
         .then(({ data }: AxiosGetPostById) => {
           const post = data.data.post;
           dispatch(getPost(post));
+          setIsLoading(false);
         })
-        .catch(err => setError(err));
+        .catch(err => {
+          setError(err);
+          setIsLoading(false);
+        });
     }
   }, [id]);
 
@@ -121,7 +127,7 @@ const PostContainer = () => {
           {comments.map(comment => {
             return (
               <Comments
-                key={comment.id}
+                key={comment.id || v4()}
                 message={comment.comment}
                 user={comment.user}
                 createdAt={comment.created_at!}

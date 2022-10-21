@@ -24,7 +24,7 @@ const MenuList = ({ open }: OpensProps) => {
       <ItemMenu href="/random" text="memes random" />
       <ItemMenu href="/favs" text="favoritos" />
       <ProfileItem
-        href={data?.user.id ? `/profile?id=${data?.user.id}` : '/login'}
+        href={data?.user.id ? `/profile?id=${data?.user.id}` : ''}
         text="mi perfil"
         icon={
           !data?.access_token ? (

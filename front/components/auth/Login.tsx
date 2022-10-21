@@ -10,7 +10,7 @@ const Login = () => {
     <LayoutFormPages heading="ingreso">
       <div className="flex flex-col justify-center items-center">
         <FormLogin />
-        <FormLinks question="¿no tenés cuenta?" anchor="/signup" anchorText="Registrate" />
+        <FormLinks question="¿no tenés cuenta?" anchorText="Registrate" />
         <HrComponent />
         <MediaContainer />
       </div>

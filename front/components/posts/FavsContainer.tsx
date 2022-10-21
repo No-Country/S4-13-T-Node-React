@@ -2,39 +2,39 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 
-import { IFav, IPost } from '../../interfaces';
 import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
-import { getPosts, PostsState, requestFailure, requestPosts } from '../../redux/slice/postsSlice';
+import { PostsState, requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
 import { getFavorites, UserDataState } from '../../redux/slice/userDataSlice';
 import { useAxios } from '../../hooks/useAxios';
 
 const FavsContainer = () => {
-  const [postsList, setPostsList] = useState<IPost[]>([]);
+  // const [postsList, setPostsList] = useState<IPost[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
   const api = useAxios();
 
-  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const { data, favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   useEffect(() => {
     dispatch(requestPosts());
     api
       .get(`/user/${data?.user.id}/favorites`)
       .then(res => {
-        const favorites = res.data.data.user.favorites.map((favorite: any) => favorite.post);
-        setPostsList(favorites);
+        const favorites = res.data.data.user.favorites;
+        // setPostsList(favorites.map((favorite: any) => favorite.post));
         dispatch(getFavorites(favorites));
-        dispatch(getPosts(favorites));
+        setIsLoading(false);
+        // dispatch(getPosts(favorites.map((favorite: any) => favorite.post)));
       })
-      .catch(err => setError(err));
+      .catch(err => {
+        setError(err);
+        setIsLoading(false);
+      });
   }, []);
-
-  const { isLoading } = useSelector<RootState, PostsState>(state => {
-    return state.postsReducer;
-  });
 
   if (isLoading) {
     return <Loading message={'Los que elegiste como favoritos'} />;
@@ -46,16 +46,16 @@ const FavsContainer = () => {
 
   return (
     <>
-      {postsList?.length ? (
-        postsList.map(post => (
+      {favorites?.length ? (
+        favorites.map(favorite => (
           <CardPost
-            key={post.id}
-            id={post.id}
-            imageUrl={post.media_url || ''}
-            author={post.user?.username}
-            title={post.title}
-            hrefPost={{ pathname: '/post', query: { id: post.id } }}
-            authorId={post.user?.id || ''}
+            key={favorite.post.id}
+            id={favorite.post.id}
+            imageUrl={favorite.post.media_url || ''}
+            author={favorite.post.user?.username}
+            title={favorite.post.title}
+            hrefPost={{ pathname: '/post', query: { id: favorite.post.id } }}
+            authorId={favorite.post.user?.id || ''}
           />
         ))
       ) : (

@@ -17,6 +17,7 @@ const PostsContainer = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [wordSearch, setWordSearch] = useState<string>('');
   const [sizeList, setSizeList] = useState<number>(20);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(requestPosts());
@@ -24,15 +25,15 @@ const PostsContainer = () => {
       .get(`/post?page=${pageNumber}`)
       .then(({ data }: AxiosGetPost) => {
         const { posts, actual_page, last_page, size, total } = data.data;
-        dispatch(getPosts(posts));
         setPostsList(posts);
+        dispatch(getPosts(posts));
+        setIsLoading(false);
       })
-      .catch(err => setError(err));
+      .catch(err => {
+        setError(err);
+        setIsLoading(false);
+      });
   }, [pageNumber]);
-
-  const { isLoading } = useSelector<RootState, PostsState>(state => {
-    return state.postsReducer;
-  });
 
   if (isLoading) {
     return <Loading message={'Enseguida te vas a reir con los mejores memes'} />;
