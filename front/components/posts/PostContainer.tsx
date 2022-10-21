@@ -13,6 +13,7 @@ import InputComment from './comments/InputComment';
 
 import { getPost, PostState } from '../../redux/slice/postSlice';
 import { useAxios } from '../../hooks/useAxios';
+import Link from 'next/link';
 
 const PostContainer = () => {
   const router = useRouter();
@@ -112,9 +113,13 @@ const PostContainer = () => {
               }`}
             >
               {postVisited?.tags?.map((tag, idx) => (
-                <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4">
-                  {tag}
-                </p>
+                <Link href={`/search?tag=${tag}`} key={idx}>
+                  <a>
+                    <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4">
+                      {tag}
+                    </p>
+                  </a>
+                </Link>
               ))}
             </div>
           </div>
