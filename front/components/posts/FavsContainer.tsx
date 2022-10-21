@@ -4,13 +4,12 @@ import Image from 'next/image';
 
 import CardPost from './cardPost/CardPost';
 import Loading from '../loading/Loading';
-import { PostsState, requestPosts } from '../../redux/slice/postsSlice';
+import { requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
 import { getFavorites, UserDataState } from '../../redux/slice/userDataSlice';
 import { useAxios } from '../../hooks/useAxios';
 
 const FavsContainer = () => {
-  // const [postsList, setPostsList] = useState<IPost[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -25,10 +24,8 @@ const FavsContainer = () => {
       .get(`/user/${data?.user.id}/favorites`)
       .then(res => {
         const favorites = res.data.data.user.favorites;
-        // setPostsList(favorites.map((favorite: any) => favorite.post));
         dispatch(getFavorites(favorites));
         setIsLoading(false);
-        // dispatch(getPosts(favorites.map((favorite: any) => favorite.post)));
       })
       .catch(err => {
         setError(err);

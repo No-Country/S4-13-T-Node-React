@@ -10,7 +10,7 @@ export const TagItem = (props: TagProps) => {
         props.other ? 'block opacity-100' : 'hidden opacity-0'
       }`}
     >
-      {props.tag}
+      <Link href={`/search?tag=${props.tag}`}>{props.tag}</Link>
     </p>
   );
 };

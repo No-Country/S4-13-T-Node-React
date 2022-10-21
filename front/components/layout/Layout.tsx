@@ -13,7 +13,7 @@ function Layout(props: ChildrenProp) {
   const { isOpen, modalToOpen } = useSelector<RootState, ModalState>(state => state.modalReducer);
 
   return (
-    <div className="min-h-full flex flex-col items-center select-none ">
+    <div className="min-h-screen flex flex-col items-center select-none ">
       {isOpen && modalToOpen === 'login' && <Modal children={<Login />} />}
       {isOpen && modalToOpen === 'signup' && <Modal children={<Signup />} />}
       <NavContainer />

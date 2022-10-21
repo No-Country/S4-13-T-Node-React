@@ -19,6 +19,7 @@ const useSearchHook = () => {
     handleInput,
     inputValue,
     handleSubmit,
+    setInputValue,
   };
 };
 

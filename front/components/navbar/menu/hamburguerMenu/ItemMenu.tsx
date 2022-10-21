@@ -14,7 +14,7 @@ export const ItemMenu = (props: MenuItem) => {
   const router = useRouter();
 
   const openModal = () => {
-    if (!data?.access_token) {
+    if (!data?.access_token && props.text === 'favoritos') {
       dispatch(handleModal(true));
     }
   };

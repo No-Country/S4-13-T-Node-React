@@ -6,23 +6,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { addRemoveFav, UserDataState } from '../../../redux/slice/userDataSlice';
 import { useAxios } from '../../../hooks/useAxios';
+import { handleModal } from '../../../redux/slice/modalSlice';
 
 const LeftIcons = ({ hrefPost, id }: { hrefPost?: IHrefPostProps; id: number }) => {
-  const { favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const { favorites, data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const dispatch = useDispatch();
   // Revisar porque el favoritos no funciona dentro de un post. Por eso agregue el idPost, se puede borrar
 
   const api = useAxios();
 
   const handleFavorite = () => {
-    api
-      .post(`/post/${id}/favorite`)
-      .then(res => {
-        if (res.status === 200) {
-          dispatch(addRemoveFav({ post: { id } }));
-        }
-      })
-      .catch(err => console.log(err));
+    if (!data?.access_token) {
+      dispatch(handleModal(true));
+    } else {
+      api
+        .post(`/post/${id}/favorite`)
+        .then(res => {
+          if (res.status === 200) {
+            dispatch(addRemoveFav({ post: { id } }));
+          }
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   return (

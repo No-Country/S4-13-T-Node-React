@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Filterbar = () => {
   const [filterValue, setFilterValue] = useState('today');
@@ -7,12 +7,17 @@ const Filterbar = () => {
     setFilterValue(e.target.value);
   };
 
+  useEffect(() => {
+    console.log(filterValue);
+  }, [filterValue]);
+
   return (
     <div className="flex w-[310px] justify-center items-center gap-x-3 mx-auto mt-4">
-      <div className="h-[90px] min-w-[60px] flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1">
-        <label className="font-roboto break-normal text-center" htmlFor="today">
-          de hoy
-        </label>
+      <label
+        htmlFor="today"
+        className="h-[90px] min-w-[60px] flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1"
+      >
+        <p className="font-roboto break-normal text-center">de hoy</p>
         <input
           type="radio"
           name="filter"
@@ -22,11 +27,12 @@ const Filterbar = () => {
           onChange={handleChange}
           className="text-primary focus:ring-primary"
         />
-      </div>
-      <div className="h-[90px] min-w-[60px] flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1">
-        <label className="font-roboto break-normal text-center" htmlFor="week">
-          de la semana
-        </label>
+      </label>
+      <label
+        htmlFor="week"
+        className="h-[90px] min-w-[60px] flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1"
+      >
+        <p className="font-roboto break-normal text-center">de la semana</p>
         <input
           type="radio"
           name="filter"
@@ -36,11 +42,12 @@ const Filterbar = () => {
           onChange={handleChange}
           className="text-primary focus:ring-primary"
         />
-      </div>
-      <div className="h-[90px] min-w-[60px] flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1">
-        <label className="font-roboto break-normal text-center" htmlFor="month">
-          del mes
-        </label>
+      </label>
+      <label
+        htmlFor="month"
+        className="h-[90px] min-w-[60px] flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1"
+      >
+        <p className="font-roboto break-normal text-center">del mes</p>
         <input
           type="radio"
           name="filter"
@@ -50,11 +57,12 @@ const Filterbar = () => {
           onChange={handleChange}
           className="h-4 w-4 text-primary border-[#79747E] focus:ring-primary"
         />
-      </div>
-      <div className="h-[90px] min-w-[60px] grow flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1">
-        <label className="font-roboto text-center text-[16px]" htmlFor="all">
-          de todos los tiempos
-        </label>
+      </label>
+      <label
+        htmlFor="all"
+        className="h-[90px] min-w-[60px] grow flex flex-col justify-between items-center border-[1px] border-secondary rounded-lg py-2 px-1"
+      >
+        <p className="font-roboto text-center text-[16px]">de todos los tiempos</p>
         <input
           type="radio"
           name="filter"
@@ -64,7 +72,7 @@ const Filterbar = () => {
           onChange={handleChange}
           className="text-primary focus:ring-primary"
         />
-      </div>
+      </label>
     </div>
   );
 };
