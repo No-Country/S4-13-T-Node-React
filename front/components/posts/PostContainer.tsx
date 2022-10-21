@@ -137,6 +137,7 @@ const PostContainer = () => {
                 user={comment.user}
                 createdAt={comment.created_at!}
                 replies={comment.replys}
+                id={comment.id}
               />
             );
           })}

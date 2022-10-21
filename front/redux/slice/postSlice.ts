@@ -41,6 +41,7 @@ const postsSlice = createSlice({
             avatar_url: action.payload.avatar_url,
           },
           created_at: date,
+          // id: action.payload.id
         },
       ];
 

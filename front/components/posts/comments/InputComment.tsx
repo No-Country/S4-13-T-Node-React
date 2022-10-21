@@ -32,6 +32,7 @@ const InputComment = ({ id }: InputProps) => {
               email: user.email,
               username: user.username,
               avatar_url: user.avatar_url,
+              // Agregar id del comentario
             })
           );
         })
