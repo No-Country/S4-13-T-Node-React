@@ -57,7 +57,7 @@ const PostsContainer = () => {
               authorId={post.user?.id || ''}
             />
           ))
-        : 'loading...'}
+        : null}
     </div>
   );
 };
