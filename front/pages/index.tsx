@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Layout from '../components/layout/Layout';
 import PostsContainer from '../components/posts/PostsContainer';
-import EditProfile from '../components/user/EditProfile';
 import { useAxios } from '../hooks/useAxios';
 import { AxiosGetPost, IPost } from '../interfaces';
 import { handleModal } from '../redux/slice/modalSlice';
