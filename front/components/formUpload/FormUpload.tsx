@@ -82,25 +82,43 @@ const FormUpload = () => {
             <label htmlFor="title" className="font-roboto text-[16px] font-bold leading-[18px]">
               Título
             </label>
-            <Field
-              className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none focus:outline-none focus-visible:border-secondary"
-              name="title"
-              id="title"
-              placeholder="Título del meme"
-            />
-            {errors.title && touched.title ? <div className="text-xs">{errors.title}</div> : null}
+            <div>
+              <Field
+                className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none focus:outline-none focus-visible:border-secondary"
+                name="title"
+                id="title"
+                placeholder="Título del meme"
+              />
+              {errors.title && touched.title ? <div className="text-xs text-error mt-1.5">{errors.title}</div> : null}
+            </div>
             <div className="border-b-[0.5px]"></div>
             <label htmlFor="meme_url" className="font-roboto text-[16px] font-bold leading-[18px]">
               Meme
             </label>
             <div className="w-full">
               <p className="font-roboto text-center w-full">Podés agregar el link del meme</p>
-              <Field
-                className="w-full px-4 py-3 h-[50px] font-roboto border-[1px] rounded resize-none focus:outline-none focus-visible:border-secondary"
-                name="meme_url"
-                id="meme_url"
-                placeholder="Link del meme"
-              />
+              <div className="relative">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="pointer-events-none absolute top-1/2 transform -translate-y-1/2 left-5"
+                >
+                  <path
+                    d="M4.22196 19.778C4.68584 20.2425 5.23693 20.6108 5.84358 20.8617C6.45023 21.1126 7.10048 21.2412 7.75696 21.24C8.41359 21.2411 9.06398 21.1126 9.67079 20.8617C10.2776 20.6108 10.8289 20.2425 11.293 19.778L14.121 16.949L12.707 15.535L9.87896 18.364C9.31543 18.925 8.55263 19.24 7.75746 19.24C6.96229 19.24 6.19949 18.925 5.63596 18.364C5.07447 17.8007 4.75917 17.0378 4.75917 16.2425C4.75917 15.4472 5.07447 14.6843 5.63596 14.121L8.46496 11.293L7.05096 9.879L4.22196 12.707C3.28577 13.6455 2.76001 14.9169 2.76001 16.2425C2.76001 17.5681 3.28577 18.8395 4.22196 19.778ZM19.778 11.293C20.7137 10.3543 21.2391 9.08292 21.2391 7.7575C21.2391 6.43208 20.7137 5.16072 19.778 4.222C18.8395 3.28581 17.568 2.76005 16.2425 2.76005C14.9169 2.76005 13.6454 3.28581 12.707 4.222L9.87896 7.051L11.293 8.465L14.121 5.636C14.6845 5.07499 15.4473 4.76003 16.2425 4.76003C17.0376 4.76003 17.8004 5.07499 18.364 5.636C18.9255 6.19927 19.2408 6.96217 19.2408 7.7575C19.2408 8.55283 18.9255 9.31573 18.364 9.879L15.535 12.707L16.949 14.121L19.778 11.293Z"
+                    fill="#74726F"
+                  />
+                  <path d="M8.46407 16.95L7.04907 15.536L15.5361 7.05L16.9501 8.465L8.46407 16.95Z" fill="#74726F" />
+                </svg>
+                <Field
+                  className="w-full px-12 py-3 h-[50px] font-roboto border-[1px] rounded resize-none focus:outline-none focus-visible:border-secondary"
+                  name="meme_url"
+                  id="meme_url"
+                  placeholder="Link del meme"
+                />
+              </div>
             </div>
             <div className="w-full flex flex-col justify-center items-center">
               <p className="font-roboto text-center w-full">O cargarlo desde tu dispositivo</p>
@@ -127,14 +145,16 @@ const FormUpload = () => {
             <label htmlFor="tags" className="font-roboto text-[16px] font-bold leading-[18px]">
               Tags
             </label>
-            <Field
-              as="textarea"
-              className="w-full px-4 py-3 h-[100px] font-roboto border-[1px] rounded resize-none focus-visible:ring-secondary focus-visible:border-none focus-visible:outline-none"
-              placeholder="Escribí los tags separados por comas"
-              name="tags"
-              id="tags"
-            />
-            {errors.tags && touched.tags ? <div className="text-xs">{errors.tags}</div> : null}
+            <div>
+              <Field
+                as="textarea"
+                className="w-full px-4 py-3 h-[100px] font-roboto border-[1px] rounded resize-none focus-visible:ring-secondary focus-visible:border-none focus-visible:outline-none"
+                placeholder="Escribí los tags separados por comas"
+                name="tags"
+                id="tags"
+              />
+              {errors.tags && touched.tags ? <div className="text-xs text-error">{errors.tags}</div> : null}
+            </div>
             <div className="flex justify-end my-2">
               <button
                 type="submit"
