@@ -6,8 +6,8 @@ export const Searchbar = () => {
   const { handleInput, handleSubmit } = useSearchHook();
 
   const [size, setSize] = useState<{ width: number; height: number }>({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0,
   });
 
   useEffect(() => {
@@ -17,6 +17,11 @@ export const Searchbar = () => {
         height: window.innerHeight,
       });
     };
+
+    setSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
 
     window.addEventListener('resize', handleResize);
 
