@@ -30,7 +30,6 @@ const FormRegister = () => {
       <h4 className="font-roboto text-sm max-w-[270px] py-6 text-center text-black">
         Vas a poder hacer comentarios, dar likes y agregar favoritos. También subir memes.
       </h4>
-      {error ? <p>{error}</p> : null} {/* TODO = Aplicar estilos a este error. */}
       {
         <Formik
           initialValues={{ email: '', username: '', password: '' }}
@@ -43,9 +42,9 @@ const FormRegister = () => {
               .catch(err => {
                 const errorMessage = err.response.data.error.message;
                 if (errorMessage === 'User already exist.') {
-                  setError('El usuario ya existe!');
+                  setError('Ya existe ese usuario. Probá con otros nombres.');
                 } else if (errorMessage === 'Email already exist.') {
-                  setError('El email ya existe!');
+                  setError('Ya existe una cuenta con ese mail.');
                 } else {
                   setError(errorMessage);
                 }
@@ -66,7 +65,7 @@ const FormRegister = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       className="pointer-events-none absolute top-1/2 transform -translate-y-1/2 left-5"
                     >
-                      {errors.username && touched.username ? (
+                      {(errors.username && touched.username) || error ? (
                         <path
                           d="M8 1.9C9.16 1.9 10.1 2.84 10.1 4C10.1 5.16 9.16 6.1 8 6.1C6.84 6.1 5.9 5.16 5.9 4C5.9 2.84 6.84 1.9 8 1.9ZM8 10.9C10.97 10.9 14.1 12.36 14.1 13V14.1H1.9V13C1.9 12.36 5.03 10.9 8 10.9ZM8 0C5.79 0 4 1.79 4 4C4 6.21 5.79 8 8 8C10.21 8 12 6.21 12 4C12 1.79 10.21 0 8 0ZM8 9C5.33 9 0 10.34 0 13V16H16V13C16 10.34 10.67 9 8 9Z"
                           fill="#FF0000"
@@ -86,7 +85,9 @@ const FormRegister = () => {
                       autoComplete="off"
                       placeholder="Nombre"
                       className={`font-roboto border-[1px] border-accent rounded-[4px] w-[295px] px-12 py-3.5 focus:ring-secondary focus:border-secondary focus-visible:border-0 ${
-                        errors.username && touched.username ? 'border-error text-error placeholder:text-error' : ''
+                        (errors.username && touched.username) || error
+                          ? 'border-error text-error placeholder:text-error'
+                          : ''
                       }`}
                     />
                   </label>
@@ -104,7 +105,7 @@ const FormRegister = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       className="pointer-events-none absolute top-1/2 transform -translate-y-1/2 left-5"
                     >
-                      {errors.email && touched.email ? (
+                      {(errors.email && touched.email) || error ? (
                         <path
                           d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 14H2V4L10 9L18 4V14ZM10 7L2 2H18L10 7Z"
                           fill="#FF0000"
@@ -122,7 +123,7 @@ const FormRegister = () => {
                       type="email"
                       placeholder="Email"
                       className={`font-roboto border-[1px] border-accent rounded-[4px] w-[295px] px-12 py-3.5 focus:ring-secondary focus:border-secondary focus-visible:border-0 ${
-                        errors.email && touched.email ? 'border-error text-error placeholder:text-error' : ''
+                        (errors.email && touched.email) || error ? 'border-error text-error placeholder:text-error' : ''
                       }`}
                     />
                   </label>
@@ -140,10 +141,17 @@ const FormRegister = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       className="pointer-events-none absolute top-1/2 transform -translate-y-1/2 left-5"
                     >
-                      <path
-                        d="M14 7H13V5C13 2.24 10.76 0 8 0C5.24 0 3 2.24 3 5V7H2C0.9 7 0 7.9 0 9V19C0 20.1 0.9 21 2 21H14C15.1 21 16 20.1 16 19V9C16 7.9 15.1 7 14 7ZM5 5C5 3.34 6.34 2 8 2C9.66 2 11 3.34 11 5V7H5V5ZM14 19H2V9H14V19ZM8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16Z"
-                        fill="#74726F"
-                      />
+                      {(errors.password && touched.password) || error ? (
+                        <path
+                          d="M14 7H13V5C13 2.24 10.76 0 8 0C5.24 0 3 2.24 3 5V7H2C0.9 7 0 7.9 0 9V19C0 20.1 0.9 21 2 21H14C15.1 21 16 20.1 16 19V9C16 7.9 15.1 7 14 7ZM5 5C5 3.34 6.34 2 8 2C9.66 2 11 3.34 11 5V7H5V5ZM14 19H2V9H14V19ZM8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16Z"
+                          fill="#FF0000"
+                        />
+                      ) : (
+                        <path
+                          d="M14 7H13V5C13 2.24 10.76 0 8 0C5.24 0 3 2.24 3 5V7H2C0.9 7 0 7.9 0 9V19C0 20.1 0.9 21 2 21H14C15.1 21 16 20.1 16 19V9C16 7.9 15.1 7 14 7ZM5 5C5 3.34 6.34 2 8 2C9.66 2 11 3.34 11 5V7H5V5ZM14 19H2V9H14V19ZM8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16Z"
+                          fill="#74726F"
+                        />
+                      )}
                     </svg>
 
                     <Field
@@ -152,7 +160,9 @@ const FormRegister = () => {
                       type={`${toggleView ? 'text' : 'password'}`}
                       placeholder="Password"
                       className={`font-roboto border-[1px] border-accent rounded-[4px] w-[295px] px-12 py-3.5 focus:ring-secondary focus:border-secondary focus-visible:border-0 ${
-                        errors.password && touched.password ? 'border-error text-error placeholder:text-error' : ''
+                        (errors.password && touched.password) || error
+                          ? 'border-error text-error placeholder:text-error'
+                          : ''
                       }`}
                     />
                     <div className="absolute top-1/2 transform -translate-y-1/2 right-5 text-xl">
@@ -194,10 +204,12 @@ const FormRegister = () => {
                   {errors.password && touched.password ? (
                     <div className="text-xs text-error mt-1.5">{errors.password}</div>
                   ) : null}
+                  {error ? <div className="text-xs text-error mt-1.5">{error}</div> : null}
                 </div>
+
                 <button
                   type="submit"
-                  className="border-2 font-bold border-primary font-roboto rounded-lg px-4 py-1 text-primary"
+                  className="border-2 font-bold border-primary font-roboto rounded-lg px-4 py-1 text-primary active:text-secondary active:border-secondary"
                 >
                   Registrate
                 </button>

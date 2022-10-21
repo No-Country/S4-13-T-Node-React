@@ -112,7 +112,7 @@ const FormLogin = () => {
                       id="password"
                       type={`${toggleView ? 'text' : 'password'}`}
                       placeholder="Password"
-                      className={`font-roboto border-[1px] border-accent rounded-[4px] w-[295px] px-12 py-3.5 focus:ring-secondary focus:border-secondary focus-visible:border-0${
+                      className={`font-roboto border-[1px] border-accent rounded-[4px] w-[295px] px-12 py-3.5 focus:ring-secondary focus:border-secondary focus-visible:border-0 ${
                         errors.password && touched.password ? 'border-error text-error placeholder:text-error' : ''
                       }`}
                     />
@@ -163,7 +163,7 @@ const FormLogin = () => {
                 </Link>
                 <button
                   type="submit"
-                  className="border-2 border-primary rounded-[8px] font-bold w-[295px] font-roboto px-4 py-1 text-primary"
+                  className="border-2 border-primary rounded-[8px] font-bold w-[295px] font-roboto px-4 py-1 text-primary active:text-secondary active:border-secondary"
                 >
                   Ingresar
                 </button>
