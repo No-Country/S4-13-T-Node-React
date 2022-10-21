@@ -1,9 +1,43 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Layout from '../../components/layout/Layout';
+import Loading from '../../components/loading/Loading';
+import PostsListContainer from '../../components/posts/PostsListContainer';
+import { useAxios } from '../../hooks/useAxios';
+import { AxiosGetPost, IPost } from '../../interfaces';
+import { getPosts, PostsState, requestPosts } from '../../redux/slice/postsSlice';
+import { RootState } from '../../redux/store';
 
 const Random: NextPage = () => {
+  const dispatch = useDispatch();
+  const api = useAxios();
+
+  const [postsList, setPostsList] = useState<IPost[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    dispatch(requestPosts());
+    api
+      .get(`/post?sort=random`)
+      .then(({ data }: AxiosGetPost) => {
+        const { posts } = data.data;
+        setPostsList(posts);
+        dispatch(getPosts(posts));
+      })
+      .catch(err => setError(err));
+  }, []);
+
+  const { isLoading } = useSelector<RootState, PostsState>(state => {
+    return state.postsReducer;
+  });
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div>
       <Head>
@@ -13,19 +47,21 @@ const Random: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
-          <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
-            <h1 className="font-orelega text-[24px] leading-[26px]">Memes Random</h1>
-            <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
-              Subir meme
-            </button>
+        {isLoading ? (
+          <Loading message={'Sorprendete con el meme que viene'} />
+        ) : (
+          <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
+            <div className="flex w-full justify-around items-center mt-4 max-w-[344px] mx-auto">
+              <h1 className="font-orelega text-[24px] leading-[26px]">Memes Random</h1>
+              <button className="font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
+                Subir meme
+              </button>
+            </div>
+            <div className="flex flex-col justify-center items-center min-h-[80vh]">
+              <PostsListContainer postsList={postsList} />
+            </div>
           </div>
-          <div className="flex flex-col justify-center items-center min-h-[80vh]">
-            <h2 className="font-orelega text-[20px] leading-[22px] text-center w-[250px]">Memes Random</h2>
-            //TODO: Container get memes random
-            <div className="flex flex-col mt-4 gap-y-4">Container</div>
-          </div>
-        </div>
+        )}
       </Layout>
     </div>
   );

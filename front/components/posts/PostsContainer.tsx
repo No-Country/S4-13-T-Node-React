@@ -24,8 +24,8 @@ const PostsContainer = () => {
       .get(`/post?page=${pageNumber}`)
       .then(({ data }: AxiosGetPost) => {
         const { posts, actual_page, last_page, size, total } = data.data;
-        setPostsList(posts);
         dispatch(getPosts(posts));
+        setPostsList(posts);
       })
       .catch(err => setError(err));
   }, [pageNumber]);
@@ -56,7 +56,7 @@ const PostsContainer = () => {
               authorId={post.user?.id || ''}
             />
           ))
-        : 'loading...'}
+        : null}
     </div>
   );
 };
