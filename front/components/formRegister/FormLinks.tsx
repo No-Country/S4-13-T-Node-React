@@ -15,7 +15,7 @@ const FormLinks = ({ question, anchorText }: FormLinksProps) => {
   return (
     <div className="flex flex-row w-[295px] justify-end items-center gap-2 font-roboto mt-5 ">
       <p className="text-[12px]">{question}</p>
-      <p className="text-primary font-bold cursor-pointer " onClick={changeModal}>
+      <p className="text-primary font-bold cursor-pointer active:text-secondary" onClick={changeModal}>
         {anchorText}
       </p>
     </div>
