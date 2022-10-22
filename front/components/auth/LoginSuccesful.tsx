@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleModal, handleToOpen } from '../../redux/slice/modalSlice';
 import { UserDataState } from '../../redux/slice/userDataSlice';
 import { RootState } from '../../redux/store';
 import LayoutFormPages from '../layout/LayoutFormPages';
@@ -7,6 +8,10 @@ import LayoutFormPages from '../layout/LayoutFormPages';
 const LoginSuccesful = () => {
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
+  const dispatch = useDispatch();
+  const closeModal = () => {
+    dispatch(handleModal(false));
+  };
   return (
     <LayoutFormPages heading="ingreso">
       <div className="flex flex-col justify-center items-center gap-y-4 p-[32px]">
@@ -16,7 +21,12 @@ const LoginSuccesful = () => {
         </div>
         <p className="font-roboto w-[230px] text-center my-3">Es un buen día para subir un meme.</p>
         <div className="font-roboto w-full flex justify-center">
-          <button className="font-bold text-primary text-base leading-[19px] active:text-secondary">Continuar</button>
+          <button
+            className="font-bold text-primary text-base leading-[19px] active:text-secondary"
+            onClick={closeModal}
+          >
+            Continuar
+          </button>
         </div>
       </div>
     </LayoutFormPages>

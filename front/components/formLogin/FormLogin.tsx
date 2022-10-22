@@ -7,7 +7,7 @@ import { LoginProps } from '../../interfaces';
 import Link from 'next/link';
 import useToggleView from '../../hooks/useToggleView';
 import { useAxios } from '../../hooks/useAxios';
-import { handleModal } from '../../redux/slice/modalSlice';
+import { handleToOpen } from '../../redux/slice/modalSlice';
 
 const validateLoginSchema = Yup.object({
   username: Yup.string().min(4, 'El nombre debe tener al menos 4 caracteres').required('Campo requerido'),
@@ -27,16 +27,17 @@ const FormLogin = () => {
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={(values: LoginProps, { resetForm }) => {
+            dispatch(handleToOpen('loading'));
             api
               .post('/login', values)
               .then(res => {
                 resetForm();
                 const userData = res.data;
                 dispatch(getData(userData));
-                dispatch(handleModal(false));
                 const id = userData.user.id;
                 api.get(`/user/${id}/likes`).then(response => {
                   const likes = response.data.data.user.likes;
+                  dispatch(handleToOpen('loginSuccessful'));
                   dispatch(getLikes(likes));
                 });
               })

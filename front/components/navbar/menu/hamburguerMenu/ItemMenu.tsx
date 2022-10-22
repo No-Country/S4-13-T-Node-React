@@ -21,9 +21,9 @@ export const ItemMenu = (props: MenuItem) => {
 
   return (
     <div
-      className={`flex justify-center items-center w-[180px] h-[42px] lg:w-auto lg:px-4 ${
+      className={`flex justify-center items-center w-[180px] h-[42px] lg:w-auto lg:px-4 transition-all duration-300 ${
         router.pathname == props.href ? 'border-2 border-secondary rounded-3xl' : ''
-      }`}
+      } ${props.open ? 'block' : 'hidden'} lg:flex`}
       onClick={openModal}
     >
       <Link href={props.href}>
