@@ -14,7 +14,7 @@ const MenuList = ({ open }: OpensProps) => {
 
   return (
     <div
-      className={`w-full h-0 flex flex-col justify-center items-center gap-y-4 absolute top-0 bg-primary/[.9] rounded-b-xl z-[-1] left-0 text-center pt-20 pb-5 transition-all duration-300 linear select-none ${
+      className={`w-full h-0 flex flex-col justify-center items-center gap-y-4 absolute top-0 bg-primary/[.9] rounded-b-xl z-[-1] left-0 text-center pt-20 pb-5 transition-all duration-100 linear select-none ${
         open ? 'opacity-100 h-[374px]' : 'opacity-0 top-[-45px]'
       } lg:hidden
       `}
