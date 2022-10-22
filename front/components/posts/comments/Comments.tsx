@@ -39,7 +39,7 @@ const Comments = ({ message, user, createdAt, replies, id }: CommentsProps) => {
       <div className="flex flex-col font-roboto max-[260px] w-full">
         <div>
           <p className="text-sm leading-[.5rem]">
-            <span className="font-bold text-base mr-1.5">{user?.username}</span>
+            <span className="font-bold text-base mr-1.5 truncate">{user?.username}</span>
             {message}
           </p>
         </div>

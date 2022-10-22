@@ -19,7 +19,10 @@ const DataUser = ({ user, id }: { user: any; id: number }) => {
         {id == data?.user.id && <h5 className="font-roboto text-sm">{user?.email}</h5>}
       </div>
       {id == data?.user.id && (
-        <p onClick={openModal} className="font-roboto font-bold text-primary text-base mt-6 cursor-pointer">
+        <p
+          onClick={openModal}
+          className="font-roboto font-bold text-primary text-base mt-6 cursor-pointer active:text-secondary"
+        >
           Editar perfil
         </p>
       )}
