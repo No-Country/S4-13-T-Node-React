@@ -43,10 +43,8 @@ const FormUpload = () => {
       const imageRef = ref(storage, `memes/${data?.user.id}.${imageUpload.name + v4()}`);
       uploadBytes(imageRef, imageUpload)
         .then(res => {
-          console.log(res);
           getDownloadURL(res.ref)
             .then(media_url => {
-              console.log(media_url);
               api
                 .post('/post', {
                   title,

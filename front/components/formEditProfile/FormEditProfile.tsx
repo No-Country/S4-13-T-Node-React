@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { v4 } from 'uuid';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../services/firebase';
 
 import { useAxios } from '../../hooks/useAxios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,18 +13,39 @@ import Avatar from '../user/avatar/Avatar';
 import LayoutProfile from '../layout/LayoutProfile';
 
 const validateRegisterSchema = Yup.object({
-  username: Yup.string()
-    .min(4, 'El nombre de usuario es demasiado corto')
-    .max(15, 'El nombre de usuario es demasiado largo')
-    .required('Nombre de usuario requerido'),
-  email: Yup.string().email('Debes ingresar un email válido').required('Email requerido'),
+  username: Yup.string().min(4, 'El nombre de usuario es demasiado corto'),
+  email: Yup.string().email('Debes ingresar un email válido'),
 });
 
 const FormEditProfile = () => {
   const dispatch = useDispatch();
   const api = useAxios();
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
+  const updateUser = (values: { username: string; email: string }) => {
+    const { email, username } = values;
+    if (imageUpload === null) {
+      if (username && email) {
+        api
+          .put(`/user/${data?.user.id}`, { username, email })
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
+      } else if (username) {
+        api
+          .put(`/user/${data?.user.id}`, { username })
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
+      } else if (email) {
+        api
+          .put(`/user/${data?.user.id}`, { email })
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
+      }
+    } else {
+    }
+  };
 
   return (
     <LayoutProfile heading="Editar perfil">
@@ -30,7 +54,7 @@ const FormEditProfile = () => {
         <Formik
           initialValues={{ username: '', email: '' }}
           onSubmit={async (values: { username: string; email: string }, { resetForm }) => {
-            console.log(values);
+            updateUser(values);
           }}
           validationSchema={validateRegisterSchema}
         >
