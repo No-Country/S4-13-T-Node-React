@@ -14,6 +14,14 @@ _Por esto surgió_ **Memex** _un sitio web que contiene exclusivamente **memes g
 
 \_Deploy: (https://s413t.vercel.app/)
 
+
+
+## Diseño e Investigación UX 🔬
+
+Ver reporte de diseño e investigación UX: (https://www.figma.com/proto/o2hBejKF8CVrwIwfKl9HlD/Memex?page-id=1401%3A49981&node-id=1401%3A50344&viewport=490%2C316%2C0.02&scaling=contain&starting-point-node-id=1401%3A50419&show-proto-sidebar=1)
+
+
+
 ## Construido con 🛠️
 
 ### Front
