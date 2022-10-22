@@ -10,7 +10,7 @@ import { useAxios } from '../../hooks/useAxios';
 import { handleModal } from '../../redux/slice/modalSlice';
 
 const validateLoginSchema = Yup.object({
-  username: Yup.string().min(5, 'El nombre debe tener al menos 5 caracteres').required('Campo requerido'),
+  username: Yup.string().min(4, 'El nombre debe tener al menos 4 caracteres').required('Campo requerido'),
   password: Yup.string().min(6, 'El password debe tener al menos 6 caracteres').required('Password requerido'),
 });
 
