@@ -12,6 +12,8 @@ import Footer from '../footer/Footer';
 import FormEditProfile from '../formEditProfile/FormEditProfile';
 import UploadSuccesful from '../formUpload/UploadSuccesful';
 import Loading from '../loading/Loading';
+import DeleteComment from '../modal/DeleteComment';
+import DeletePost from '../modal/DeletePost';
 import Modal from '../modal/Modal';
 import NavContainer from '../navbar/NavContainer';
 
@@ -28,6 +30,8 @@ function Layout(props: ChildrenProp) {
       {isOpen && modalToOpen === 'loading' && <Modal canClose={false} children={<Loading />} />}
       {isOpen && modalToOpen === 'upload' && <Modal children={<UploadSuccesful />} />}
       {isOpen && modalToOpen === 'logout' && <Modal children={<Logout />} />}
+      {isOpen && modalToOpen === 'deleteComment' && <Modal children={<DeleteComment />} />}
+      {isOpen && modalToOpen === 'deletePost' && <Modal children={<DeletePost />} />}
       <NavContainer />
       {props.children}
       <Footer />

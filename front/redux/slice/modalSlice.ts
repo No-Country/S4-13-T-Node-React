@@ -8,16 +8,22 @@ type ModalToOpen =
   | 'editProfile'
   | 'loading'
   | 'upload'
-  | 'logout';
+  | 'logout'
+  | 'deletePost'
+  | 'deleteComment';
 
 export interface ModalState {
   isOpen: boolean;
   modalToOpen: ModalToOpen;
+  postToDelete: number | null;
+  commentToDelete: number | null;
 }
 
 const initialState: ModalState = {
   isOpen: false,
   modalToOpen: 'login',
+  postToDelete: null,
+  commentToDelete: null,
 };
 
 const modalSlice = createSlice({
@@ -38,9 +44,15 @@ const modalSlice = createSlice({
       state.modalToOpen = action.payload;
       return;
     },
+    changePostToDelete: (state, action: PayloadAction<number>) => {
+      state.postToDelete = action.payload;
+    },
+    changeCommentToDelete: (state, action: PayloadAction<number>) => {
+      state.commentToDelete = action.payload;
+    },
   },
 });
 
-export const { handleModal, handleToOpen } = modalSlice.actions;
+export const { handleModal, handleToOpen, changePostToDelete, changeCommentToDelete } = modalSlice.actions;
 
 export default modalSlice.reducer;

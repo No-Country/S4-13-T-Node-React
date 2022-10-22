@@ -168,7 +168,7 @@ const FormUpload = () => {
                   (values.title === '' || values.tags === '' || (values.meme_url === '' && imageUpload === null)) &&
                   'border-accent text-accent active:text-accent active:border-accent'
                 } `}
-                // disabled={values.title === '' || values.tags === '' || (values.meme_url === '' && imageUpload === null)}
+                disabled={values.title === '' || values.tags === '' || (values.meme_url === '' && imageUpload === null)}
               >
                 Subir a Memex
               </button>
