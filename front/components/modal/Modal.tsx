@@ -5,11 +5,14 @@ import { handleModal } from '../../redux/slice/modalSlice';
 
 const Modal = (props: ChildrenProp) => {
   const dispatch = useDispatch();
+  const { canClose = true } = props;
 
   const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.target as HTMLElement;
-    if (target.id === 'modal') {
-      dispatch(handleModal(false));
+    if (canClose) {
+      const target = e.target as HTMLElement;
+      if (target.id === 'modal') {
+        dispatch(handleModal(false));
+      }
     }
   };
 
