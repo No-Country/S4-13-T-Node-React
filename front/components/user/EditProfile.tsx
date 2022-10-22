@@ -15,7 +15,7 @@ const EditProfile = () => {
       <LayoutProfile heading="Editar perfil">
         <div className="w-full flex flex-col justify-center items-center gap-y-4 font-roboto px-6 py-3">
           <div className="w-[127px] h-[127px] rounded-full overflow-hidden">
-            <Image src={data?.user.avatar_url} width={127} height={127} />
+            <Image src={data?.user.avatar_url!} width={127} height={127} />
           </div>
           <FormEditProfile />
         </div>

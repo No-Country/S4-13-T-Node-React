@@ -5,7 +5,12 @@ module.exports = {
     node: true,
     jest: true,
   },
-  extends: ['plugin:react/recommended', 'standard-with-typescript', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:react/recommended',
+    'standard-with-typescript',
+    'plugin:prettier/recommended',
+    'plugin:@next/next/recommended',
+  ],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
