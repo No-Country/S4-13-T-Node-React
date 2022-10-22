@@ -41,7 +41,7 @@ const Edit: NextPage = () => {
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
           <div className="w-full flex flex-col gap-y-4 mt-4 mx-auto max-w-[344px] min-h-[80vh]">
             <h1 className="font-orelega text-[24px] leading-[26px]">Editar meme</h1>
-            {post && <FormEditMeme id={id} title="Claro que si..." imageUrl={post?.media_url!} tags={post?.tags!} />}
+            {post && <FormEditMeme id={id} title={post?.title!} imageUrl={post?.media_url!} tags={post?.tags!} />}
           </div>
         </div>
       </Layout>
