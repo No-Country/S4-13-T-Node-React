@@ -14,7 +14,7 @@ interface CommentsProps {
   user: IUser;
   createdAt: Date;
   replies?: IReply[] | null;
-  id: string | number;
+  id: number;
 }
 
 const Comments = ({ message, user, createdAt, replies, id }: CommentsProps) => {

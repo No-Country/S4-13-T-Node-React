@@ -12,6 +12,7 @@ import RightIcons from './RightIcons';
 
 const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostProps) => {
   const [imageHeight, setImageHeight] = useState<number>(0);
+  const [imageWidth, setImageWidth] = useState<number>(0);
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
@@ -36,12 +37,12 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
           // >
           <Link href={`/profile?id=${authorId}`}>
             <a
-              className={`w-[28%] h-full flex flex-col justify-end font-bold cursor-pointer text-right ${
+              className={`w-[28%] h-full flex flex-col justify-end font-bold cursor-pointer text-right active:text-secondary ${
                 authorId == id ? 'text-accent' : 'text-primary'
               }
             `}
             >
-              <p className="leading-none truncate">{author}</p>
+              <p className="text-right leading-none truncate">{author}</p>
             </a>
           </Link>
         ) : (
@@ -91,8 +92,11 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
               <Image
                 src={imageUrl}
                 width={340}
-                height={imageHeight}
-                onLoadingComplete={e => setImageHeight(e.naturalHeight)}
+                height={imageHeight > 1000 && imageWidth > 800 ? 800 : imageHeight}
+                onLoadingComplete={e => {
+                  setImageWidth(e.naturalWidth);
+                  setImageHeight(e.naturalHeight);
+                }}
                 alt="meme"
               />
             </a>
@@ -101,8 +105,11 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
           <Image
             src={imageUrl}
             width={340}
-            height={imageHeight}
-            onLoadingComplete={e => setImageHeight(e.naturalHeight)}
+            height={imageHeight > 1000 && imageWidth > 800 ? 800 : imageHeight}
+            onLoadingComplete={e => {
+              setImageWidth(e.naturalWidth);
+              setImageHeight(e.naturalHeight);
+            }}
             alt="meme"
           />
         )}

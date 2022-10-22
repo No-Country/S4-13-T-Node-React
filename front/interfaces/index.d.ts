@@ -80,7 +80,7 @@ export interface IFav {
 export interface IComment {
   comment: string;
   created_at?: Date;
-  id: number | string;
+  id?: number;
   user: IUser;
   replys?: IReply[];
 }
@@ -93,14 +93,14 @@ export interface IReply {
   replys?: IReply[];
 }
 
-export interface IUser {
-  username: string;
-  email: string;
-  role?: string[];
-  avatar_url?: string;
-  total_likes?: number;
-  post?: IPost[];
-}
+// export interface IUser {
+//   username: string;
+//   email: string;
+//   role?: string[];
+//   avatar_url?: string;
+//   total_likes?: number;
+//   post?: IPost[];
+// }
 
 export interface ILike {
   post: IPost;
@@ -181,13 +181,15 @@ export interface GetUserData {
 }
 
 export interface IUser {
-  username: string;
-  id: number | null;
-  email: string;
-  avatar_url: string;
-  created_at: Date | null;
-  updated_at: Date | null;
-  deleted_at: Date | null;
-  google_id: string | null;
-  facebook_id: string | null;
+  username?: string;
+  id?: number | null;
+  email?: string;
+  avatar_url?: string;
+  created_at?: Date | null;
+  updated_at?: Date | null;
+  deleted_at?: Date | null;
+  google_id?: string | null;
+  facebook_id?: string | null;
+  role?: string[];
+  post?: IPost[];
 }

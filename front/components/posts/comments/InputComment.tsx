@@ -29,9 +29,9 @@ const InputComment = ({ id }: InputProps) => {
           dispatch(
             addComment({
               comment: values.comment,
-              email: user.email,
-              username: user.username,
-              avatar_url: user.avatar_url,
+              email: user!.email!,
+              username: user!.username!,
+              avatar_url: user!.avatar_url!,
               // Agregar id del comentario
             })
           );
