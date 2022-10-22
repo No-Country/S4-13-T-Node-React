@@ -22,7 +22,6 @@ const Avatar = ({ user, likes = true }: { user: any; likes?: boolean }) => {
           <div
             className="w-[127px] h-[127px] flex flex-col justify-center items-center gap-y-1 absolute bottom-0 z-[100] ml-3 rounded-full cursor-pointer hover:bg-[#74726F]/75 transition-all ease-linear"
             onMouseOver={e => {
-              console.log(e);
               if (e.target) {
                 setMouseOver(true);
               }
