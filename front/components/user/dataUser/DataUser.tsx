@@ -1,11 +1,17 @@
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleModal, handleToOpen } from '../../../redux/slice/modalSlice';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
 
 const DataUser = ({ user, id }: { user: any; id: number }) => {
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    dispatch(handleToOpen('editProfile'));
+    dispatch(handleModal(true));
+  };
   return (
     <div className="flex flex-col mt-11">
       <div className="border-b border-accent w-[173px] pb-6">
@@ -13,9 +19,12 @@ const DataUser = ({ user, id }: { user: any; id: number }) => {
         {id == data?.user.id && <h5 className="font-roboto text-sm">{user?.email}</h5>}
       </div>
       {id == data?.user.id && (
-        <a className="font-roboto font-bold text-primary text-base mt-6" href="/">
+        <p
+          onClick={openModal}
+          className="font-roboto font-bold text-primary text-base mt-6 cursor-pointer active:text-secondary"
+        >
           Editar perfil
-        </a>
+        </p>
       )}
     </div>
   );

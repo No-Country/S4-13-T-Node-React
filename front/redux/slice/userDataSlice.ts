@@ -99,10 +99,26 @@ const userDataSlice = createSlice({
       state.data!.refresh_token = action.payload.refresh_token;
       return;
     },
+    changeUserData: (state, action: PayloadAction<{ username?: string; avatar_url?: string; email?: string }>) => {
+      const { avatar_url, email, username } = action.payload;
+      console.log(avatar_url, email, username);
+      if (username) state.data!.user.username = username;
+      if (email) state.data!.user.email = email;
+      if (avatar_url) state.data!.user.avatar_url = avatar_url;
+    },
   },
 });
 
-export const { getData, getLikes, addRemoveLike, getFavorites, addRemoveFav, logout, loadAuthData, setTokens } =
-  userDataSlice.actions;
+export const {
+  getData,
+  getLikes,
+  addRemoveLike,
+  getFavorites,
+  addRemoveFav,
+  logout,
+  loadAuthData,
+  setTokens,
+  changeUserData,
+} = userDataSlice.actions;
 
 export default userDataSlice.reducer;

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type ModalToOpen = 'login' | 'signup';
+type ModalToOpen = 'login' | 'signup' | 'editProfile' | 'loading' | 'upload';
 
 export interface ModalState {
   isOpen: boolean;
@@ -26,7 +26,7 @@ const modalSlice = createSlice({
       }
       return;
     },
-    handleToOpen: (state, action: PayloadAction<'login' | 'signup'>) => {
+    handleToOpen: (state, action: PayloadAction<ModalToOpen>) => {
       state.modalToOpen = action.payload;
       return;
     },

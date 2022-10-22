@@ -14,7 +14,7 @@ const TagsContainer = ({ tags }: { tags: string[] }) => {
                   'text-primary font-roboto text-[16px] capitalize text-center py-2 px-4 cursor-pointer z-[-1] rounded-[50px] border-2 border-secondary block opacity-100'
                 }
               >
-                {tag}
+                {tag.toLowerCase()}
               </p>
             </a>
           </Link>
