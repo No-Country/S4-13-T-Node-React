@@ -18,7 +18,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
 
   return (
     <div className={`border-2 border-secondary rounded-3xl ${hrefPost ? 'mb-8' : ''} first:mt-4 py-2.5 w-[344px]`}>
-      <div className="flex justify-between items-center font-roboto px-6 mt-1 mb-3">
+      <div className="flex justify-between items-center font-roboto px-6 mt-1 mb-3 gap-[8px]">
         {hrefPost ? (
           <Link href={hrefPost}>
             <a>
@@ -37,7 +37,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
           // >
           <Link href={`/profile?id=${authorId}`}>
             <a
-              className={`w-[30%] h-full font-bold cursor-pointer active:text-secondary ${
+              className={`w-[28%] h-full flex flex-col justify-end font-bold cursor-pointer text-right active:text-secondary ${
                 authorId == id ? 'text-accent' : 'text-primary'
               }
             `}

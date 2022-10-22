@@ -49,7 +49,7 @@ export const ProfileItem = (props: MenuItem) => {
             </svg>
           ) : (
             <div className="rounded-full border-[1px] border-secondary w-[32px] h-[32px]">
-              <Image src={data.user.avatar_url} width={32} height={32} layout="responsive" className="rounded-full" />
+              <Image src={data.user.avatar_url!} width={32} height={32} layout="responsive" className="rounded-full" />
             </div>
           )}
         </a>
