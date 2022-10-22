@@ -1,4 +1,4 @@
-const Avatar = ({ user }: { user: any }) => {
+const Avatar = ({ user, likes = true }: { user: any; likes?: boolean }) => {
   return (
     <div className="flex flex-col ">
       <div className="relative">
@@ -13,7 +13,7 @@ const Avatar = ({ user }: { user: any }) => {
           src={user?.avatar_url}
         />
       </div>
-      <h3 className="ml-3 font-roboto text-center font-bold">{user.likesCount} me gusta totales</h3>
+      {likes && <h3 className="ml-3 font-roboto text-center font-bold">{user.likesCount} me gusta totales</h3>}
     </div>
   );
 };
