@@ -135,7 +135,7 @@ const FormEditProfile = () => {
                     <div className="text-xs text-error mt-1.5">{errors.email}</div>
                   ) : null}
                 </div>
-                <div className="w-full flex justify-end gap-x-6">
+                <div className="w-full flex justify-end gap-x-6 font-roboto">
                   <button className="font-bold text-primary text-base leading-[19px] active:text-secondary">
                     Cancelar
                   </button>
