@@ -1,16 +1,15 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import React from 'react';
-import { FacebookProvider, LoginButton } from 'react-facebook';
 import { useDispatch } from 'react-redux';
 import { useAxios } from '../../hooks/useAxios';
 import { APIResponseSuccess } from '../../interfaces';
-import { getData } from '../../redux/slice/userDataSlice';
+import { handleModal } from '../../redux/slice/modalSlice';
+import { getData, getFavorites, getLikes } from '../../redux/slice/userDataSlice';
 
 export const MediaContainer = () => {
   const api = useAxios();
   const dispatch = useDispatch();
   const googleID = process.env.NEXT_PUBLIC_GOOGLE;
-  const facebookID = process.env.NEXT_PUBLIC_FACEBOOK;
 
   return (
     <div className="flex flex-col gap-4">
@@ -20,7 +19,24 @@ export const MediaContainer = () => {
             await api
               .post('/login/social', { token: credentialResponse.credential })
               .then(({ data }: APIResponseSuccess) => {
-                dispatch(getData(data.data));
+                const userData = data.data;
+                dispatch(getData(userData));
+                dispatch(handleModal(false));
+                const id = userData.user.id;
+                api
+                  .get(`/user/${id}/likes`)
+                  .then(response => {
+                    const likes = response.data.data.user.likes;
+                    dispatch(getLikes(likes));
+                  })
+                  .catch(err => console.log(err));
+                api
+                  .get(`/user/${id}/favorites`)
+                  .then(response => {
+                    const favorites = response.data.data.user.favorites;
+                    dispatch(getFavorites(favorites));
+                  })
+                  .catch(err => console.log(err));
               })
               .catch(res => {
                 console.log(res);
@@ -32,17 +48,6 @@ export const MediaContainer = () => {
           useOneTap
         />
       </GoogleOAuthProvider>
-      {/* <FacebookProvider appId={facebookID}>
-        <LoginButton
-          onSuccess={(response: any) => {
-            console.log(response);
-          }}
-          scope="email"
-        >
-          Continuar con Facebook
-        </LoginButton>
-      </FacebookProvider> */}
-      {/* <MediaButton social="facebook" /> */}
     </div>
   );
 };

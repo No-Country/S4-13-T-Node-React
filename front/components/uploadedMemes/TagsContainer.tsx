@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import React from 'react';
-import { TagItem } from '../navbar/menu/tags/TagItem';
 
 const TagsContainer = ({ tags }: { tags: string[] }) => {
   return (
@@ -7,7 +7,17 @@ const TagsContainer = ({ tags }: { tags: string[] }) => {
       <h2 className="text-text font-roboto font-bold text-base mb-2">Tags</h2>
       <div className="flex flex-wrap gap-x-3 gap-y-2 pb-4">
         {tags.map((tag, idx) => (
-          <TagItem tag={tag} key={idx} other />
+          <Link href={`/search?tag=${tag}`} key={idx}>
+            <a>
+              <p
+                className={
+                  'text-primary font-roboto text-[16px] capitalize text-center py-2 px-4 cursor-pointer z-[-1] rounded-[50px] border-2 border-secondary block opacity-100'
+                }
+              >
+                {tag}
+              </p>
+            </a>
+          </Link>
         ))}
       </div>
     </div>

@@ -30,14 +30,8 @@ export interface IUser extends IUserDTO {
   refresh_token?: string | null
   actual_page?: number
   size?: number
-}
-
-export interface RequestUser extends Express.User {
-  id: number
-  sub: number
-  role: RoleTypes[]
-  iat: number
-  exp: number
+  likesCount?: number
+  sub?: number
 }
 
 export interface UpdateUser {

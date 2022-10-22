@@ -1,6 +1,7 @@
 import { Form, Field, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAxios } from '../../../hooks/useAxios';
+import { handleModal } from '../../../redux/slice/modalSlice';
 import { addComment } from '../../../redux/slice/postSlice';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
@@ -19,19 +20,24 @@ const InputComment = ({ id }: InputProps) => {
 
   const api = useAxios();
   const handleSubmit = (values: CommentProps) => {
-    api
-      .post(`/post/${id}/comment`, { comment: values.comment })
-      .then(res => {
-        dispatch(
-          addComment({
-            comment: values.comment,
-            email: user.email,
-            username: user.username,
-            avatar_url: user.avatar_url,
-          })
-        );
-      })
-      .catch(error => console.log(error));
+    if (!data?.access_token) {
+      dispatch(handleModal(true));
+    } else {
+      api
+        .post(`/post/${id}/comment`, { comment: values.comment })
+        .then(res => {
+          dispatch(
+            addComment({
+              comment: values.comment,
+              email: user.email,
+              username: user.username,
+              avatar_url: user.avatar_url,
+              // Agregar id del comentario
+            })
+          );
+        })
+        .catch(error => console.log(error));
+    }
   };
 
   return (
@@ -41,7 +47,7 @@ const InputComment = ({ id }: InputProps) => {
       }}
       onSubmit={(values, { resetForm }) => {
         handleSubmit(values);
-        resetForm();
+        if (data?.access_token) resetForm();
       }}
     >
       {({ values }) => {

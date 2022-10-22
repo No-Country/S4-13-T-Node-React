@@ -13,7 +13,7 @@ const Avatar = ({ user }: { user: any }) => {
           src={user?.avatar_url}
         />
       </div>
-      <h3 className="ml-3 font-roboto text-center font-bold">{user?.total_likes} me gusta totales</h3>
+      <h3 className="ml-3 font-roboto text-center font-bold">{user.likesCount} me gusta totales</h3>
     </div>
   );
 };

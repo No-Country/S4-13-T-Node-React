@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 } from 'uuid';
 import { RootState } from '../../redux/store';
 import { useRouter } from 'next/router';
 
@@ -12,6 +13,7 @@ import InputComment from './comments/InputComment';
 
 import { getPost, PostState } from '../../redux/slice/postSlice';
 import { useAxios } from '../../hooks/useAxios';
+import Link from 'next/link';
 
 const PostContainer = () => {
   const router = useRouter();
@@ -20,8 +22,9 @@ const PostContainer = () => {
   const [postVisited, setPostVisited] = useState<Partial<IPost | null>>(null);
   const [showTags, setShowTags] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { isLoading, comments } = useSelector<RootState, PostState>(state => {
+  const { comments, post } = useSelector<RootState, PostState>(state => {
     return state.postReducer;
   });
 
@@ -35,12 +38,19 @@ const PostContainer = () => {
         .get(`/post/${id}`)
         .then(({ data }: AxiosGetPostById) => {
           const post = data.data.post;
-          setPostVisited(post);
           dispatch(getPost(post));
+          setIsLoading(false);
         })
-        .catch(err => setError(err));
+        .catch(err => {
+          setError(err);
+          setIsLoading(false);
+        });
     }
   }, [id]);
+
+  useEffect(() => {
+    setPostVisited(post);
+  }, [post]);
 
   const handleShowTags = () => {
     setShowTags(prev => !prev);
@@ -103,9 +113,13 @@ const PostContainer = () => {
               }`}
             >
               {postVisited?.tags?.map((tag, idx) => (
-                <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4">
-                  {tag}
-                </p>
+                <Link href={`/search?tag=${tag}`} key={idx}>
+                  <a>
+                    <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4 capitalize">
+                      {tag.toLowerCase()}
+                    </p>
+                  </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -118,11 +132,12 @@ const PostContainer = () => {
           {comments.map(comment => {
             return (
               <Comments
-                key={comment.id}
+                key={comment.id || v4()}
                 message={comment.comment}
                 user={comment.user}
                 createdAt={comment.created_at!}
                 replies={comment.replys}
+                id={comment.id}
               />
             );
           })}

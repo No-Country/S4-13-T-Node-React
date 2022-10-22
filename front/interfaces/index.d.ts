@@ -80,7 +80,7 @@ export interface IFav {
 export interface IComment {
   comment: string;
   created_at?: Date;
-  id?: number;
+  id: number | string;
   user: IUser;
   replys?: IReply[];
 }
@@ -104,12 +104,26 @@ export interface IUser {
 
 export interface ILike {
   post: IPost;
+  id?: number;
+  postId?: number;
+  userId?: number;
+}
+
+export interface IFavorite {
+  post: IPost;
+  id?: number;
+  postId?: number;
+  userId?: number;
 }
 
 export interface AxiosGetPost extends AxiosResponse {
   data: {
     data: {
       posts: IPost[];
+      actual_page: number;
+      last_page: number;
+      size: number;
+      total: number;
     };
   };
 }
@@ -153,8 +167,7 @@ export interface LoginProps {
 
 export interface FormLinksProps {
   question: string;
-  anchor: string;
-  achorText: string;
+  anchorText: string;
 }
 
 export interface MDProps {
@@ -164,5 +177,17 @@ export interface MDProps {
 export interface GetUserData {
   access_token: string;
   refresh_token?: string;
-  user: IUserLikes;
+  user: IUser;
+}
+
+export interface IUser {
+  username: string;
+  id: number | null;
+  email: string;
+  avatar_url: string;
+  created_at: Date | null;
+  updated_at: Date | null;
+  deleted_at: Date | null;
+  google_id: string | null;
+  facebook_id: string | null;
 }

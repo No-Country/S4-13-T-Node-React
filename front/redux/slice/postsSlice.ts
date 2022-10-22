@@ -2,34 +2,30 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPost } from '../../interfaces';
 
 export interface PostsState {
-    posts: IPost[];
-    isLoading: boolean;
-    error: string | null;
+  posts: IPost[];
+  error: string | null;
 }
 
 const initialState: PostsState = {
   posts: [],
-  isLoading: true,
-  error: "",
+  error: '',
 };
 
 const postsSlice = createSlice({
   name: 'posts',
-    initialState,
+  initialState,
   reducers: {
-    requestPosts: (state) => {
-      state.isLoading = true;
+    requestPosts: state => {
       state.posts = [];
-      return
+      return;
     },
     getPosts: (state, action: PayloadAction<IPost[]>) => {
-        state.posts = action.payload
-        state.isLoading = false;
-        return
+      state.posts = action.payload;
+      return;
     },
     requestFailure: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
-    }
+    },
   },
 });
 

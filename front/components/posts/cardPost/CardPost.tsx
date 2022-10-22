@@ -21,26 +21,31 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
         {hrefPost ? (
           <Link href={hrefPost}>
             <a>
-              <p className="cursor-pointer truncate">{title}</p>
+              <p className="cursor-pointer">{title}</p>
             </a>
           </Link>
         ) : (
-          <p className="pointer truncate">{title}</p>
+          <p className="pointer">{title}</p>
         )}
 
         {author ? (
-          <div
-            className={`max-w-[120px] flex flex-col justify-end font-bold cursor-pointer ${
-              authorId == id ? 'text-accent' : 'text-primary'
-            }`}
-          >
-            <Link href={`/profile?id=${authorId}`}>
-              <a>
-                <p className="leading-none truncate">{author}</p>
-              </a>
-            </Link>
-          </div>
+          // <div
+          //   className={`w-[30%] flex flex-col justify-end font-bold cursor-pointer ${
+          //     authorId == id ? 'text-accent' : 'text-primary'
+          //   }`}
+          // >
+          <Link href={`/profile?id=${authorId}`}>
+            <a
+              className={`w-[30%] h-full flex flex-col justify-end font-bold cursor-pointer ${
+                authorId == id ? 'text-accent' : 'text-primary'
+              }
+            `}
+            >
+              <p className="leading-none truncate">{author}</p>
+            </a>
+          </Link>
         ) : (
+          // </div>
           <>
             {data?.access_token ? (
               <div className="flex justify-center items-center gap-x-3">
