@@ -18,6 +18,10 @@ const UserContainer = ({ user, id }: { user: any; id: number }) => {
     dispatch(handleModal(true));
   };
 
+  const handleUploadMeme = () => {
+    route.push('/upload');
+  };
+
   return (
     <>
       <div className="flex gap-x-36 justify-center items-center mt-[56px]">
@@ -31,6 +35,7 @@ const UserContainer = ({ user, id }: { user: any; id: number }) => {
         </div>
         {/* {id == data?.user.id && ( */}
         <button
+          onClick={handleUploadMeme}
           className={`h-[40px] mt-4 font-roboto font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-1 px-4 active:text-secondary active:border-secondary ${
             id === data?.user.id || 'opacity-0 cursor-default'
           }`}
