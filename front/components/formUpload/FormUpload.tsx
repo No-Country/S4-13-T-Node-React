@@ -132,6 +132,7 @@ const FormUpload = () => {
                   type="file"
                   id="upload"
                   className="hidden"
+                  accept="image/*"
                   onChange={e => {
                     setImageUpload(e.target.files![0]);
                   }}
