@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAxios } from '../../hooks/useAxios';
 import { APIResponseSuccess } from '../../interfaces';
-import { handleModal } from '../../redux/slice/modalSlice';
+import { handleToOpen } from '../../redux/slice/modalSlice';
 import { getData, getFavorites, getLikes } from '../../redux/slice/userDataSlice';
 
 export const MediaContainer = () => {
@@ -18,17 +18,18 @@ export const MediaContainer = () => {
       <GoogleOAuthProvider clientId={googleID!}>
         <GoogleLogin
           onSuccess={async credentialResponse => {
+            dispatch(handleToOpen('loading'));
             await api
               .post('/login/social', { token: credentialResponse.credential })
               .then(({ data }: APIResponseSuccess) => {
                 const userData = data.data;
                 dispatch(getData(userData));
-                dispatch(handleModal(false));
                 const id = userData.user.id;
                 api
                   .get(`/user/${id}/likes`)
                   .then(response => {
                     const likes = response.data.data.user.likes;
+                    dispatch(handleToOpen('loginSuccessful'));
                     dispatch(getLikes(likes));
                   })
                   .catch(err => console.log(err));

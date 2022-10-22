@@ -42,7 +42,7 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
               }
             `}
             >
-              <p className="text-right leading-none truncate">{author}</p>
+              <p className="text-right leading-none">{author}</p>
             </a>
           </Link>
         ) : (

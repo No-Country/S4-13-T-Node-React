@@ -1,12 +1,27 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { UserDataState } from '../../redux/slice/userDataSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleModal } from '../../redux/slice/modalSlice';
+import { logout, UserDataState } from '../../redux/slice/userDataSlice';
 import { RootState } from '../../redux/store';
 import LayoutProfile from '../layout/LayoutProfile';
 import Modal from '../modal/Modal';
 
 const Logout = () => {
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
+  const route = useRouter();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    route.push('/');
+    dispatch(logout());
+    dispatch(handleModal(false));
+  };
+
+  const closeModal = () => {
+    dispatch(handleModal(false));
+  };
 
   return (
     <Modal>
@@ -18,8 +33,16 @@ const Logout = () => {
           </div>
           <p className="font-roboto w-[200px] text-center my-3">Los memes siempre aquí dispuestos a divertirte</p>
           <div className="font-roboto w-full flex justify-around gap-x-8">
-            <button className="font-bold text-primary text-base leading-[19px] active:text-secondary">Cancelar</button>
-            <button className="font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary">
+            <button
+              className="font-bold text-primary text-base leading-[19px] active:text-secondary"
+              onClick={closeModal}
+            >
+              Cancelar
+            </button>
+            <button
+              className="font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary"
+              onClick={handleLogout}
+            >
               Continuar
             </button>
           </div>

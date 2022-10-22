@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type ModalToOpen = 'login' | 'signup' | 'editProfile' | 'loading' | 'upload';
+type ModalToOpen = 'login' | 'loginSuccessful' | 'signup' | 'editProfile' | 'loading' | 'upload' | 'logout';
 
 export interface ModalState {
   isOpen: boolean;

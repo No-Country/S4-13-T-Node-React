@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { handleModal, handleToOpen } from '../../redux/slice/modalSlice';
 import { logout, UserDataState } from '../../redux/slice/userDataSlice';
 import { RootState } from '../../redux/store';
 import Avatar from './avatar/Avatar';
@@ -13,8 +14,8 @@ const UserContainer = ({ user, id }: { user: any; id: number }) => {
   const { data, logged } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const handleLogout = () => {
-    route.push('/');
-    dispatch(logout());
+    dispatch(handleToOpen('logout'));
+    dispatch(handleModal(true));
   };
 
   return (
