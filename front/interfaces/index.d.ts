@@ -18,6 +18,7 @@ export interface MenuItem {
   text: String;
   icon?: React.ReactNode;
   href?: Url;
+  open: Boolean;
 }
 
 export interface TagProps {
