@@ -34,7 +34,7 @@ const Logout = () => {
           <p className="font-roboto w-[200px] text-center my-3">Los memes siempre aquí dispuestos a divertirte</p>
           <div className="font-roboto w-full flex justify-around gap-x-8">
             <button
-              className="font-bold text-primary text-base leading-[19px] active:text-secondary"
+              className="font-bold text-primary text-base leading-[19px] active:text-secondary cursor-pointer"
               onClick={closeModal}
             >
               Cancelar

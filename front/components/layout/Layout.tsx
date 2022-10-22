@@ -7,6 +7,7 @@ import Login from '../auth/Login';
 import LoginSuccesful from '../auth/LoginSuccesful';
 import Logout from '../auth/Logout';
 import Signup from '../auth/Signup';
+import SignupSuccesful from '../auth/SignupSuccesful';
 import Footer from '../footer/Footer';
 import FormEditProfile from '../formEditProfile/FormEditProfile';
 import UploadSuccesful from '../formUpload/UploadSuccesful';
@@ -22,6 +23,7 @@ function Layout(props: ChildrenProp) {
       {isOpen && modalToOpen === 'login' && <Modal children={<Login />} />}
       {isOpen && modalToOpen === 'loginSuccessful' && <Modal children={<LoginSuccesful />} />}
       {isOpen && modalToOpen === 'signup' && <Modal children={<Signup />} />}
+      {isOpen && modalToOpen === 'signupSuccessFul' && <Modal children={<SignupSuccesful />} />}
       {isOpen && modalToOpen === 'editProfile' && <Modal children={<FormEditProfile />} />}
       {isOpen && modalToOpen === 'loading' && <Modal canClose={false} children={<Loading />} />}
       {isOpen && modalToOpen === 'upload' && <Modal children={<UploadSuccesful />} />}

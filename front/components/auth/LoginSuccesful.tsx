@@ -22,7 +22,7 @@ const LoginSuccesful = () => {
         <p className="font-roboto w-[230px] text-center my-3">Es un buen día para subir un meme.</p>
         <div className="font-roboto w-full flex justify-center">
           <button
-            className="font-bold text-primary text-base leading-[19px] active:text-secondary"
+            className="font-bold text-primary text-base leading-[19px] active:text-secondary cursor-pointer"
             onClick={closeModal}
           >
             Continuar
