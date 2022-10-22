@@ -34,10 +34,11 @@ const FormRegister = () => {
         <Formik
           initialValues={{ email: '', username: '', password: '' }}
           onSubmit={async (values: RegisterProps, { resetForm }) => {
+            dispatch(handleToOpen('loading'));
             api
               .post('/register', values)
               .then(res => {
-                dispatch(handleToOpen('login'));
+                dispatch(handleToOpen('signupSuccessFul'));
               })
               .catch(err => {
                 const errorMessage = err.response.data.error.message;
