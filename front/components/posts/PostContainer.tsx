@@ -128,7 +128,7 @@ const PostContainer = () => {
         <div className="w-full mt-2" id="comments">
           <InputComment id={id} />
         </div>
-        <div className="flex flex-col gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
+        <div className="flex flex-col-reverse gap-y-5 mt-6 mb-4 max-w-[344px] w-full">
           {comments.map(comment => {
             return (
               <Comments
