@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAxios } from '../../../hooks/useAxios';
 import { AxiosGetPostById } from '../../../interfaces';
 import { handleModal } from '../../../redux/slice/modalSlice';
-import { getPost } from '../../../redux/slice/postSlice';
+import { getPost, handleLikesCount } from '../../../redux/slice/postSlice';
 import { addRemoveLike, UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
 import ButtonIcon from './ButtonIcon';
@@ -13,30 +13,33 @@ const RightIcons = ({ id }: { id: number }) => {
   const dispatch = useDispatch();
 
   const [share, setShare] = useState(false);
+  const [pressed, setPressed] = useState(false);
 
   const { likes, data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
   const api = useAxios();
 
   const handleLike = () => {
-    if (!data?.access_token) {
-      dispatch(handleModal(true));
-    } else {
-      api
-        .post(`/post/${id}/like`)
-        .then(res => {
-          if (res.status === 200) {
-            dispatch(addRemoveLike({ post: { id } }));
-            api
-              .get(`/post/${id}`)
-              .then(({ data }: AxiosGetPostById) => {
-                const post = data.data.post;
-                dispatch(getPost(post));
-              })
-              .catch(err => console.log(err));
-          }
-        })
-        .catch(err => console.log(err));
+    if (!pressed) {
+      if (!data?.access_token) {
+        dispatch(handleModal(true));
+      } else {
+        setPressed(true);
+        api
+          .post(`/post/${id}/like`)
+          .then(res => {
+            if (res.status === 200) {
+              const liked = res.data.data.liked;
+              dispatch(addRemoveLike({ post: { id }, liked }));
+              dispatch(handleLikesCount(liked));
+              setPressed(false);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            setPressed(false);
+          });
+      }
     }
   };
 

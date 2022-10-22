@@ -115,8 +115,8 @@ const PostContainer = () => {
               {postVisited?.tags?.map((tag, idx) => (
                 <Link href={`/search?tag=${tag}`} key={idx}>
                   <a>
-                    <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4">
-                      {tag}
+                    <p key={idx} className="border-2 border-secondary rounded-3xl text-center py-1 px-4 capitalize">
+                      {tag.toLowerCase()}
                     </p>
                   </a>
                 </Link>

@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { getData, getLikes } from '../../redux/slice/userDataSlice';
@@ -17,6 +17,7 @@ const validateLoginSchema = Yup.object({
 const FormLogin = () => {
   const dispatch = useDispatch();
   const api = useAxios();
+  const [error, setError] = useState<string | undefined>();
 
   const { handleToggle, toggleView } = useToggleView();
 
@@ -26,20 +27,22 @@ const FormLogin = () => {
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={(values: LoginProps, { resetForm }) => {
-            api.post('/login', values).then(res => {
-              const userData = res.data;
-              dispatch(getData(userData));
-              dispatch(handleModal(false));
-              const id = userData.user.id;
-              api
-                .get(`/user/${id}/likes`)
-                .then(response => {
+            api
+              .post('/login', values)
+              .then(res => {
+                resetForm();
+                const userData = res.data;
+                dispatch(getData(userData));
+                dispatch(handleModal(false));
+                const id = userData.user.id;
+                api.get(`/user/${id}/likes`).then(response => {
                   const likes = response.data.data.user.likes;
                   dispatch(getLikes(likes));
-                })
-                .catch(err => console.log(err));
-            });
-            resetForm();
+                });
+              })
+              .catch(err => {
+                setError('Credenciales invalidas.');
+              });
           }}
           validationSchema={validateLoginSchema}
         >
@@ -84,7 +87,7 @@ const FormLogin = () => {
                   ) : null}
                 </div>
 
-                <div>
+                <div className="flex flex-col">
                   <label htmlFor="password" className="relative">
                     <svg
                       width="16"
@@ -153,8 +156,9 @@ const FormLogin = () => {
                     </div>
                   </label>
                   {errors.password && touched.password ? (
-                    <div className="text-xs text-error mt-1.5">{errors.password}</div>
+                    <span className="text-sm text-error mt-1.5 font-roboto">{errors.password}</span>
                   ) : null}
+                  {error && <span className="text-error text-center font-roboto text-sm">{error}</span>}
                 </div>
                 <Link href="#">
                   <a className="text-[12px] font-roboto w-[295px] text-end my-2 hover:text-primary">

@@ -22,7 +22,7 @@ const MenuList = ({ open }: OpensProps) => {
       <ItemMenu href="/" text="lo nuevo" />
       <ItemMenu href="/best-memes" text="mejores memes" />
       <ItemMenu href="/random" text="memes random" />
-      <ItemMenu href="/favs" text="favoritos" />
+      <ItemMenu href={data?.access_token && '/favs'} text="favoritos" />
       <ProfileItem
         href={data?.user.id ? `/profile?id=${data?.user.id}` : ''}
         text="mi perfil"

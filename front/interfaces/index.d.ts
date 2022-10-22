@@ -177,5 +177,17 @@ export interface MDProps {
 export interface GetUserData {
   access_token: string;
   refresh_token?: string;
-  user: IUserLikes;
+  user: IUser;
+}
+
+export interface IUser {
+  username: string;
+  id: number | null;
+  email: string;
+  avatar_url: string;
+  created_at: Date | null;
+  updated_at: Date | null;
+  deleted_at: Date | null;
+  google_id: string | null;
+  facebook_id: string | null;
 }

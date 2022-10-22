@@ -8,6 +8,7 @@ import { requestPosts } from '../../redux/slice/postsSlice';
 import { RootState } from '../../redux/store';
 import { getFavorites, UserDataState } from '../../redux/slice/userDataSlice';
 import { useAxios } from '../../hooks/useAxios';
+import { IFavorite } from '../../interfaces';
 
 const FavsContainer = () => {
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +17,9 @@ const FavsContainer = () => {
   const dispatch = useDispatch();
   const api = useAxios();
 
-  const { data, favorites } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
+  const [favorites, setFavorites] = useState<IFavorite[]>();
 
   useEffect(() => {
     dispatch(requestPosts());
@@ -24,6 +27,7 @@ const FavsContainer = () => {
       .get(`/user/${data?.user.id}/favorites`)
       .then(res => {
         const favorites = res.data.data.user.favorites;
+        setFavorites(favorites);
         dispatch(getFavorites(favorites));
         setIsLoading(false);
       })

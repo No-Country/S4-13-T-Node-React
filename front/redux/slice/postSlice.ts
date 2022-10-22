@@ -47,9 +47,16 @@ const postsSlice = createSlice({
 
       return;
     },
+    handleLikesCount: (state, action: PayloadAction<boolean>) => {
+      if (action.payload) {
+        state.post = { ...state.post!, likesCount: state.post?.likesCount! + 1 };
+      } else {
+        state.post = { ...state.post!, likesCount: state.post?.likesCount! - 1 };
+      }
+    },
   },
 });
 
-export const { getPost, addComment } = postsSlice.actions;
+export const { getPost, addComment, handleLikesCount } = postsSlice.actions;
 
 export default postsSlice.reducer;

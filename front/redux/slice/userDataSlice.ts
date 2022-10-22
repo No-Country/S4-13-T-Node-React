@@ -21,11 +21,16 @@ const initialState: UserDataState = {
     access_token: '',
     refresh_token: '',
     user: {
-      id: '',
+      id: null,
       username: '',
       email: '',
       role: [],
       avatar_url: '',
+      created_at: null,
+      deleted_at: null,
+      facebook_id: null,
+      google_id: null,
+      updated_at: null,
     },
   },
   likes: [],
@@ -49,8 +54,8 @@ const userDataSlice = createSlice({
     getLikes: (state, action: PayloadAction<ILike[]>) => {
       state.likes = action.payload;
     },
-    addRemoveLike: (state, action: PayloadAction<ILike>) => {
-      if (!state.likes.find(like => like.post.id === action.payload.post.id)) {
+    addRemoveLike: (state, action: PayloadAction<{ post: { id: number }; liked: boolean }>) => {
+      if (action.payload.liked) {
         state.likes.push(action.payload);
       } else {
         const likesArray = state.likes.filter(like => like.post.id !== action.payload.post.id);
@@ -60,12 +65,12 @@ const userDataSlice = createSlice({
     getFavorites: (state, action: PayloadAction<IFavorite[]>) => {
       state.favorites = action.payload;
     },
-    addRemoveFav: (state, action: PayloadAction<IFavorite>) => {
-      if (!state.favorites.find(fav => fav.id === action.payload.id)) {
+    addRemoveFav: (state, action: PayloadAction<{ post: { id: number }; favorited: boolean }>) => {
+      if (action.payload.favorited) {
         state.favorites.push(action.payload);
       } else {
-        const likesArray = state.favorites.filter(fav => fav.id !== action.payload.id);
-        state.favorites = likesArray;
+        const favoritesArray = state.favorites.filter(favorite => favorite.post.id !== action.payload.post.id);
+        state.favorites = favoritesArray;
       }
     },
     logout: state => {
