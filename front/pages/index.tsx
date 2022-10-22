@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Layout from '../components/layout/Layout';
-import DeleteComment from '../components/posts/comments/DeleteComment';
 import PostsContainer from '../components/posts/PostsContainer';
 import { useAxios } from '../hooks/useAxios';
 import { AxiosGetPost, IPost } from '../interfaces';

@@ -75,10 +75,22 @@ const FormEditMeme = (props: FormEditMemeProps) => {
             </div>
             <div className="border-b-[0.5px]"></div>
             <h3 className="font-roboto text-[16px] font-bold leading-[18px]">Meme</h3>
+            {/* <div className={`pointer-events-none opacity-100 w-[344px] h-auto`}>
+              <Image
+                src={props.imageUrl}
+                width={344}
+                height={imageHeight > 1000 && imageWidth > 800 ? 800 : imageHeight}
+                onLoadingComplete={e => {
+                  setImageWidth(e.naturalWidth);
+                  setImageHeight(e.naturalHeight);
+                }}
+                alt="meme"
+              />
+            </div> */}
             <div className="relative">
               <img
                 src={props.imageUrl}
-                className="pointer-events-none opacity-100 mt-6 ml-3 border border-secondary w-[340px] h-auto"
+                className="pointer-events-none opacity-100 border border-secondary w-[340px] h-auto"
               />
             </div>
             <div className="border-b-[0.5px]"></div>

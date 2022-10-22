@@ -80,7 +80,7 @@ const RightIcons = ({ id }: { id: number }) => {
             xmlns="http://www.w3.org/2000/svg"
             onClick={handleLike}
           >
-            {likes.some(like => like.post.id == id) ? (
+            {likes.some(like => like?.post?.id == id) ? (
               <path
                 d="M15.9971 27L21.9971 21L28.9971 12L28.4971 8.5L25.4971 5.5H19.4971L15.9971 8L13.4971 5.5L7.49707 5L3.99707 7.5L2.49707 12L10.4971 21.5L15.9971 27Z"
                 fill="#FD8A09"
