@@ -6,7 +6,7 @@ import 'toastify-js/src/toastify.css';
 
 const ButtonsShare = ({ id }: { id: number | string }) => {
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://www.memex.com/post?id=${id}`);
+    navigator.clipboard.writeText(`https://s413t.vercel.app/post?id=${id}`);
     Toastify({
       text: 'Enlace copiado al portapapeles',
       duration: 1500,
@@ -55,7 +55,7 @@ const ButtonsShare = ({ id }: { id: number | string }) => {
       />
       <ButtonIcon
         icon={
-          <Link href={`https://api.whatsapp.com/send/?text=Mira este MEMEX https://www.memex.com/post?id=${id}`}>
+          <Link href={`https://api.whatsapp.com/send/?text=Mira este MEMEX https://s413t.vercel.app/post?id=${id}`}>
             <a target="_blank">
               <svg
                 className="cursor-pointer"
