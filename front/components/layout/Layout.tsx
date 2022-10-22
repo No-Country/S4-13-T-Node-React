@@ -7,6 +7,8 @@ import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import Footer from '../footer/Footer';
 import FormEditProfile from '../formEditProfile/FormEditProfile';
+import UploadSuccesful from '../formUpload/UploadSuccesful';
+import Loading from '../loading/Loading';
 import Modal from '../modal/Modal';
 import NavContainer from '../navbar/NavContainer';
 
@@ -18,6 +20,8 @@ function Layout(props: ChildrenProp) {
       {isOpen && modalToOpen === 'login' && <Modal children={<Login />} />}
       {isOpen && modalToOpen === 'signup' && <Modal children={<Signup />} />}
       {isOpen && modalToOpen === 'editProfile' && <Modal children={<FormEditProfile />} />}
+      {isOpen && modalToOpen === 'loading' && <Modal canClose={false} children={<Loading />} />}
+      {isOpen && modalToOpen === 'upload' && <Modal children={<UploadSuccesful />} />}
       <NavContainer />
       {props.children}
       <Footer />

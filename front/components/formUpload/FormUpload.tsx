@@ -4,10 +4,11 @@ import * as Yup from 'yup';
 import { v4 } from 'uuid';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../services/firebase';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UserDataState } from '../../redux/slice/userDataSlice';
 import { useAxios } from '../../hooks/useAxios';
+import { handleModal, handleToOpen } from '../../redux/slice/modalSlice';
 
 interface FormValues {
   title: string;
@@ -19,6 +20,7 @@ const FormUpload = () => {
   const [imageUpload, setImageUpload] = useState<File | null>(null);
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
   const api = useAxios();
+  const dispatch = useDispatch();
 
   const validateUploadSchema = Yup.object({
     title: Yup.string().min(6, '').required('Campo requerido'),
@@ -29,6 +31,8 @@ const FormUpload = () => {
   const handleSubmit = (values: FormValues) => {
     const title = values.title;
     const tags = values.tags.split(',');
+    dispatch(handleToOpen('loading'));
+    dispatch(handleModal(true));
     if (imageUpload == null || values.meme_url) {
       const media_url = values.meme_url;
       api
@@ -37,7 +41,9 @@ const FormUpload = () => {
           tags,
           media_url,
         })
-        .then(res => console.log(res))
+        .then(res => {
+          dispatch(handleToOpen('upload'));
+        })
         .catch(err => console.log(err));
     } else {
       const imageRef = ref(storage, `memes/${data?.user.id}.${imageUpload.name + v4()}`);
@@ -51,7 +57,9 @@ const FormUpload = () => {
                   tags,
                   media_url,
                 })
-                .then(res => console.log(res))
+                .then(res => {
+                  dispatch(handleToOpen('upload'));
+                })
                 .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
@@ -68,11 +76,10 @@ const FormUpload = () => {
         tags: '',
       }}
       onSubmit={(values, { resetForm }) => {
-        console.log(values);
         handleSubmit(values);
         // resetForm();
       }}
-      validationSchema={validateUploadSchema}
+      // validationSchema={validateUploadSchema}
     >
       {({ values, errors, touched }) => {
         return (
@@ -160,7 +167,7 @@ const FormUpload = () => {
                   (values.title === '' || values.tags === '' || (values.meme_url === '' && imageUpload === null)) &&
                   'border-accent text-accent active:text-accent active:border-accent'
                 } `}
-                disabled={values.title === '' || values.tags === '' || (values.meme_url === '' && imageUpload === null)}
+                // disabled={values.title === '' || values.tags === '' || (values.meme_url === '' && imageUpload === null)}
               >
                 Subir a Memex
               </button>

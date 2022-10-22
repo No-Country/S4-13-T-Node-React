@@ -3,6 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 export interface ChildrenProp {
   children: React.ReactNode;
+  canClose?: boolean;
 }
 
 export interface HCProps extends ChildrenProp {

@@ -1,5 +1,5 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAxios } from '../../hooks/useAxios';
 import { APIResponseSuccess } from '../../interfaces';
@@ -10,9 +10,11 @@ export const MediaContainer = () => {
   const api = useAxios();
   const dispatch = useDispatch();
   const googleID = process.env.NEXT_PUBLIC_GOOGLE;
+  const [error, setError] = useState<string>();
 
   return (
     <div className="flex flex-col gap-4">
+      {error && <span className="text-error text-sm font-roboto">{error}</span>}
       <GoogleOAuthProvider clientId={googleID!}>
         <GoogleLogin
           onSuccess={async credentialResponse => {
@@ -39,7 +41,7 @@ export const MediaContainer = () => {
                   .catch(err => console.log(err));
               })
               .catch(res => {
-                console.log(res);
+                setError('El email ya existe. Proba creandote una cuenta.');
               });
           }}
           type="icon"

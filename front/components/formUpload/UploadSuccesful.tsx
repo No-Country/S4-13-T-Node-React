@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { UserDataState } from '../../redux/slice/userDataSlice';
+import { RootState } from '../../redux/store';
 import LayoutProfile from '../layout/LayoutProfile';
 import Modal from '../modal/Modal';
 
 const UploadSuccesful = () => {
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
   return (
     <Modal>
       <LayoutProfile heading="Meme subido">
@@ -13,7 +18,12 @@ const UploadSuccesful = () => {
           </div>
           <p className="font-roboto w-[200px] text-center my-3">¿Cuántos me gusta acumulará?</p>
           <div className="font-roboto w-full flex justify-center gap-x-8">
-            <button className="font-bold text-primary text-base leading-[19px] active:text-secondary">Continuar</button>
+            <a
+              href={`/profile?id=${data?.user.id}`}
+              className="font-bold text-primary text-base leading-[19px] active:text-secondary"
+            >
+              Continuar
+            </a>
           </div>
         </div>
       </LayoutProfile>

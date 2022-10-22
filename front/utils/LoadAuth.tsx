@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { IFavorite } from '../interfaces';
+import { ChildrenProp, IFavorite } from '../interfaces';
 import { getFavorites, loadAuthData } from '../redux/slice/userDataSlice';
 import { useAxios } from '../hooks/useAxios';
 
-const LoadAuth = ({ children }: { children: JSX.Element }) => {
+const LoadAuth = (props: ChildrenProp) => {
   const dispatch = useDispatch();
   const api = useAxios();
 
@@ -21,7 +21,7 @@ const LoadAuth = ({ children }: { children: JSX.Element }) => {
     }
   }, []);
 
-  return <>{children}</>;
+  return <>{props.children}</>;
 };
 
 export default LoadAuth;
