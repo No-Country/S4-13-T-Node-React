@@ -2,9 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CardPostProps } from '../../../interfaces';
+import { changePostToDelete, handleModal, handleToOpen } from '../../../redux/slice/modalSlice';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { RootState } from '../../../redux/store';
 import LeftIcons from './LeftIcons';
@@ -15,6 +16,13 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
   const [imageWidth, setImageWidth] = useState<number>(0);
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+
+  const dispatch = useDispatch();
+  const openModal = () => {
+    dispatch(changePostToDelete(id));
+    dispatch(handleToOpen('deletePost'));
+    dispatch(handleModal(true));
+  };
 
   return (
     <div className={`border-2 border-secondary rounded-3xl ${hrefPost ? 'mb-8' : ''} first:mt-4 py-2.5 w-[344px]`}>
@@ -50,27 +58,34 @@ const CardPost = ({ id, imageUrl, author, title, hrefPost, authorId }: CardPostP
           <>
             {data?.access_token ? (
               <div className="flex justify-center items-center gap-x-3">
-                <svg
-                  width="17"
-                  height="20"
-                  viewBox="0 0 17 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="cursor-pointer"
-                >
-                  <path
-                    d="M15.9998 18H1.99981C1.73459 18 1.48024 18.1053 1.2927 18.2929C1.10517 18.4804 0.999808 18.7348 0.999808 19C0.999808 19.2652 1.10517 19.5196 1.2927 19.7071C1.48024 19.8946 1.73459 20 1.99981 20H15.9998C16.265 20 16.5194 19.8946 16.7069 19.7071C16.8945 19.5196 16.9998 19.2652 16.9998 19C16.9998 18.7348 16.8945 18.4804 16.7069 18.2929C16.5194 18.1053 16.265 18 15.9998 18ZM1.99981 16H2.08981L6.25981 15.62C6.71661 15.5745 7.14384 15.3732 7.46981 15.05L16.4698 6.04998C16.8191 5.68095 17.0079 5.18849 16.9948 4.68052C16.9817 4.17254 16.7677 3.69049 16.3998 3.33998L13.6598 0.59998C13.3022 0.264076 12.8336 0.0713388 12.3431 0.058432C11.8527 0.0455252 11.3746 0.213349 10.9998 0.52998L1.99981 9.52998C1.67657 9.85594 1.47531 10.2832 1.42981 10.74L0.999808 14.91C0.986337 15.0564 1.00534 15.2041 1.05547 15.3424C1.1056 15.4806 1.18561 15.6062 1.28981 15.71C1.38325 15.8027 1.49406 15.876 1.6159 15.9258C1.73774 15.9755 1.8682 16.0007 1.99981 16ZM12.2698 1.99998L14.9998 4.72998L12.9998 6.67998L10.3198 3.99998L12.2698 1.99998ZM3.36981 10.91L8.99981 5.31998L11.6998 8.01998L6.09981 13.62L3.09981 13.9L3.36981 10.91Z"
-                    fill="#74726F"
-                  />
-                </svg>
+                <Link href={`/edit?postId=${id}`}>
+                  <a>
+                    <svg
+                      name="edit"
+                      width="17"
+                      height="20"
+                      viewBox="0 0 17 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="cursor-pointer"
+                    >
+                      <path
+                        d="M15.9998 18H1.99981C1.73459 18 1.48024 18.1053 1.2927 18.2929C1.10517 18.4804 0.999808 18.7348 0.999808 19C0.999808 19.2652 1.10517 19.5196 1.2927 19.7071C1.48024 19.8946 1.73459 20 1.99981 20H15.9998C16.265 20 16.5194 19.8946 16.7069 19.7071C16.8945 19.5196 16.9998 19.2652 16.9998 19C16.9998 18.7348 16.8945 18.4804 16.7069 18.2929C16.5194 18.1053 16.265 18 15.9998 18ZM1.99981 16H2.08981L6.25981 15.62C6.71661 15.5745 7.14384 15.3732 7.46981 15.05L16.4698 6.04998C16.8191 5.68095 17.0079 5.18849 16.9948 4.68052C16.9817 4.17254 16.7677 3.69049 16.3998 3.33998L13.6598 0.59998C13.3022 0.264076 12.8336 0.0713388 12.3431 0.058432C11.8527 0.0455252 11.3746 0.213349 10.9998 0.52998L1.99981 9.52998C1.67657 9.85594 1.47531 10.2832 1.42981 10.74L0.999808 14.91C0.986337 15.0564 1.00534 15.2041 1.05547 15.3424C1.1056 15.4806 1.18561 15.6062 1.28981 15.71C1.38325 15.8027 1.49406 15.876 1.6159 15.9258C1.73774 15.9755 1.8682 16.0007 1.99981 16ZM12.2698 1.99998L14.9998 4.72998L12.9998 6.67998L10.3198 3.99998L12.2698 1.99998ZM3.36981 10.91L8.99981 5.31998L11.6998 8.01998L6.09981 13.62L3.09981 13.9L3.36981 10.91Z"
+                        fill="#74726F"
+                      />
+                    </svg>
+                  </a>
+                </Link>
 
                 <svg
+                  name="delete"
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="cursor-pointer"
+                  onClick={openModal}
                 >
                   <path
                     fillRule="evenodd"

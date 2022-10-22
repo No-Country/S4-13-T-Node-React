@@ -1,36 +1,36 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { handleModal } from '../../redux/slice/modalSlice';
-import { logout, UserDataState } from '../../redux/slice/userDataSlice';
+import { useAxios } from '../../hooks/useAxios';
+import { handleModal, ModalState } from '../../redux/slice/modalSlice';
 import { RootState } from '../../redux/store';
 import LayoutProfile from '../layout/LayoutProfile';
-import Modal from '../modal/Modal';
 
-const Logout = () => {
-  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+function DeleteComment() {
+  const { commentToDelete } = useSelector<RootState, ModalState>(state => state.modalReducer);
 
-  const route = useRouter();
+  const api = useAxios();
   const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    route.push('/');
-    dispatch(logout());
-    dispatch(handleModal(false));
+  const router = useRouter();
+  const deleteComment = () => {
+    api
+      .delete(`/comment/${commentToDelete}`)
+      .then(res => {
+        console.log(res);
+        router.reload();
+      })
+      .catch(err => console.log(err));
   };
-
   const closeModal = () => {
     dispatch(handleModal(false));
   };
-
   return (
-    <LayoutProfile heading="Cerrar sesión">
+    <LayoutProfile heading="Eliminar">
       <div className="flex flex-col justify-center items-center gap-y-4 p-[32px]">
         <div className="flex flex-col justify-center items-center font-orelega">
-          <h2 className="w-[200px] text-2xl text-center">Hasta la próxima {data?.user.username}</h2>
-          <h3 className="text-xl text-center">Vas a cerrar la sesión</h3>
+          <h3 className="text-xl text-center">Vas a eliminar el comentario</h3>
         </div>
-        <p className="font-roboto w-[200px] text-center my-3">Los memes siempre aquí dispuestos a divertirte</p>
+        <p className="font-roboto w-[200px] text-center my-3">Una vez eliminado no se recupera</p>
         <div className="font-roboto w-full flex justify-around gap-x-8">
           <button
             className="font-bold text-primary text-base leading-[19px] active:text-secondary cursor-pointer"
@@ -40,7 +40,7 @@ const Logout = () => {
           </button>
           <button
             className="font-bold text-primary text-base leading-[19px] border-2 border-primary rounded-lg py-2 px-4 active:text-secondary active:border-secondary"
-            onClick={handleLogout}
+            onClick={deleteComment}
           >
             Continuar
           </button>
@@ -48,6 +48,6 @@ const Logout = () => {
       </div>
     </LayoutProfile>
   );
-};
+}
 
-export default Logout;
+export default DeleteComment;

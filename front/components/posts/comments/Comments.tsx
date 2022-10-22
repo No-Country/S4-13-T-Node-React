@@ -4,10 +4,13 @@ import InputComment from './InputComment';
 import { IReply, IUser } from '../../../interfaces';
 import Replies from './Replies';
 import { calculateDates } from '../../../utils/calculateDates';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { UserDataState } from '../../../redux/slice/userDataSlice';
 import { useAxios } from '../../../hooks/useAxios';
+import Modal from '../../modal/Modal';
+import DeleteComment from '../../modal/DeleteComment';
+import { changeCommentToDelete, changePostToDelete, handleModal, handleToOpen } from '../../../redux/slice/modalSlice';
 
 interface CommentsProps {
   message: string;
@@ -22,13 +25,17 @@ const Comments = ({ message, user, createdAt, replies, id }: CommentsProps) => {
 
   const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
 
-  const api = useAxios();
-
+  const dispatch = useDispatch();
   const handleDeleteComment = () => {
-    api
-      .delete(`/comment/${id}`)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    // if (id) {
+    //   api
+    //     .delete(`/comment/${id}`)
+    //     .then(res => console.log(res))
+    //     .catch(err => console.log(err));
+    // }
+    dispatch(changeCommentToDelete(id));
+    dispatch(handleToOpen('deleteComment'));
+    dispatch(handleModal(true));
   };
 
   return (
@@ -51,7 +58,7 @@ const Comments = ({ message, user, createdAt, replies, id }: CommentsProps) => {
           >
             Responder
           </span>
-          {user.username === data?.user.username && (
+          {user.username === data?.user.username && id && (
             <span className="cursor-pointer active:text-secondary" onClick={handleDeleteComment}>
               Eliminar
             </span>

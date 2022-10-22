@@ -1,9 +1,34 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import FormEditMeme from '../../components/formEditMeme/FormEditMeme';
 import Layout from '../../components/layout/Layout';
+import { useAxios } from '../../hooks/useAxios';
+import { IPost } from '../../interfaces';
+import { UserDataState } from '../../redux/slice/userDataSlice';
+import { RootState } from '../../redux/store';
 
 const Edit: NextPage = () => {
+  const { data } = useSelector<RootState, UserDataState>(state => state.userDataReducer);
+  const router = useRouter();
+  const api = useAxios();
+  const [post, setPost] = useState<IPost>();
+
+  const id = parseInt(router.query.postId as string);
+
+  useEffect(() => {
+    if (id) {
+      api.get(`/post/${id}`).then(res => {
+        if (res.data.data.post.user.id !== data?.user.id) {
+          router.push('/');
+        }
+        setPost(res.data.data.post);
+      });
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -16,7 +41,7 @@ const Edit: NextPage = () => {
         <div className="flex flex-col min-w-screen w-full sm:w-[512px] lg:w-[1024px] mt-[56px]">
           <div className="w-full flex flex-col gap-y-4 mt-4 mx-auto max-w-[344px] min-h-[80vh]">
             <h1 className="font-orelega text-[24px] leading-[26px]">Editar meme</h1>
-            <FormEditMeme title="Claro que si..." imageUrl="imagen" tags="Thanos, Las cosas como son, Apocalipsis" />
+            {post && <FormEditMeme id={id} title="Claro que si..." imageUrl={post?.media_url!} tags={post?.tags!} />}
           </div>
         </div>
       </Layout>
